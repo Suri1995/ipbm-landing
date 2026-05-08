@@ -32,8 +32,8 @@ export default function Header() {
               className="relative w-10 h-10 sm:w-12 sm:h-12 flex-shrink-0"
               aria-hidden="true"
             >
-              <div className="absolute inset-0 bg-navy-900 rounded-lg rotate-3 group-hover:rotate-6 transition-transform duration-300" />
-              <div className="absolute inset-0 bg-gradient-to-br from-gold-400 to-gold-600 rounded-lg flex items-center justify-center font-display font-bold text-navy-950 text-lg sm:text-xl">
+              <div className="absolute inset-0 bg-navy-600 rounded-lg rotate-3 group-hover:rotate-6 transition-transform duration-300" />
+              <div className="absolute inset-0 bg-gradient-to-br from-gold-400 to-gold-600 rounded-lg flex items-center justify-center font-display font-bold text-white text-lg sm:text-xl">
                 IP
               </div>
             </div>
@@ -52,7 +52,7 @@ export default function Header() {
           <a
             href="tel:+919876543210"
             aria-label="Call us at +91 98765 43210"
-            className="group flex items-center gap-2 bg-navy-900 hover:bg-navy-700 text-white px-4 py-2 sm:px-5 sm:py-2.5 rounded-full text-sm font-medium transition-all duration-200 hover:shadow-navy-glow focus:outline-none focus:ring-2 focus:ring-navy-500 focus:ring-offset-2"
+            className="group flex items-center gap-2 bg-navy-600 hover:bg-navy-700 text-white px-4 py-2 sm:px-5 sm:py-2.5 rounded-full text-sm font-medium transition-all duration-200 hover:shadow-navy-glow focus:outline-none focus:ring-2 focus:ring-navy-500 focus:ring-offset-2"
           >
             <svg
               className="w-4 h-4 group-hover:animate-bounce"

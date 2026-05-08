@@ -16,8 +16,8 @@ export default function Footer() {
               className="flex items-center gap-3 mb-4 group w-fit"
             >
               <div className="relative w-10 h-10 flex-shrink-0">
-                <div className="absolute inset-0 bg-navy-700 rounded-lg rotate-3" aria-hidden="true" />
-                <div className="absolute inset-0 bg-gradient-to-br from-gold-400 to-gold-600 rounded-lg flex items-center justify-center font-display font-bold text-navy-950">
+                <div className="absolute inset-0 bg-navy-600 rounded-lg rotate-3" aria-hidden="true" />
+                <div className="absolute inset-0 bg-gradient-to-br from-gold-400 to-gold-600 rounded-lg flex items-center justify-center font-display font-bold text-white">
                   IP
                 </div>
               </div>

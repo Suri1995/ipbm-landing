@@ -75,7 +75,7 @@ export default function Contact() {
       id="contact"
       ref={ref}
       aria-labelledby="contact-heading"
-      className="py-20 sm:py-28 bg-navy-950 px-4 sm:px-6"
+      className="py-20 sm:py-28 bg-navy-900 px-4 sm:px-6"
     >
       <div className="max-w-7xl mx-auto pl-0 md:pl-20 xl:pl-24">
         <div
@@ -141,7 +141,7 @@ export default function Contact() {
                     href="#"
                     role="listitem"
                     aria-label={`Follow IPBM on ${s}`}
-                    className="w-9 h-9 bg-white/8 border border-white/15 rounded-xl flex items-center justify-center text-navy-300 hover:bg-gold-500 hover:text-navy-950 hover:border-gold-500 transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-gold-400 focus:ring-offset-2 focus:ring-offset-navy-950 text-xs font-bold"
+                    className="w-9 h-9 bg-white/8 border border-white/15 rounded-xl flex items-center justify-center text-navy-300 hover:bg-gold-500 hover:text-white hover:border-gold-500 transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-gold-400 focus:ring-offset-2 focus:ring-offset-navy-900 text-xs font-bold"
                   >
                     {s[0]}
                   </a>
@@ -159,7 +159,7 @@ export default function Contact() {
             {status === "sent" ? (
               <div className="flex flex-col items-center justify-center h-full py-12 text-center">
                 <div className="w-16 h-16 bg-gold-500 rounded-full flex items-center justify-center mb-4" aria-hidden="true">
-                  <svg className="w-8 h-8 text-navy-950" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <svg className="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M5 13l4 4L19 7" />
                   </svg>
                 </div>
@@ -267,7 +267,7 @@ export default function Contact() {
                   type="submit"
                   disabled={status === "sending"}
                   aria-disabled={status === "sending"}
-                  className="w-full bg-gold-500 hover:bg-gold-400 disabled:opacity-70 text-navy-950 font-semibold py-3.5 rounded-full text-sm transition-all duration-200 hover:shadow-gold-glow focus:outline-none focus:ring-2 focus:ring-gold-400 focus:ring-offset-2 focus:ring-offset-navy-950 flex items-center justify-center gap-2"
+                  className="w-full bg-gold-500 hover:bg-gold-400 disabled:opacity-70 text-white font-semibold py-3.5 rounded-full text-sm transition-all duration-200 hover:shadow-gold-glow focus:outline-none focus:ring-2 focus:ring-gold-400 focus:ring-offset-2 focus:ring-offset-navy-900 flex items-center justify-center gap-2"
                 >
                   {status === "sending" ? (
                     <>

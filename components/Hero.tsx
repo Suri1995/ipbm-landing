@@ -20,7 +20,7 @@ export default function Hero() {
     <section
       id="hero"
       aria-labelledby="hero-heading"
-      className="relative min-h-screen flex items-center overflow-hidden bg-navy-950"
+      className="relative min-h-screen flex items-center overflow-hidden bg-navy-900"
     >
       {/* Background grid pattern */}
       <div
@@ -88,7 +88,7 @@ export default function Hero() {
             <div className="flex flex-col sm:flex-row gap-4">
               <a
                 href="#contact"
-                className="inline-flex items-center justify-center gap-2 bg-gold-500 hover:bg-gold-400 text-navy-950 font-semibold px-6 py-3.5 rounded-full transition-all duration-200 hover:shadow-gold-glow focus:outline-none focus:ring-2 focus:ring-gold-400 focus:ring-offset-2 focus:ring-offset-navy-950 text-sm sm:text-base"
+                className="inline-flex items-center justify-center gap-2 bg-gold-500 hover:bg-gold-400 text-white font-semibold px-6 py-3.5 rounded-full transition-all duration-200 hover:shadow-gold-glow focus:outline-none focus:ring-2 focus:ring-gold-400 focus:ring-offset-2 focus:ring-offset-navy-900 text-sm sm:text-base"
                 aria-label="Enroll now – go to contact section"
               >
                 Enroll Now
@@ -109,7 +109,7 @@ export default function Hero() {
               </a>
               <a
                 href="#about"
-                className="inline-flex items-center justify-center gap-2 border border-white/30 hover:border-white/60 text-white hover:bg-white/5 font-medium px-6 py-3.5 rounded-full transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-white/50 focus:ring-offset-2 focus:ring-offset-navy-950 text-sm sm:text-base"
+                className="inline-flex items-center justify-center gap-2 border border-white/30 hover:border-white/60 text-white hover:bg-white/5 font-medium px-6 py-3.5 rounded-full transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-white/50 focus:ring-offset-2 focus:ring-offset-navy-900 text-sm sm:text-base"
                 aria-label="Learn more about our institute"
               >
                 Learn More
@@ -130,7 +130,7 @@ export default function Hero() {
               {/* Main card */}
               <div className="bg-white/8 backdrop-blur-sm border border-white/15 rounded-2xl p-8 animate-float">
                 <div className="flex items-center gap-3 mb-6">
-                  <div className="w-10 h-10 bg-gold-500 rounded-xl flex items-center justify-center font-display font-bold text-navy-950">
+                  <div className="w-10 h-10 bg-gold-500 rounded-xl flex items-center justify-center font-display font-bold text-white">
                     IP
                   </div>
                   <div>
@@ -168,7 +168,7 @@ export default function Hero() {
               </div>
 
               {/* Floating badge */}
-              <div className="absolute -top-4 -right-4 bg-gold-500 text-navy-950 rounded-full p-3 shadow-lg animate-float [animation-delay:2s]">
+              <div className="absolute -top-4 -right-4 bg-gold-500 text-white rounded-full p-3 shadow-lg animate-float [animation-delay:2s]">
                 <svg
                   className="w-5 h-5"
                   fill="none"

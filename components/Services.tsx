@@ -9,7 +9,7 @@ const programs = [
     mode: "Full-time",
     seats: "60 seats",
     highlights: ["Strategic Management", "Finance & Accounting", "HR Management", "Marketing Strategy"],
-    color: "from-navy-950 to-navy-800",
+    color: "from-navy-900 to-navy-700",
     accent: "text-gold-400",
     badge: "bg-gold-500 text-navy-950",
   },
@@ -66,7 +66,7 @@ export default function Services() {
       id="services"
       ref={ref}
       aria-labelledby="services-heading"
-      className="py-20 sm:py-28 bg-navy-950 px-4 sm:px-6"
+      className="py-20 sm:py-28 bg-navy-900 px-4 sm:px-6"
     >
       <div className="max-w-7xl mx-auto pl-0 md:pl-20 xl:pl-24">
         {/* Header */}
@@ -94,7 +94,7 @@ export default function Services() {
         {/* Cards grid */}
         <div className="grid sm:grid-cols-2 xl:grid-cols-4 gap-5 sm:gap-6">
           {programs.map((prog, i) => {
-            const isDark = prog.color.includes("navy-950");
+            const isDark = prog.color.includes("navy-900");
             return (
               <article
                 key={prog.title}

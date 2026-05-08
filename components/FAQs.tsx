@@ -55,7 +55,7 @@ function FAQItem({ q, a, index }: { q: string; a: string; index: number }) {
         </span>
         <span
           className={`flex-shrink-0 w-7 h-7 rounded-full border-2 border-navy-200 flex items-center justify-center transition-all duration-200 ${
-            open ? "bg-navy-950 border-navy-950 rotate-45" : ""
+            open ? "bg-navy-600 border-navy-600 rotate-45" : ""
           }`}
           aria-hidden="true"
         >
@@ -128,7 +128,7 @@ export default function FAQs() {
             </p>
             <a
               href="#contact"
-              className="inline-flex items-center gap-2 bg-navy-950 hover:bg-navy-800 text-white px-5 py-2.5 rounded-full text-sm font-medium transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-navy-500 focus:ring-offset-2"
+              className="inline-flex items-center gap-2 bg-navy-600 hover:bg-navy-700 text-white px-5 py-2.5 rounded-full text-sm font-medium transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-navy-500 focus:ring-offset-2"
               aria-label="Go to contact section to ask a question"
             >
               Ask a Question →

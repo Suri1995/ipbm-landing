@@ -125,7 +125,7 @@ export default function SideNavbar() {
                 title={item.label}
                 className={`group flex items-center gap-0 overflow-hidden rounded-xl transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-navy-500 ${
                   isActive
-                    ? "bg-navy-950 text-white w-36 px-3 py-2.5"
+                    ? "bg-navy-600 text-white w-36 px-3 py-2.5"
                     : "text-navy-400 hover:bg-navy-50 hover:text-navy-800 w-10 h-10 justify-center"
                 }`}
               >
@@ -151,7 +151,7 @@ export default function SideNavbar() {
           onClick={() => setMobileOpen((prev) => !prev)}
           aria-label={mobileOpen ? "Close navigation menu" : "Open navigation menu"}
           aria-expanded={mobileOpen}
-          className="w-12 h-12 bg-navy-950 text-white rounded-full shadow-lg flex items-center justify-center focus:outline-none focus:ring-2 focus:ring-navy-500 focus:ring-offset-2"
+          className="w-12 h-12 bg-navy-600 text-white rounded-full shadow-lg flex items-center justify-center focus:outline-none focus:ring-2 focus:ring-navy-500 focus:ring-offset-2"
         >
           {mobileOpen ? (
             <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
@@ -180,7 +180,7 @@ export default function SideNavbar() {
                   aria-current={isActive ? "true" : undefined}
                   className={`flex items-center gap-3 px-4 py-2.5 rounded-xl text-sm font-medium transition-all duration-150 focus:outline-none focus:ring-2 focus:ring-navy-500 text-left ${
                     isActive
-                      ? "bg-navy-950 text-white"
+                      ? "bg-navy-600 text-white"
                       : "text-navy-600 hover:bg-navy-50"
                   }`}
                 >

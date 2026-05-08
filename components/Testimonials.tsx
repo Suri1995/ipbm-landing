@@ -88,7 +88,7 @@ export default function Testimonials() {
       id="testimonials"
       ref={ref}
       aria-labelledby="testimonials-heading"
-      className="py-20 sm:py-28 bg-navy-950 px-4 sm:px-6"
+      className="py-20 sm:py-28 bg-navy-900 px-4 sm:px-6"
     >
       <div className="max-w-7xl mx-auto pl-0 md:pl-20 xl:pl-24">
         {/* Header */}
@@ -135,7 +135,7 @@ export default function Testimonials() {
 
               <div className="flex items-center gap-3 pt-4 border-t border-white/10">
                 <div
-                  className="w-10 h-10 rounded-full bg-gradient-to-br from-gold-400 to-gold-600 flex items-center justify-center text-navy-950 font-display font-bold text-sm flex-shrink-0"
+                  className="w-10 h-10 rounded-full bg-gradient-to-br from-gold-400 to-gold-600 flex items-center justify-center text-white font-display font-bold text-sm flex-shrink-0"
                   aria-hidden="true"
                 >
                   {t.initials}

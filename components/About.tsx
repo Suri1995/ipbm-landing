@@ -84,7 +84,7 @@ export default function About() {
               {["AICTE Approved", "ISO 9001:2015", "NAAC A+"].map((badge) => (
                 <span
                   key={badge}
-                  className="bg-navy-950 text-gold-400 px-4 py-1.5 rounded-full text-xs font-semibold tracking-wide border border-navy-800"
+                  className="bg-navy-600 text-white px-4 py-1.5 rounded-full text-xs font-semibold tracking-wide border border-navy-500"
                 >
                   {badge}
                 </span>

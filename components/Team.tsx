@@ -113,8 +113,8 @@ export default function Team() {
                 <div
                   className={`w-14 h-14 rounded-2xl flex items-center justify-center text-lg font-display font-bold flex-shrink-0 ${
                     member.color === "navy"
-                      ? "bg-navy-950 text-gold-400"
-                      : "bg-gold-500 text-navy-950"
+                      ? "bg-navy-600 text-white"
+                      : "bg-gold-500 text-white"
                   }`}
                   aria-hidden="true"
                 >
