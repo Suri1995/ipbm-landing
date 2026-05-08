@@ -64,7 +64,7 @@ export default function About() {
       aria-labelledby="about-heading"
       className="py-16 sm:py-20 lg:py-28 bg-cream px-4 sm:px-6"
     >
-      <div className="max-w-7xl mx-auto pl-0 md:pl-20 xl:pl-24">
+      <div className="max-w-7xl mx-auto">
         <div className="grid lg:grid-cols-2 gap-10 lg:gap-16 xl:gap-20 items-start">
           {/* Left text */}
           <div

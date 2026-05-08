@@ -115,7 +115,7 @@ export default function FAQs() {
       aria-labelledby="faqs-heading"
       className="py-16 sm:py-20 lg:py-28 bg-cream px-4 sm:px-6"
     >
-      <div className="max-w-7xl mx-auto pl-0 md:pl-20 xl:pl-24">
+      <div className="max-w-7xl mx-auto">
         <div className="grid lg:grid-cols-5 gap-8 lg:gap-12 xl:gap-16">
           {/* Left label */}
           <div

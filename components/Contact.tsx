@@ -90,7 +90,7 @@ export default function Contact() {
       aria-labelledby="contact-heading"
       className="py-16 sm:py-20 lg:py-28 bg-navy-900 px-4 sm:px-6"
     >
-      <div className="max-w-7xl mx-auto pl-0 md:pl-20 xl:pl-24">
+      <div className="max-w-7xl mx-auto">
         <div
           className={`text-center mb-10 sm:mb-14 lg:mb-16 transition-all duration-700 ${
             visible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"

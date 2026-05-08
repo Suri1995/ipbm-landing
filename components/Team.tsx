@@ -72,7 +72,7 @@ export default function Team() {
       aria-labelledby="team-heading"
       className="py-16 sm:py-20 lg:py-28 bg-cream px-4 sm:px-6"
     >
-      <div className="max-w-7xl mx-auto pl-0 md:pl-20 xl:pl-24">
+      <div className="max-w-7xl mx-auto">
         {/* Header */}
         <div
           className={`text-center mb-10 sm:mb-14 lg:mb-16 transition-all duration-700 ${
