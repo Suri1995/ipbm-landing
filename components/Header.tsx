@@ -20,29 +20,29 @@ export default function Header() {
       }`}
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex items-center justify-between h-16 sm:h-20">
+        <div className="flex items-center justify-between h-14 sm:h-16 lg:h-20">
           {/* Logo */}
           <a
             href="/"
             aria-label="Institute of Practical Business Management – Home"
-            className="flex items-center gap-3 group"
+            className="flex items-center gap-2 sm:gap-3 group"
           >
             {/* Emblem */}
             <div
-              className="relative w-10 h-10 sm:w-12 sm:h-12 flex-shrink-0"
+              className="relative w-8 h-8 sm:w-10 sm:h-10 lg:w-12 lg:h-12 flex-shrink-0"
               aria-hidden="true"
             >
-              <div className="absolute inset-0 bg-navy-900 rounded-lg rotate-3 group-hover:rotate-6 transition-transform duration-300" />
-              <div className="absolute inset-0 bg-gradient-to-br from-gold-400 to-gold-600 rounded-lg flex items-center justify-center font-display font-bold text-navy-950 text-lg sm:text-xl">
+              <div className="absolute inset-0 bg-navy-600 rounded-lg rotate-3 group-hover:rotate-6 transition-transform duration-300" />
+              <div className="absolute inset-0 bg-gradient-to-br from-gold-400 to-gold-600 rounded-lg flex items-center justify-center font-display font-bold text-white text-sm sm:text-base lg:text-xl">
                 IP
               </div>
             </div>
             {/* Text */}
             <div className="flex flex-col leading-tight">
-              <span className="font-display font-bold text-navy-950 text-sm sm:text-base tracking-tight">
+              <span className="font-display font-bold text-navy-900 text-xs sm:text-sm lg:text-base tracking-tight">
                 Institute of Practical
               </span>
-              <span className="font-body text-xs sm:text-sm font-medium text-gold-600 tracking-widest uppercase">
+              <span className="font-body text-[10px] sm:text-xs font-medium text-gold-600 tracking-widest uppercase">
                 Business Management
               </span>
             </div>
@@ -52,10 +52,10 @@ export default function Header() {
           <a
             href="tel:+919876543210"
             aria-label="Call us at +91 98765 43210"
-            className="group flex items-center gap-2 bg-navy-900 hover:bg-navy-700 text-white px-4 py-2 sm:px-5 sm:py-2.5 rounded-full text-sm font-medium transition-all duration-200 hover:shadow-navy-glow focus:outline-none focus:ring-2 focus:ring-navy-500 focus:ring-offset-2"
+            className="group flex items-center gap-1.5 sm:gap-2 bg-navy-600 hover:bg-navy-700 text-white px-3 py-1.5 sm:px-4 sm:py-2 lg:px-5 lg:py-2.5 rounded-full text-xs sm:text-sm font-medium transition-all duration-200 hover:shadow-navy-glow focus:outline-none focus-visible:ring-2 focus-visible:ring-navy-500 focus-visible:ring-offset-2"
           >
             <svg
-              className="w-4 h-4 group-hover:animate-bounce"
+              className="w-3.5 h-3.5 sm:w-4 sm:h-4 group-hover:animate-bounce"
               fill="none"
               stroke="currentColor"
               viewBox="0 0 24 24"

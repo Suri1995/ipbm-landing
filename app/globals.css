@@ -1,31 +1,52 @@
-@import url("https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;0,800;1,400;1,600&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,300;1,9..40,400&display=swap");
+@import url("https://fonts.cdnfonts.com/css/inlander?display=swap");
+@import url("https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,600&display=swap");
 
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
 :root {
-  --font-playfair: "Playfair Display", Georgia, serif;
+  --font-inlander: "Inlander", Georgia, serif;
   --font-dm-sans: "DM Sans", system-ui, sans-serif;
 }
 
-* {
-  box-sizing: border-box;
-  margin: 0;
-  padding: 0;
-}
+@layer base {
+  * {
+    box-sizing: border-box;
+  }
 
-html {
-  scroll-behavior: smooth;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-}
+  html {
+    scroll-behavior: smooth;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-size-adjust: 100%;
+  }
 
-body {
-  font-family: var(--font-dm-sans);
-  background-color: #faf8f3;
-  color: #0a0c1e;
-  overflow-x: hidden;
+  body {
+    font-family: var(--font-dm-sans);
+    background-color: #faf8f3;
+    color: #0a0c1e;
+    overflow-x: hidden;
+    line-height: 1.5;
+  }
+
+  /* Focus styles for accessibility */
+  :focus-visible {
+    outline: 2px solid #005FA6;
+    outline-offset: 2px;
+  }
+
+  /* Reduce motion for accessibility */
+  @media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+      scroll-behavior: auto !important;
+    }
+  }
 }
 
 /* Custom scrollbar */
@@ -36,7 +57,7 @@ body {
   background: #eee;
 }
 ::-webkit-scrollbar-thumb {
-  background: #1420e1;
+  background: #005FA6;
   border-radius: 3px;
 }
 
@@ -49,9 +70,7 @@ section[id] {
   .text-balance {
     text-wrap: balance;
   }
-  .animate-delay-100 { animation-delay: 100ms; }
-  .animate-delay-200 { animation-delay: 200ms; }
-  .animate-delay-300 { animation-delay: 300ms; }
-  .animate-delay-400 { animation-delay: 400ms; }
-  .animate-delay-500 { animation-delay: 500ms; }
+  .text-pretty {
+    text-wrap: pretty;
+  }
 }
