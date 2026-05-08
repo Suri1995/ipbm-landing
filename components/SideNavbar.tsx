@@ -1,5 +1,5 @@
 "use client";
-import { useState, useEffect, useCallback } from "react";
+import { useState, useEffect, useCallback, memo } from "react";
 
 const navItems = [
   {
@@ -58,6 +58,67 @@ const navItems = [
   },
 ];
 
+const NavButton = memo(function NavButton({ 
+  item, 
+  isActive, 
+  onClick 
+}: { 
+  item: typeof navItems[0]; 
+  isActive: boolean; 
+  onClick: () => void;
+}) {
+  return (
+    <button
+      onClick={onClick}
+      aria-label={`Navigate to ${item.label} section`}
+      aria-current={isActive ? "true" : undefined}
+      title={item.label}
+      className={`group flex items-center gap-0 overflow-hidden rounded-xl transition-all duration-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-navy-500 ${
+        isActive
+          ? "bg-navy-600 text-white w-32 lg:w-36 px-3 py-2.5"
+          : "text-navy-400 hover:bg-navy-50 hover:text-navy-800 w-10 h-10 justify-center"
+      }`}
+    >
+      <span className={`flex-shrink-0 ${isActive ? "mr-2" : ""}`}>
+        {item.icon}
+      </span>
+      <span
+        className={`text-sm font-medium whitespace-nowrap transition-all duration-200 ${
+          isActive ? "opacity-100 max-w-xs" : "opacity-0 max-w-0"
+        }`}
+      >
+        {item.label}
+      </span>
+    </button>
+  );
+});
+
+const MobileNavButton = memo(function MobileNavButton({ 
+  item, 
+  isActive, 
+  onClick 
+}: { 
+  item: typeof navItems[0]; 
+  isActive: boolean; 
+  onClick: () => void;
+}) {
+  return (
+    <button
+      onClick={onClick}
+      aria-label={`Navigate to ${item.label} section`}
+      aria-current={isActive ? "true" : undefined}
+      className={`flex items-center gap-3 px-4 py-2.5 rounded-xl text-sm font-medium transition-all duration-150 focus:outline-none focus-visible:ring-2 focus-visible:ring-navy-500 text-left w-full ${
+        isActive
+          ? "bg-navy-600 text-white"
+          : "text-navy-600 hover:bg-navy-50"
+      }`}
+    >
+      {item.icon}
+      {item.label}
+    </button>
+  );
+});
+
 export default function SideNavbar() {
   const [activeSection, setActiveSection] = useState("");
   const [showNav, setShowNav] = useState(false);
@@ -102,6 +163,32 @@ export default function SideNavbar() {
     };
   }, []);
 
+  // Close mobile menu on escape key
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === "Escape" && mobileOpen) {
+        setMobileOpen(false);
+      }
+    };
+    document.addEventListener("keydown", handleKeyDown);
+    return () => document.removeEventListener("keydown", handleKeyDown);
+  }, [mobileOpen]);
+
+  // Close mobile menu on click outside
+  useEffect(() => {
+    if (!mobileOpen) return;
+    
+    const handleClickOutside = (e: MouseEvent) => {
+      const target = e.target as Element;
+      if (!target.closest('[data-mobile-nav]')) {
+        setMobileOpen(false);
+      }
+    };
+    
+    document.addEventListener("click", handleClickOutside);
+    return () => document.removeEventListener("click", handleClickOutside);
+  }, [mobileOpen]);
+
   if (!showNav) return null;
 
   return (
@@ -109,49 +196,29 @@ export default function SideNavbar() {
       {/* Desktop Side Navbar */}
       <nav
         aria-label="Page sections navigation"
-        className={`fixed left-4 xl:left-6 top-1/2 -translate-y-1/2 z-40 hidden md:flex flex-col gap-1 transition-all duration-500 ${
+        className={`fixed left-3 lg:left-4 xl:left-6 top-1/2 -translate-y-1/2 z-40 hidden md:flex flex-col gap-1 transition-all duration-500 ${
           showNav ? "opacity-100 translate-x-0" : "opacity-0 -translate-x-4"
         }`}
       >
-        <div className="bg-white border border-navy-100 rounded-2xl shadow-card p-2 flex flex-col gap-1">
-          {navItems.map((item) => {
-            const isActive = activeSection === item.id;
-            return (
-              <button
-                key={item.id}
-                onClick={() => scrollToSection(item.id)}
-                aria-label={`Navigate to ${item.label} section`}
-                aria-current={isActive ? "true" : undefined}
-                title={item.label}
-                className={`group flex items-center gap-0 overflow-hidden rounded-xl transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-navy-500 ${
-                  isActive
-                    ? "bg-navy-600 text-white w-36 px-3 py-2.5"
-                    : "text-navy-400 hover:bg-navy-50 hover:text-navy-800 w-10 h-10 justify-center"
-                }`}
-              >
-                <span className={`flex-shrink-0 ${isActive ? "mr-2" : ""}`}>
-                  {item.icon}
-                </span>
-                <span
-                  className={`text-sm font-medium whitespace-nowrap transition-all duration-200 ${
-                    isActive ? "opacity-100 max-w-xs" : "opacity-0 max-w-0"
-                  }`}
-                >
-                  {item.label}
-                </span>
-              </button>
-            );
-          })}
+        <div className="bg-white border border-navy-100 rounded-2xl shadow-card p-1.5 lg:p-2 flex flex-col gap-1">
+          {navItems.map((item) => (
+            <NavButton
+              key={item.id}
+              item={item}
+              isActive={activeSection === item.id}
+              onClick={() => scrollToSection(item.id)}
+            />
+          ))}
         </div>
       </nav>
 
       {/* Mobile FAB */}
-      <div className="fixed bottom-6 right-4 z-50 md:hidden">
+      <div className="fixed bottom-5 right-4 z-50 md:hidden" data-mobile-nav>
         <button
           onClick={() => setMobileOpen((prev) => !prev)}
           aria-label={mobileOpen ? "Close navigation menu" : "Open navigation menu"}
           aria-expanded={mobileOpen}
-          className="w-12 h-12 bg-navy-600 text-white rounded-full shadow-lg flex items-center justify-center focus:outline-none focus:ring-2 focus:ring-navy-500 focus:ring-offset-2"
+          className="w-11 h-11 sm:w-12 sm:h-12 bg-navy-600 text-white rounded-full shadow-lg flex items-center justify-center focus:outline-none focus-visible:ring-2 focus-visible:ring-navy-500 focus-visible:ring-offset-2"
         >
           {mobileOpen ? (
             <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
@@ -168,27 +235,16 @@ export default function SideNavbar() {
         {mobileOpen && (
           <nav
             aria-label="Mobile page sections navigation"
-            className="absolute bottom-14 right-0 bg-white border border-navy-100 rounded-2xl shadow-card-hover p-2 flex flex-col gap-1 min-w-[160px]"
+            className="absolute bottom-14 right-0 bg-white border border-navy-100 rounded-2xl shadow-card-hover p-1.5 sm:p-2 flex flex-col gap-1 min-w-[150px] sm:min-w-[160px]"
           >
-            {navItems.map((item) => {
-              const isActive = activeSection === item.id;
-              return (
-                <button
-                  key={item.id}
-                  onClick={() => scrollToSection(item.id)}
-                  aria-label={`Navigate to ${item.label} section`}
-                  aria-current={isActive ? "true" : undefined}
-                  className={`flex items-center gap-3 px-4 py-2.5 rounded-xl text-sm font-medium transition-all duration-150 focus:outline-none focus:ring-2 focus:ring-navy-500 text-left ${
-                    isActive
-                      ? "bg-navy-600 text-white"
-                      : "text-navy-600 hover:bg-navy-50"
-                  }`}
-                >
-                  {item.icon}
-                  {item.label}
-                </button>
-              );
-            })}
+            {navItems.map((item) => (
+              <MobileNavButton
+                key={item.id}
+                item={item}
+                isActive={activeSection === item.id}
+                onClick={() => scrollToSection(item.id)}
+              />
+            ))}
           </nav>
         )}
       </div>

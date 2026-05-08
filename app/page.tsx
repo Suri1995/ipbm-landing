@@ -14,8 +14,8 @@ export default function Home() {
     <>
       {/* Skip to main content for accessibility */}
       <a
-        href="#about"
-        className="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 z-[100] bg-gold-500 text-navy-950 px-4 py-2 rounded font-semibold text-sm"
+        href="#main-content"
+        className="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 z-[100] bg-gold-500 text-white px-4 py-2 rounded-lg font-semibold text-sm shadow-lg"
       >
         Skip to main content
       </a>

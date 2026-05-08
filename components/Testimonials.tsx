@@ -88,12 +88,12 @@ export default function Testimonials() {
       id="testimonials"
       ref={ref}
       aria-labelledby="testimonials-heading"
-      className="py-20 sm:py-28 bg-navy-900 px-4 sm:px-6"
+      className="py-16 sm:py-20 lg:py-28 bg-navy-900 px-4 sm:px-6"
     >
       <div className="max-w-7xl mx-auto pl-0 md:pl-20 xl:pl-24">
         {/* Header */}
         <div
-          className={`text-center mb-12 sm:mb-16 transition-all duration-700 ${
+          className={`text-center mb-10 sm:mb-14 lg:mb-16 transition-all duration-700 ${
             visible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
           }`}
         >
@@ -102,47 +102,46 @@ export default function Testimonials() {
           </p>
           <h2
             id="testimonials-heading"
-            className="font-display text-3xl sm:text-4xl font-bold text-white mb-4 text-balance"
+            className="font-display text-2xl sm:text-3xl lg:text-4xl font-bold text-white mb-4 text-balance"
           >
             What Our Graduates{" "}
-            <em className="not-italic text-gold-400">Actually Say</em>
+            <span className="text-gold-400">Actually Say</span>
           </h2>
-          <p className="text-navy-300 text-base sm:text-lg max-w-2xl mx-auto">
-            Over 12,000 alumni across India and the world — here's what
+          <p className="text-navy-300 text-sm sm:text-base lg:text-lg max-w-2xl mx-auto text-pretty">
+            Over 12,000 alumni across India and the world — here&apos;s what
             some of them have shared.
           </p>
         </div>
 
-        {/* Masonry-style grid */}
-        <div className="columns-1 sm:columns-2 lg:columns-3 gap-5 sm:gap-6 space-y-5 sm:space-y-6">
+        {/* Grid layout instead of masonry for better performance */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-5 lg:gap-6">
           {testimonials.map((t, i) => (
             <article
               key={t.name}
               aria-label={`Testimonial from ${t.name}`}
-              className={`break-inside-avoid bg-white/6 backdrop-blur-sm border border-white/10 rounded-2xl p-6 hover:border-gold-500/30 transition-all duration-300 ${
-                visible
-                  ? `opacity-100 translate-y-0 [transition-delay:${i * 70}ms]`
-                  : "opacity-0 translate-y-8"
+              className={`bg-white/6 backdrop-blur-sm border border-white/10 rounded-2xl p-5 sm:p-6 hover:border-gold-500/30 transition-all duration-300 flex flex-col ${
+                visible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
               }`}
+              style={{ transitionDelay: visible ? `${i * 70}ms` : "0ms" }}
             >
               <StarRating count={t.rating} />
 
-              <blockquote className="mt-4 mb-5">
-                <p className="text-navy-100 text-sm leading-relaxed">
+              <blockquote className="mt-4 mb-5 flex-1">
+                <p className="text-navy-100 text-xs sm:text-sm leading-relaxed">
                   &ldquo;{t.quote}&rdquo;
                 </p>
               </blockquote>
 
               <div className="flex items-center gap-3 pt-4 border-t border-white/10">
                 <div
-                  className="w-10 h-10 rounded-full bg-gradient-to-br from-gold-400 to-gold-600 flex items-center justify-center text-white font-display font-bold text-sm flex-shrink-0"
+                  className="w-9 h-9 sm:w-10 sm:h-10 rounded-full bg-gradient-to-br from-gold-400 to-gold-600 flex items-center justify-center text-white font-display font-bold text-xs sm:text-sm flex-shrink-0"
                   aria-hidden="true"
                 >
                   {t.initials}
                 </div>
-                <div>
-                  <p className="text-white text-sm font-semibold">{t.name}</p>
-                  <p className="text-navy-400 text-xs">
+                <div className="min-w-0">
+                  <p className="text-white text-xs sm:text-sm font-semibold truncate">{t.name}</p>
+                  <p className="text-navy-400 text-xs truncate">
                     {t.role} · {t.batch}
                   </p>
                 </div>

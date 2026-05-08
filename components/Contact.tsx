@@ -1,5 +1,5 @@
 "use client";
-import { useEffect, useRef, useState, FormEvent } from "react";
+import { useEffect, useRef, useState, FormEvent, useCallback } from "react";
 
 const contactDetails = [
   {
@@ -43,6 +43,13 @@ const contactDetails = [
   },
 ];
 
+const socialLinks = [
+  { name: "LinkedIn", abbr: "Li" },
+  { name: "Instagram", abbr: "Ig" },
+  { name: "YouTube", abbr: "Yt" },
+  { name: "Facebook", abbr: "Fb" },
+];
+
 export default function Contact() {
   const ref = useRef<HTMLElement>(null);
   const [visible, setVisible] = useState(false);
@@ -58,9 +65,10 @@ export default function Contact() {
     return () => observer.disconnect();
   }, []);
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
-    setForm((prev) => ({ ...prev, [e.target.name]: e.target.value }));
-  };
+  const handleChange = useCallback((e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
+    const { name, value } = e.target;
+    setForm((prev) => ({ ...prev, [name]: value }));
+  }, []);
 
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
@@ -70,16 +78,21 @@ export default function Contact() {
     setStatus("sent");
   };
 
+  const resetForm = useCallback(() => {
+    setStatus("idle");
+    setForm({ name: "", email: "", phone: "", program: "", message: "" });
+  }, []);
+
   return (
     <section
       id="contact"
       ref={ref}
       aria-labelledby="contact-heading"
-      className="py-20 sm:py-28 bg-navy-900 px-4 sm:px-6"
+      className="py-16 sm:py-20 lg:py-28 bg-navy-900 px-4 sm:px-6"
     >
       <div className="max-w-7xl mx-auto pl-0 md:pl-20 xl:pl-24">
         <div
-          className={`text-center mb-12 sm:mb-16 transition-all duration-700 ${
+          className={`text-center mb-10 sm:mb-14 lg:mb-16 transition-all duration-700 ${
             visible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
           }`}
         >
@@ -88,42 +101,42 @@ export default function Contact() {
           </p>
           <h2
             id="contact-heading"
-            className="font-display text-3xl sm:text-4xl font-bold text-white mb-4 text-balance"
+            className="font-display text-2xl sm:text-3xl lg:text-4xl font-bold text-white mb-4 text-balance"
           >
             Start Your Journey{" "}
-            <em className="not-italic text-gold-400">With IPBM</em>
+            <span className="text-gold-400">With IPBM</span>
           </h2>
-          <p className="text-navy-300 text-base sm:text-lg max-w-2xl mx-auto">
+          <p className="text-navy-300 text-sm sm:text-base lg:text-lg max-w-2xl mx-auto text-pretty">
             Fill in the form below and our admissions counsellor will get in
             touch within 24 hours.
           </p>
         </div>
 
-        <div className="grid lg:grid-cols-5 gap-8 lg:gap-12">
+        <div className="grid lg:grid-cols-5 gap-6 lg:gap-10 xl:gap-12">
           {/* Contact info */}
           <div
-            className={`lg:col-span-2 flex flex-col gap-6 transition-all duration-700 delay-100 ${
+            className={`lg:col-span-2 flex flex-col gap-5 sm:gap-6 transition-all duration-700 delay-100 ${
               visible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
             }`}
           >
             {contactDetails.map((item) => (
-              <div key={item.label} className="flex items-start gap-4">
-                <div className="w-10 h-10 bg-gold-500/15 border border-gold-500/30 rounded-xl flex items-center justify-center text-gold-400 flex-shrink-0">
+              <div key={item.label} className="flex items-start gap-3 sm:gap-4">
+                <div className="w-9 h-9 sm:w-10 sm:h-10 bg-gold-500/15 border border-gold-500/30 rounded-xl flex items-center justify-center text-gold-400 flex-shrink-0">
                   {item.icon}
                 </div>
-                <div>
+                <div className="min-w-0">
                   <p className="text-navy-400 text-xs uppercase tracking-wide font-medium mb-0.5">
                     {item.label}
                   </p>
                   {item.href ? (
                     <a
                       href={item.href}
-                      className="text-white text-sm hover:text-gold-400 transition-colors focus:outline-none focus:underline"
+                      className="text-white text-sm hover:text-gold-400 transition-colors focus:outline-none focus:underline break-words"
                     >
                       {item.value}
                     </a>
                   ) : (
-                    <p className="text-white text-sm">{item.value}</p>
+                    <p className="text-white text-sm break-words">{item.value}</p>
                   )}
                 </div>
               </div>
@@ -134,16 +147,16 @@ export default function Contact() {
               <p className="text-navy-400 text-xs uppercase tracking-wide font-medium mb-3">
                 Follow Us
               </p>
-              <div className="flex gap-3" role="list" aria-label="Social media links">
-                {["LinkedIn", "Instagram", "YouTube", "Facebook"].map((s) => (
+              <div className="flex flex-wrap gap-2 sm:gap-3" role="list" aria-label="Social media links">
+                {socialLinks.map((s) => (
                   <a
-                    key={s}
+                    key={s.name}
                     href="#"
                     role="listitem"
-                    aria-label={`Follow IPBM on ${s}`}
+                    aria-label={`Follow IPBM on ${s.name}`}
                     className="w-9 h-9 bg-white/8 border border-white/15 rounded-xl flex items-center justify-center text-navy-300 hover:bg-gold-500 hover:text-white hover:border-gold-500 transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-gold-400 focus:ring-offset-2 focus:ring-offset-navy-900 text-xs font-bold"
                   >
-                    {s[0]}
+                    {s.abbr}
                   </a>
                 ))}
               </div>
@@ -152,26 +165,26 @@ export default function Contact() {
 
           {/* Form */}
           <div
-            className={`lg:col-span-3 bg-white/5 backdrop-blur-sm border border-white/10 rounded-2xl p-6 sm:p-8 transition-all duration-700 delay-200 ${
+            className={`lg:col-span-3 bg-white/5 backdrop-blur-sm border border-white/10 rounded-2xl p-5 sm:p-6 lg:p-8 transition-all duration-700 delay-200 ${
               visible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
             }`}
           >
             {status === "sent" ? (
-              <div className="flex flex-col items-center justify-center h-full py-12 text-center">
-                <div className="w-16 h-16 bg-gold-500 rounded-full flex items-center justify-center mb-4" aria-hidden="true">
-                  <svg className="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <div className="flex flex-col items-center justify-center h-full py-8 sm:py-12 text-center">
+                <div className="w-14 h-14 sm:w-16 sm:h-16 bg-gold-500 rounded-full flex items-center justify-center mb-4" aria-hidden="true">
+                  <svg className="w-7 h-7 sm:w-8 sm:h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M5 13l4 4L19 7" />
                   </svg>
                 </div>
-                <h3 className="font-display font-bold text-white text-2xl mb-2">
+                <h3 className="font-display font-bold text-white text-xl sm:text-2xl mb-2">
                   Enquiry Received!
                 </h3>
                 <p className="text-navy-300 text-sm max-w-sm">
                   Thank you, <strong className="text-white">{form.name}</strong>. Our admissions team will contact you within 24 hours.
                 </p>
                 <button
-                  onClick={() => { setStatus("idle"); setForm({ name: "", email: "", phone: "", program: "", message: "" }); }}
-                  className="mt-6 text-gold-400 text-sm hover:text-gold-300 underline focus:outline-none"
+                  onClick={resetForm}
+                  className="mt-5 sm:mt-6 text-gold-400 text-sm hover:text-gold-300 underline focus:outline-none"
                 >
                   Submit another enquiry
                 </button>
@@ -239,7 +252,7 @@ export default function Contact() {
                       name="program"
                       value={form.program}
                       onChange={handleChange}
-                      className="w-full bg-navy-900 border border-white/15 text-white rounded-xl px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-gold-400 focus:border-transparent transition-all appearance-none"
+                      className="w-full bg-navy-800 border border-white/15 text-white rounded-xl px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-gold-400 focus:border-transparent transition-all appearance-none cursor-pointer"
                     >
                       <option value="" className="text-navy-400">Select a program</option>
                       <option value="mba">MBA in Business Management</option>
@@ -249,7 +262,7 @@ export default function Contact() {
                     </select>
                   </div>
                 </div>
-                <div className="mb-6">
+                <div className="mb-5 sm:mb-6">
                   <label htmlFor="message" className="block text-navy-200 text-sm font-medium mb-1.5">
                     Message / Questions
                   </label>
@@ -267,7 +280,7 @@ export default function Contact() {
                   type="submit"
                   disabled={status === "sending"}
                   aria-disabled={status === "sending"}
-                  className="w-full bg-gold-500 hover:bg-gold-400 disabled:opacity-70 text-white font-semibold py-3.5 rounded-full text-sm transition-all duration-200 hover:shadow-gold-glow focus:outline-none focus:ring-2 focus:ring-gold-400 focus:ring-offset-2 focus:ring-offset-navy-900 flex items-center justify-center gap-2"
+                  className="w-full bg-gold-500 hover:bg-gold-400 disabled:opacity-70 disabled:cursor-not-allowed text-white font-semibold py-3 sm:py-3.5 rounded-full text-sm transition-all duration-200 hover:shadow-gold-glow focus:outline-none focus:ring-2 focus:ring-gold-400 focus:ring-offset-2 focus:ring-offset-navy-900 flex items-center justify-center gap-2"
                 >
                   {status === "sending" ? (
                     <>
@@ -275,7 +288,7 @@ export default function Contact() {
                         <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
                         <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z" />
                       </svg>
-                      Sending…
+                      <span>Sending...</span>
                     </>
                   ) : (
                     "Submit Enquiry"

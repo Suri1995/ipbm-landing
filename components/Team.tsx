@@ -1,6 +1,5 @@
 "use client";
 import { useEffect, useRef, useState } from "react";
-import Image from "next/image";
 
 const team = [
   {
@@ -71,12 +70,12 @@ export default function Team() {
       id="team"
       ref={ref}
       aria-labelledby="team-heading"
-      className="py-20 sm:py-28 bg-cream px-4 sm:px-6"
+      className="py-16 sm:py-20 lg:py-28 bg-cream px-4 sm:px-6"
     >
       <div className="max-w-7xl mx-auto pl-0 md:pl-20 xl:pl-24">
         {/* Header */}
         <div
-          className={`text-center mb-12 sm:mb-16 transition-all duration-700 ${
+          className={`text-center mb-10 sm:mb-14 lg:mb-16 transition-all duration-700 ${
             visible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
           }`}
         >
@@ -85,33 +84,32 @@ export default function Team() {
           </p>
           <h2
             id="team-heading"
-            className="font-display text-3xl sm:text-4xl font-bold text-navy-950 mb-4 text-balance"
+            className="font-display text-2xl sm:text-3xl lg:text-4xl font-bold text-navy-900 mb-4 text-balance"
           >
             Learn From Those Who{" "}
-            <em className="not-italic text-navy-600">Have Done It</em>
+            <span className="text-navy-600">Have Done It</span>
           </h2>
-          <p className="text-navy-500 text-base sm:text-lg max-w-2xl mx-auto">
+          <p className="text-navy-500 text-sm sm:text-base lg:text-lg max-w-2xl mx-auto text-pretty">
             Our faculty are active practitioners — they bring current market
             knowledge, not just textbook theory.
           </p>
         </div>
 
         {/* Grid */}
-        <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-5 sm:gap-6">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-5 lg:gap-6">
           {team.map((member, i) => (
             <article
               key={member.name}
               aria-label={`${member.name}, ${member.role}`}
-              className={`bg-white border border-navy-100 rounded-2xl p-6 flex flex-col hover:shadow-card-hover hover:-translate-y-1 transition-all duration-300 ${
-                visible
-                  ? `opacity-100 translate-y-0 [transition-delay:${i * 80}ms]`
-                  : "opacity-0 translate-y-8"
+              className={`bg-white border border-navy-100 rounded-2xl p-5 sm:p-6 flex flex-col hover:shadow-card-hover hover:-translate-y-1 transition-all duration-300 ${
+                visible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
               }`}
+              style={{ transitionDelay: visible ? `${i * 80}ms` : "0ms" }}
             >
               {/* Avatar */}
-              <div className="flex items-center gap-4 mb-4">
+              <div className="flex items-center gap-3 sm:gap-4 mb-4">
                 <div
-                  className={`w-14 h-14 rounded-2xl flex items-center justify-center text-lg font-display font-bold flex-shrink-0 ${
+                  className={`w-12 h-12 sm:w-14 sm:h-14 rounded-2xl flex items-center justify-center text-base sm:text-lg font-display font-bold flex-shrink-0 ${
                     member.color === "navy"
                       ? "bg-navy-600 text-white"
                       : "bg-gold-500 text-white"
@@ -120,20 +118,20 @@ export default function Team() {
                 >
                   {member.initials}
                 </div>
-                <div>
-                  <h3 className="font-display font-bold text-navy-950 text-base leading-tight">
+                <div className="min-w-0">
+                  <h3 className="font-display font-bold text-navy-900 text-sm sm:text-base leading-tight truncate">
                     {member.name}
                   </h3>
-                  <p className="text-gold-600 text-xs font-semibold mt-0.5">
+                  <p className="text-gold-600 text-xs font-semibold mt-0.5 truncate">
                     {member.role}
                   </p>
                 </div>
               </div>
 
-              <p className="text-navy-400 text-xs font-medium mb-3 tracking-wide uppercase">
+              <p className="text-navy-400 text-xs font-medium mb-2 sm:mb-3 tracking-wide uppercase">
                 {member.expertise}
               </p>
-              <p className="text-navy-500 text-sm leading-relaxed flex-1">
+              <p className="text-navy-500 text-xs sm:text-sm leading-relaxed flex-1">
                 {member.bio}
               </p>
 
