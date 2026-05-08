@@ -122,6 +122,7 @@ const MobileNavButton = memo(function MobileNavButton({
 export default function SideNavbar() {
   const [activeSection, setActiveSection] = useState("");
   const [showNav, setShowNav] = useState(false);
+  const [hideForFooter, setHideForFooter] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
 
   const scrollToSection = useCallback((id: string) => {
@@ -134,6 +135,7 @@ export default function SideNavbar() {
 
   useEffect(() => {
     const heroEl = document.getElementById("hero");
+    const footerEl = document.querySelector("footer");
 
     // Show nav once hero scrolls out of view
     const heroObserver = new IntersectionObserver(
@@ -141,6 +143,13 @@ export default function SideNavbar() {
       { threshold: 0.1 }
     );
     if (heroEl) heroObserver.observe(heroEl);
+
+    // Hide nav when footer comes into view
+    const footerObserver = new IntersectionObserver(
+      ([entry]) => setHideForFooter(entry.isIntersecting),
+      { threshold: 0.15, rootMargin: "0px 0px 0px 0px" }
+    );
+    if (footerEl) footerObserver.observe(footerEl);
 
     // Track active section
     const sectionObserver = new IntersectionObserver(
@@ -159,6 +168,7 @@ export default function SideNavbar() {
 
     return () => {
       heroObserver.disconnect();
+      footerObserver.disconnect();
       sectionObserver.disconnect();
     };
   }, []);
@@ -189,7 +199,8 @@ export default function SideNavbar() {
     return () => document.removeEventListener("click", handleClickOutside);
   }, [mobileOpen]);
 
-  if (!showNav) return null;
+  // Don't render if we're in hero or footer area
+  if (!showNav || hideForFooter) return null;
 
   return (
     <>
@@ -197,7 +208,7 @@ export default function SideNavbar() {
       <nav
         aria-label="Page sections navigation"
         className={`fixed left-3 lg:left-4 xl:left-6 top-1/2 -translate-y-1/2 z-40 hidden md:flex flex-col gap-1 transition-all duration-500 ${
-          showNav ? "opacity-100 translate-x-0" : "opacity-0 -translate-x-4"
+          showNav && !hideForFooter ? "opacity-100 translate-x-0" : "opacity-0 -translate-x-4 pointer-events-none"
         }`}
       >
         <div className="bg-white border border-navy-100 rounded-2xl shadow-card p-1.5 lg:p-2 flex flex-col gap-1">
@@ -212,13 +223,13 @@ export default function SideNavbar() {
         </div>
       </nav>
 
-      {/* Mobile FAB */}
-      <div className="fixed bottom-5 right-4 z-50 md:hidden" data-mobile-nav>
+      {/* Mobile FAB - positioned in bottom right, away from content */}
+      <div className="fixed bottom-6 right-5 z-50 md:hidden" data-mobile-nav>
         <button
           onClick={() => setMobileOpen((prev) => !prev)}
           aria-label={mobileOpen ? "Close navigation menu" : "Open navigation menu"}
           aria-expanded={mobileOpen}
-          className="w-11 h-11 sm:w-12 sm:h-12 bg-navy-600 text-white rounded-full shadow-lg flex items-center justify-center focus:outline-none focus-visible:ring-2 focus-visible:ring-navy-500 focus-visible:ring-offset-2"
+          className="w-12 h-12 bg-navy-600 text-white rounded-full shadow-lg flex items-center justify-center focus:outline-none focus-visible:ring-2 focus-visible:ring-navy-500 focus-visible:ring-offset-2 active:scale-95 transition-transform"
         >
           {mobileOpen ? (
             <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
@@ -231,11 +242,11 @@ export default function SideNavbar() {
           )}
         </button>
 
-        {/* Mobile menu panel */}
+        {/* Mobile menu panel - positioned above the FAB button */}
         {mobileOpen && (
           <nav
             aria-label="Mobile page sections navigation"
-            className="absolute bottom-14 right-0 bg-white border border-navy-100 rounded-2xl shadow-card-hover p-1.5 sm:p-2 flex flex-col gap-1 min-w-[150px] sm:min-w-[160px]"
+            className="absolute bottom-16 right-0 bg-white border border-navy-100 rounded-2xl shadow-card-hover p-2 flex flex-col gap-1 min-w-[160px] max-h-[70vh] overflow-y-auto"
           >
             {navItems.map((item) => (
               <MobileNavButton
