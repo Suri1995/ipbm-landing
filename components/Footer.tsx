@@ -4,9 +4,9 @@ export default function Footer() {
   return (
     <footer
       role="contentinfo"
-      className="bg-ink border-t border-white/8 px-4 sm:px-6 py-10 sm:py-12 lg:py-16"
+      className="bg-ink border-t border-white/8 py-10 sm:py-12 lg:py-16"
     >
-      <div className="max-w-7xl mx-auto pl-0 md:pl-20 xl:pl-24">
+      <div className="max-w-7xl mx-auto px-4">
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 sm:gap-10 mb-8 sm:mb-10 lg:mb-12">
           {/* Brand column */}
           <div className="sm:col-span-2 lg:col-span-1">

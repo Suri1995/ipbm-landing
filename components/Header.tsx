@@ -1,51 +1,25 @@
 "use client";
 import { useState, useEffect } from "react";
+import Image from "next/image";
 
 export default function Header() {
-  const [scrolled, setScrolled] = useState(false);
-
-  useEffect(() => {
-    const handleScroll = () => setScrolled(window.scrollY > 20);
-    window.addEventListener("scroll", handleScroll, { passive: true });
-    return () => window.removeEventListener("scroll", handleScroll);
-  }, []);
 
   return (
     <header
       role="banner"
-      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
-        scrolled
-          ? "bg-white/95 backdrop-blur-md shadow-sm border-b border-navy-100"
-          : "bg-transparent"
-      }`}
+      className="fixed top-0 left-0 right-0 z-50 bg-white transition-all duration-300"
     >
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div className="max-w-7xl mx-auto px-4">
         <div className="flex items-center justify-between h-14 sm:h-16 lg:h-20">
           {/* Logo */}
-          <a
-            href="/"
-            aria-label="Institute of Practical Business Management – Home"
-            className="flex items-center gap-2 sm:gap-3 group"
-          >
-            {/* Emblem */}
-            <div
-              className="relative w-8 h-8 sm:w-10 sm:h-10 lg:w-12 lg:h-12 flex-shrink-0"
-              aria-hidden="true"
-            >
-              <div className="absolute inset-0 bg-navy-600 rounded-lg rotate-3 group-hover:rotate-6 transition-transform duration-300" />
-              <div className="absolute inset-0 bg-gradient-to-br from-gold-400 to-gold-600 rounded-lg flex items-center justify-center font-display font-bold text-white text-sm sm:text-base lg:text-xl">
-                IP
-              </div>
-            </div>
-            {/* Text */}
-            <div className="flex flex-col leading-tight">
-              <span className="font-display font-bold text-navy-900 text-xs sm:text-sm lg:text-base tracking-tight">
-                Institute of Practical
-              </span>
-              <span className="font-body text-[10px] sm:text-xs font-medium text-gold-600 tracking-widest uppercase">
-                Business Management
-              </span>
-            </div>
+          <a>
+            <Image
+            src="/ipbmLogo.png"
+            alt="Logo"
+            width={300}
+            height={40}
+            className="w-36 sm:w-72"
+            />
           </a>
 
           {/* Phone CTA */}
