@@ -9,7 +9,14 @@ import FAQs from "@/components/FAQs";
 import Contact from "@/components/Contact";
 import Footer from "@/components/Footer";
 
-export default function Home() {
+import { getHomePage } from "@/lib/strapi";
+
+export default async function Home() {
+  const data = await getHomePage();
+
+  const testimonialsSection =
+    data.data.testimonialsSection;
+
   return (
     <>
       {/* Skip to main content for accessibility */}
@@ -31,7 +38,11 @@ export default function Home() {
         <About />
         <Services />
         <Team />
-        <Testimonials />
+
+        <Testimonials
+          data={testimonialsSection}
+        />
+
         <FAQs />
         <Contact />
       </main>

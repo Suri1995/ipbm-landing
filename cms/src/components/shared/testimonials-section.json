@@ -1,0 +1,25 @@
+{
+  "collectionName": "components_shared_testimonials_sections",
+  "info": {
+    "displayName": "Testimonials Section",
+    "icon": "quote"
+  },
+  "options": {},
+  "attributes": {
+    "preHeading": {
+      "type": "string"
+    },
+    "heading": {
+      "type": "string"
+    },
+    "description": {
+      "type": "blocks"
+    },
+    "testimonials": {
+      "type": "component",
+      "component": "shared.testimonial",
+      "repeatable": true
+    }
+  },
+  "config": {}
+}

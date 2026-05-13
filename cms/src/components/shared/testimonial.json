@@ -1,0 +1,32 @@
+{
+  "collectionName": "components_shared_testimonials",
+  "info": {
+    "displayName": "Testimonial",
+    "icon": "quote"
+  },
+  "options": {},
+  "attributes": {
+    "name": {
+      "type": "string"
+    },
+    "role": {
+      "type": "string"
+    },
+    "batch": {
+      "type": "string"
+    },
+    "quote": {
+      "type": "blocks"
+    },
+    "rating": {
+      "type": "integer"
+    },
+    "isPioneer": {
+      "type": "boolean"
+    },
+    "initials": {
+      "type": "string"
+    }
+  },
+  "config": {}
+}

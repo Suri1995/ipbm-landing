@@ -19,6 +19,7 @@ export default function Header() {
             width={300}
             height={40}
             className="w-36 sm:w-72"
+            priority
             />
           </a>
 
