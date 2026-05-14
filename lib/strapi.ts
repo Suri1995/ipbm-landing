@@ -1,16 +1,14 @@
-const API_URL = "http://localhost:1337"
+const STRAPI_URL = process.env.NEXT_PUBLIC_STRAPI_URL;
 
 export async function getHomePage() {
   const res = await fetch(
-    `${API_URL}/api/home-page?populate[testimonialsSection][populate][testimonials]=*`,
-    {
-      cache: "no-store",
-    }
-  )
+    `${STRAPI_URL}/api/home-page?populate[testimonialsSection][populate][testimonials][populate]=*`,
+    { cache: "no-store" }
+  );
 
   if (!res.ok) {
-    throw new Error("Failed to fetch homepage data")
+    throw new Error("Failed to fetch homepage data");
   }
 
-  return res.json()
+  return res.json();
 }

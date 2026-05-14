@@ -1,4 +1,5 @@
 "use client";
+
 import { useEffect, useRef, useState, FormEvent, useCallback, useMemo } from "react";
 
 const contactDetails = [
@@ -87,7 +88,6 @@ const LiveEnquiries = () => {
   const [count, setCount] = useState(47);
   useEffect(() => {
     const interval = setInterval(() => {
-      // Randomly tick up 0–1 every 8–14s to simulate live activity
       if (Math.random() > 0.5) setCount((c) => c + 1);
     }, 10000);
     return () => clearInterval(interval);
@@ -146,7 +146,6 @@ const IntakeCountdown = () => {
             </span>
             <span className="text-navy-400 text-xs mt-0.5">{label}</span>
           </div>
-          {/* Separator dots between units */}
           {i < units.length - 1 && (
             <span
               className="text-navy-500 text-sm font-bold leading-none mb-3 select-none"
@@ -199,7 +198,7 @@ const StepDots = ({ current }: { current: number }) => (
   </div>
 );
 
-// ── Field wrapper with floating label ────────────────────────────────────
+// ── Field wrapper ────────────────────────────────────────────────────────
 const Field = ({
   id, label, required, children, hint,
 }: {
@@ -222,6 +221,22 @@ const inputCls =
 const selectCls =
   "w-full bg-navy-800 border border-white/15 text-white rounded-xl px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-gold-400 focus:border-transparent transition-all appearance-none cursor-pointer hover:border-white/25";
 
+// ── SSR-safe deterministic particles (no Math.random) ─────────────────────
+const useParticles = (n: number) =>
+  useMemo(
+    () =>
+      Array.from({ length: n }, (_, i) => ({
+        id: i,
+        w: ((i * 137.508) % 3) + 1,
+        h: ((i * 137.508) % 3) + 1,
+        left: (i * 73.137) % 100,
+        top: (i * 53.711) % 100,
+        dur: ((i * 11.317) % 10) + 8,
+        delay: (i * 7.919) % 6,
+      })),
+    [n]
+  );
+
 // ── Main component ─────────────────────────────────────────────────────────
 export default function Contact() {
   const ref = useRef<HTMLElement>(null);
@@ -234,20 +249,8 @@ export default function Contact() {
   const [errors, setErrors] = useState<Partial<typeof form>>({});
   const [touched, setTouched] = useState<Partial<Record<keyof typeof form, boolean>>>({});
 
-  // Stable particle positions
-  const particles = useMemo(
-    () =>
-      Array.from({ length: 12 }, (_, i) => ({
-        id: i,
-        w: Math.random() * 3 + 1,
-        h: Math.random() * 3 + 1,
-        left: Math.random() * 100,
-        top: Math.random() * 100,
-        dur: Math.random() * 10 + 8,
-        delay: Math.random() * 6,
-      })),
-    []
-  );
+  // ── SSR-safe deterministic particles ──
+  const particles = useParticles(12);
 
   useEffect(() => {
     const observer = new IntersectionObserver(
@@ -262,7 +265,6 @@ export default function Contact() {
     (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
       const { name, value } = e.target;
       setForm((prev) => ({ ...prev, [name]: value }));
-      // Clear error on change
       if (errors[name as keyof typeof form]) {
         setErrors((prev) => ({ ...prev, [name]: undefined }));
       }
@@ -274,7 +276,6 @@ export default function Contact() {
     setTouched((prev) => ({ ...prev, [e.target.name]: true }));
   }, []);
 
-  // Inline validation per step
   const validateStep = useCallback(
     (s: number): boolean => {
       const errs: Partial<typeof form> = {};
@@ -321,7 +322,6 @@ export default function Contact() {
     >
       {/* ── Subtle background ── */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none" aria-hidden="true">
-        {/* Dot grid */}
         <div
           className="absolute inset-0 opacity-[0.04]"
           style={{
@@ -329,10 +329,9 @@ export default function Contact() {
             backgroundSize: "40px 40px",
           }}
         />
-        {/* Orbs */}
         <div className="absolute top-0 right-1/4 w-80 h-80 bg-gold-500/5 rounded-full blur-3xl" />
         <div className="absolute bottom-0 left-1/4 w-80 h-80 bg-navy-600/20 rounded-full blur-3xl" />
-        {/* Particles */}
+        {/* Deterministic particles — SSR-safe */}
         {particles.map((p) => (
           <div
             key={p.id}
@@ -357,7 +356,6 @@ export default function Contact() {
             visible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
           }`}
         >
-          {/* Live enquiry badge */}
           <div className="inline-flex items-center gap-2 bg-gold-500/10 border border-gold-500/20 rounded-full px-4 py-1.5 mb-4">
             <span className="relative flex h-2 w-2" aria-hidden="true">
               <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-gold-400 opacity-75" />
@@ -511,7 +509,6 @@ export default function Contact() {
                   </svg>
                 </div>
 
-                {/* Confetti dots */}
                 <div className="flex gap-1.5 mb-4" aria-hidden="true">
                   {["bg-gold-400","bg-navy-300","bg-gold-600","bg-white/40","bg-gold-300"].map((c,i) => (
                     <span key={i} className={`w-2 h-2 rounded-full ${c}`} style={{ animation: `confettiPop .5s ease ${i * 80}ms both` }} />
@@ -532,7 +529,6 @@ export default function Contact() {
                   <span className="text-navy-300">{form.email}</span>.
                 </p>
 
-                {/* Next steps */}
                 <div className="w-full max-w-sm bg-white/5 border border-white/10 rounded-xl p-4 text-left mb-6">
                   <p className="text-gold-400 text-xs font-semibold uppercase tracking-wide mb-3">
                     What happens next?
@@ -670,7 +666,6 @@ export default function Contact() {
                       />
                     </Field>
 
-                    {/* Summary review */}
                     <div className="bg-white/5 border border-white/10 rounded-xl p-4" aria-label="Review your details">
                       <p className="text-navy-400 text-xs uppercase tracking-wide font-medium mb-3">Review your details</p>
                       <dl className="space-y-1.5">

@@ -2,6 +2,30 @@
 
 import { useEffect, useRef, useState } from "react";
 
+const particles = [
+  { id: 0, width: 2, height: 2, left: 5, top: 10, duration: 8, delay: 0 },
+  { id: 1, width: 3, height: 3, left: 15, top: 20, duration: 10, delay: 1 },
+  { id: 2, width: 2, height: 2, left: 25, top: 30, duration: 7, delay: 2 },
+  { id: 3, width: 4, height: 4, left: 35, top: 40, duration: 9, delay: 1.5 },
+  { id: 4, width: 3, height: 3, left: 45, top: 15, duration: 11, delay: 0.5 },
+  { id: 5, width: 2, height: 2, left: 55, top: 60, duration: 6, delay: 3 },
+  { id: 6, width: 4, height: 4, left: 65, top: 70, duration: 12, delay: 2.5 },
+  { id: 7, width: 3, height: 3, left: 75, top: 25, duration: 8, delay: 1 },
+  { id: 8, width: 2, height: 2, left: 85, top: 35, duration: 10, delay: 4 },
+  { id: 9, width: 4, height: 4, left: 95, top: 45, duration: 7, delay: 0.8 },
+
+  { id: 10, width: 2, height: 2, left: 8, top: 55, duration: 9, delay: 2 },
+  { id: 11, width: 3, height: 3, left: 18, top: 65, duration: 11, delay: 1.2 },
+  { id: 12, width: 4, height: 4, left: 28, top: 75, duration: 8, delay: 2.8 },
+  { id: 13, width: 2, height: 2, left: 38, top: 85, duration: 10, delay: 3.5 },
+  { id: 14, width: 3, height: 3, left: 48, top: 5, duration: 7, delay: 1.7 },
+  { id: 15, width: 4, height: 4, left: 58, top: 18, duration: 12, delay: 0.3 },
+  { id: 16, width: 2, height: 2, left: 68, top: 28, duration: 8, delay: 4.2 },
+  { id: 17, width: 3, height: 3, left: 78, top: 38, duration: 9, delay: 2.3 },
+  { id: 18, width: 2, height: 2, left: 88, top: 48, duration: 11, delay: 0.9 },
+  { id: 19, width: 4, height: 4, left: 98, top: 58, duration: 10, delay: 1.4 },
+];
+
 const pillars = [
   {
     icon: (
@@ -179,6 +203,7 @@ const ProgressBar = ({
   );
 };
 
+
 // ── Main component ─────────────────────────────────────────────────────────
 export default function About() {
   const sectionRef = useRef<HTMLElement>(null);
@@ -187,32 +212,10 @@ export default function About() {
   const [sectionVisible, setSectionVisible] = useState(false);
   const [pillarsVisible, setPillarsVisible] = useState(false);
   const [progressVisible, setProgressVisible] = useState(false);
-  const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
+  const [mousePosition, setMousePosition] = useState<{ x: number; y: number } | null>(null);
   const decorativeRef = useRef<HTMLDivElement>(null);
 
-  const particles = [
-  { id: 0, width: 2, height: 2, left: 5, top: 10, duration: 8, delay: 0 },
-  { id: 1, width: 3, height: 3, left: 15, top: 20, duration: 10, delay: 1 },
-  { id: 2, width: 2, height: 2, left: 25, top: 30, duration: 7, delay: 2 },
-  { id: 3, width: 4, height: 4, left: 35, top: 40, duration: 9, delay: 1.5 },
-  { id: 4, width: 3, height: 3, left: 45, top: 15, duration: 11, delay: 0.5 },
-  { id: 5, width: 2, height: 2, left: 55, top: 60, duration: 6, delay: 3 },
-  { id: 6, width: 4, height: 4, left: 65, top: 70, duration: 12, delay: 2.5 },
-  { id: 7, width: 3, height: 3, left: 75, top: 25, duration: 8, delay: 1 },
-  { id: 8, width: 2, height: 2, left: 85, top: 35, duration: 10, delay: 4 },
-  { id: 9, width: 4, height: 4, left: 95, top: 45, duration: 7, delay: 0.8 },
-
-  { id: 10, width: 2, height: 2, left: 8, top: 55, duration: 9, delay: 2 },
-  { id: 11, width: 3, height: 3, left: 18, top: 65, duration: 11, delay: 1.2 },
-  { id: 12, width: 4, height: 4, left: 28, top: 75, duration: 8, delay: 2.8 },
-  { id: 13, width: 2, height: 2, left: 38, top: 85, duration: 10, delay: 3.5 },
-  { id: 14, width: 3, height: 3, left: 48, top: 5, duration: 7, delay: 1.7 },
-  { id: 15, width: 4, height: 4, left: 58, top: 18, duration: 12, delay: 0.3 },
-  { id: 16, width: 2, height: 2, left: 68, top: 28, duration: 8, delay: 4.2 },
-  { id: 17, width: 3, height: 3, left: 78, top: 38, duration: 9, delay: 2.3 },
-  { id: 18, width: 2, height: 2, left: 88, top: 48, duration: 11, delay: 0.9 },
-  { id: 19, width: 4, height: 4, left: 98, top: 58, duration: 10, delay: 1.4 },
-];
+  
 
   useEffect(() => {
     const observer = new IntersectionObserver(
@@ -271,7 +274,9 @@ export default function About() {
         <div
           className="absolute w-[500px] h-[500px] rounded-full opacity-[0.03] transition-all duration-300"
           style={{
-            background: `radial-gradient(circle at ${mousePosition.x}% ${mousePosition.y}%, #1a2a3a 0%, transparent 70%)`,
+            background: mousePosition
+  ? `radial-gradient(circle at ${mousePosition.x}% ${mousePosition.y}%, #1a2a3a 0%, transparent 70%)`
+  : "transparent",
           }}
         />
         <div className="absolute inset-0">

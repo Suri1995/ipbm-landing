@@ -1,5 +1,5 @@
 "use client";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState, useMemo } from "react";
 
 const team = [
   {
@@ -57,6 +57,22 @@ const team = [
     social: "linkedin",
   },
 ];
+
+// ── Deterministic particles hook (no Math.random — SSR-safe) ──────────────
+const useParticles = (n: number) =>
+  useMemo(
+    () =>
+      Array.from({ length: n }, (_, i) => ({
+        id: i,
+        width: ((i * 137.508) % 5) + 1,
+        height: ((i * 97.333) % 5) + 1,
+        left: (i * 73.137) % 100,
+        top: (i * 53.711) % 100,
+        duration: ((i * 11.317) % 12) + 8,
+        delay: (i * 7.919) % 6,
+      })),
+    [n]
+  );
 
 // Animated profile card component
 const ProfileCard = ({ member, index, visible }: { member: typeof team[0]; index: number; visible: boolean }) => {
@@ -171,6 +187,9 @@ export default function Team() {
   const [visible, setVisible] = useState(false);
   const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
 
+  // ── SSR-safe deterministic particles ──
+  const particles = useParticles(40);
+
   useEffect(() => {
     const observer = new IntersectionObserver(
       ([entry]) => { if (entry.isIntersecting) setVisible(true); },
@@ -189,19 +208,19 @@ export default function Team() {
     >
       {/* Animated background elements */}
       <div aria-hidden="true" className="absolute inset-0 overflow-hidden pointer-events-none">
-        {/* Floating dots pattern */}
+        {/* Floating dots pattern — deterministic, SSR-safe */}
         <div className="absolute inset-0">
-          {[...Array(40)].map((_, i) => (
+          {particles.map((p) => (
             <div
-              key={i}
+              key={p.id}
               className="absolute rounded-full bg-gold-400/5"
               style={{
-                width: `${Math.random() * 6 + 1}px`,
-                height: `${Math.random() * 6 + 1}px`,
-                left: `${Math.random() * 100}%`,
-                top: `${Math.random() * 100}%`,
-                animation: `floatDot ${Math.random() * 12 + 8}s ease-in-out infinite`,
-                animationDelay: `${Math.random() * 6}s`,
+                width: `${p.width}px`,
+                height: `${p.height}px`,
+                left: `${p.left}%`,
+                top: `${p.top}%`,
+                animation: `floatDot ${p.duration}s ease-in-out infinite`,
+                animationDelay: `${p.delay}s`,
               }}
             />
           ))}
@@ -229,7 +248,7 @@ export default function Team() {
             visible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
           }`}
         >
-          {/* Founding badge - Updated for May 2026 */}
+          {/* Founding badge */}
           <div className="inline-flex items-center gap-2 bg-gold-500/10 backdrop-blur-sm border border-gold-500/20 rounded-full px-4 py-1.5 mb-4 animate-pulse-slow">
             <span className="w-1.5 h-1.5 bg-gold-400 rounded-full animate-ping" />
             <span className="text-gold-600 text-xs font-medium tracking-wide">Founded May 2026 · First Batch Starting Soon</span>
@@ -322,6 +341,12 @@ export default function Team() {
         @keyframes float {
           0%, 100% { transform: translateY(0px); }
           50% { transform: translateY(-5px); }
+        }
+        @media (prefers-reduced-motion: reduce) {
+          [style*="animation"] { animation: none !important; }
+          .animate-pulse, .animate-ping, .animate-bounce, .animate-dash, .animate-pulse-slow {
+            animation: none !important;
+          }
         }
       `}</style>
     </section>

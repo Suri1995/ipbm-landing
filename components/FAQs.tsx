@@ -137,7 +137,6 @@ function FAQItem({
   const btnId = `faq-btn-${index}`;
   const panelId = `faq-panel-${index}`;
 
-  // Highlight matching text
   const highlight = (text: string) => {
     if (!searchTerm.trim()) return text;
     const regex = new RegExp(`(${searchTerm.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")})`, "gi");
@@ -160,7 +159,6 @@ function FAQItem({
           className="w-full flex items-start justify-between gap-4 py-4 sm:py-5 text-left focus:outline-none focus-visible:ring-2 focus-visible:ring-gold-500 focus-visible:ring-inset rounded-lg transition-all duration-200 hover:bg-navy-50/40 px-2 -mx-2 group"
         >
           <div className="flex items-start gap-2.5 min-w-0">
-            {/* Category dot */}
             <span
               className={`mt-1.5 w-1.5 h-1.5 rounded-full flex-shrink-0 transition-colors duration-300 ${
                 isOpen ? "bg-gold-500" : "bg-navy-300 group-hover:bg-gold-400"
@@ -173,11 +171,9 @@ function FAQItem({
           </div>
 
           <div className="flex items-center gap-2 flex-shrink-0">
-            {/* Read time */}
             <span className="hidden sm:inline text-navy-400 text-xs">
               {readTime(a)} min read
             </span>
-            {/* Toggle icon */}
             <span
               className={`w-6 h-6 sm:w-7 sm:h-7 rounded-full border-2 flex items-center justify-center transition-all duration-300 flex-shrink-0 ${
                 isOpen
@@ -201,7 +197,6 @@ function FAQItem({
         </button>
       </h3>
 
-      {/* Animated panel */}
       <div
         id={panelId}
         role="region"
@@ -215,7 +210,6 @@ function FAQItem({
               isOpen ? "opacity-100 translate-y-0" : "opacity-0 -translate-y-2"
             }`}
           >
-            {/* Category badge inside answer */}
             <span className={`inline-flex items-center gap-1 text-xs font-semibold px-2 py-0.5 rounded-full mb-2 
               ${category === "Admissions" ? "bg-blue-50 text-blue-700" :
                 category === "Fees" ? "bg-emerald-50 text-emerald-700" :
@@ -260,7 +254,6 @@ const FAQSearch = ({
   const [focused, setFocused] = useState(false);
   const inputRef = useRef<HTMLInputElement>(null);
 
-  // Keyboard shortcut: "/" to focus
   useEffect(() => {
     const handler = (e: KeyboardEvent) => {
       if (e.key === "/" && document.activeElement?.tagName !== "INPUT" && document.activeElement?.tagName !== "TEXTAREA") {
@@ -296,7 +289,6 @@ const FAQSearch = ({
           className="w-full pl-10 pr-14 py-2.5 text-sm bg-white border rounded-xl focus:outline-none focus:ring-2 focus:ring-gold-500/30 focus:border-gold-500 transition-all duration-200 border-navy-200 text-navy-900 placeholder-navy-400"
         />
 
-        {/* Shortcut hint / clear */}
         {value ? (
           <button
             onClick={() => { onChange(""); inputRef.current?.focus(); }}
@@ -344,17 +336,17 @@ const AnsweredBar = ({ opened, total }: { opened: number; total: number }) => (
   </div>
 );
 
-// ── Stable particles ───────────────────────────────────────────────────────
+// ── SSR-safe deterministic particles (no Math.random) ─────────────────────
 const useParticles = (n: number) =>
   useMemo(
     () =>
       Array.from({ length: n }, (_, i) => ({
         id: i,
-        left: Math.random() * 100,
-        top: Math.random() * 100,
-        dur: Math.random() * 8 + 6,
-        delay: Math.random() * 5,
-        size: Math.random() * 3 + 1,
+        left: (i * 73.137) % 100,
+        top: (i * 53.711) % 100,
+        dur: ((i * 11.317) % 8) + 6,
+        delay: (i * 7.919) % 5,
+        size: ((i * 3.713) % 3) + 1,
       })),
     [n]
   );
@@ -409,7 +401,6 @@ export default function FAQs() {
     return list;
   }, [activeCategory, searchTerm]);
 
-  // Expand / collapse all
   const allExpanded = openIndices.size === filtered.length;
   const toggleAll = useCallback(() => {
     setOpenIndices((prev) =>
@@ -419,7 +410,6 @@ export default function FAQs() {
     );
   }, [filtered]);
 
-  // Count how many unique questions user has opened
   const exploredCount = openIndices.size;
 
   return (
@@ -433,7 +423,6 @@ export default function FAQs() {
       <div aria-hidden="true" className="absolute inset-0 overflow-hidden pointer-events-none">
         <div className="absolute top-0 right-0 w-96 h-96 bg-gold-500/5 rounded-full blur-3xl" />
         <div className="absolute bottom-0 left-0 w-96 h-96 bg-navy-500/5 rounded-full blur-3xl" />
-        {/* Floating "?" marks */}
         {[0, 1, 2].map((i) => (
           <div
             key={i}
@@ -448,7 +437,7 @@ export default function FAQs() {
             ?
           </div>
         ))}
-        {/* Subtle dot particles */}
+        {/* Deterministic particles — SSR-safe */}
         {particles.map((p) => (
           <div
             key={p.id}
@@ -471,7 +460,6 @@ export default function FAQs() {
               visible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
             }`}
           >
-            {/* Founded badge */}
             <div className="inline-flex items-center gap-2 bg-gold-500/10 backdrop-blur-sm border border-gold-500/20 rounded-full px-3 py-1 mb-4">
               <span className="w-1.5 h-1.5 bg-gold-400 rounded-full animate-pulse" aria-hidden="true" />
               <span className="text-gold-600 text-xs font-medium tracking-wide">Founded May 2026</span>
@@ -503,7 +491,6 @@ export default function FAQs() {
               practice-first business school for the startup economy.
             </p>
 
-            {/* Quick stats */}
             <div className="flex flex-col gap-2.5 mb-6">
               {[
                 { icon: "⏱", text: "Response within 24 hours" },
@@ -517,7 +504,6 @@ export default function FAQs() {
               ))}
             </div>
 
-            {/* Category filter — vertical on desktop */}
             <div
               className="flex flex-wrap lg:flex-col gap-2 mb-6"
               role="group"
@@ -555,7 +541,6 @@ export default function FAQs() {
               })}
             </div>
 
-            {/* CTA */}
             <a
               href="#contact"
               className="group inline-flex items-center gap-2 bg-navy-700 hover:bg-gold-500 text-white px-4 sm:px-5 py-2.5 sm:py-3 rounded-full text-sm font-medium transition-all duration-300 focus:outline-none focus-visible:ring-2 focus-visible:ring-gold-500 focus-visible:ring-offset-2 shadow-md"
@@ -577,10 +562,8 @@ export default function FAQs() {
               visible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
             }`}
           >
-            {/* Search */}
             <FAQSearch value={searchTerm} onChange={handleSearch} />
 
-            {/* Answered progress + expand-all */}
             <div className="flex items-center justify-between mb-1">
               <div className="flex-1 mr-4">
                 <AnsweredBar opened={exploredCount} total={filtered.length} />
@@ -596,7 +579,6 @@ export default function FAQs() {
               )}
             </div>
 
-            {/* FAQ list */}
             {filtered.length === 0 ? (
               <div className="text-center py-12" role="status">
                 <svg className="w-14 h-14 mx-auto text-navy-200 mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
@@ -629,7 +611,6 @@ export default function FAQs() {
               </div>
             )}
 
-            {/* Footer */}
             <div className="mt-6 pt-4 border-t border-navy-100 text-center">
               <p className="text-navy-500 text-sm">Still have questions about the founding batch?</p>
               <div className="flex items-center justify-center gap-3 mt-3">

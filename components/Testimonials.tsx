@@ -1,9 +1,25 @@
 "use client";
+import { useEffect, useRef, useState, useMemo } from "react";
 
-import { useEffect, useRef, useState } from "react";
+function extractText(value: any): string {
+  if (!value) return "";
 
-function extractText(blocks: any[]) {
-  return blocks?.[0]?.children?.[0]?.text || "";
+  if (typeof value === "string") return value;
+
+  if (Array.isArray(value)) {
+    return value
+      .map((block) =>
+        block?.children?.map((child: any) => child?.text).join(" ")
+      )
+      .join(" ")
+      .trim();
+  }
+
+  if (value?.children) {
+    return value.children.map((c: any) => c?.text).join(" ");
+  }
+
+  return "";
 }
 
 type TestimonialType = {
@@ -16,6 +32,22 @@ type TestimonialType = {
   rating: number;
   isPioneer: boolean;
 };
+
+// ── Deterministic particles hook (no Math.random — SSR-safe) ──────────────
+const useParticles = (n: number) =>
+  useMemo(
+    () =>
+      Array.from({ length: n }, (_, i) => ({
+        id: i,
+        width: ((i * 137.508) % 3) + 1,
+        height: ((i * 137.508) % 3) + 1,
+        left: (i * 73.137) % 100,
+        top: (i * 53.711) % 100,
+        duration: ((i * 11.317) % 10) + 5,
+        delay: (i * 7.919) % 5,
+      })),
+    [n]
+  );
 
 function StarRating({ count }: { count: number }) {
   const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
@@ -58,20 +90,14 @@ const TestimonialCard = ({
   visible: boolean;
 }) => {
   const cardRef = useRef<HTMLDivElement>(null);
-
   const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
-
   const [isHovered, setIsHovered] = useState(false);
 
   const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
     if (!cardRef.current) return;
-
     const rect = cardRef.current.getBoundingClientRect();
-
     const x = ((e.clientX - rect.left) / rect.width) * 100;
-
     const y = ((e.clientY - rect.top) / rect.height) * 100;
-
     setMousePosition({ x, y });
   };
 
@@ -145,12 +171,10 @@ const TestimonialCard = ({
 
           <p className="text-navy-400 text-xs truncate flex items-center gap-1">
             {testimonial.role}
-
             <span
               className="w-1 h-1 bg-navy-500 rounded-full"
               aria-hidden="true"
             />
-
             {testimonial.batch}
           </p>
         </div>
@@ -166,14 +190,14 @@ const TestimonialCard = ({
 
 export default function Testimonials({ data }: any) {
   const testimonialsSection = data;
-
-  const testimonials = testimonialsSection?.testimonials || [];
+  const testimonials = testimonialsSection?.testimonials ?? [];
 
   const ref = useRef<HTMLElement>(null);
-
   const [visible, setVisible] = useState(false);
-
   const [activeIndex, setActiveIndex] = useState<number | null>(null);
+
+  // ── SSR-safe deterministic particles ──
+  const particles = useParticles(30);
 
   useEffect(() => {
     const observer = new IntersectionObserver(
@@ -182,9 +206,7 @@ export default function Testimonials({ data }: any) {
       },
       { threshold: 0.1 }
     );
-
     if (ref.current) observer.observe(ref.current);
-
     return () => observer.disconnect();
   }, []);
 
@@ -200,22 +222,20 @@ export default function Testimonials({ data }: any) {
         className="absolute inset-0 overflow-hidden pointer-events-none"
       >
         <div className="absolute top-20 -left-32 w-96 h-96 bg-gold-500/5 rounded-full blur-3xl animate-pulse-slow" />
-
         <div className="absolute bottom-20 -right-32 w-96 h-96 bg-gold-500/5 rounded-full blur-3xl animate-pulse-slow animation-delay-2000" />
 
-        {[...Array(30)].map((_, i) => (
+        {/* Floating dots — deterministic, SSR-safe */}
+        {particles.map((p) => (
           <div
-            key={i}
+            key={p.id}
             className="absolute rounded-full bg-gold-400/5"
             style={{
-              width: `${Math.random() * 4 + 1}px`,
-              height: `${Math.random() * 4 + 1}px`,
-              left: `${Math.random() * 100}%`,
-              top: `${Math.random() * 100}%`,
-              animation: `floatParticle ${
-                Math.random() * 10 + 5
-              }s ease-in-out infinite`,
-              animationDelay: `${Math.random() * 5}s`,
+              width: `${p.width}px`,
+              height: `${p.height}px`,
+              left: `${p.left}%`,
+              top: `${p.top}%`,
+              animation: `floatParticle ${p.duration}s ease-in-out infinite`,
+              animationDelay: `${p.delay}s`,
             }}
           />
         ))}
@@ -243,7 +263,6 @@ export default function Testimonials({ data }: any) {
               />
             </pattern>
           </defs>
-
           <rect width="100%" height="100%" fill="url(#diagonalPattern)" />
         </svg>
       </div>
@@ -256,7 +275,6 @@ export default function Testimonials({ data }: any) {
         >
           <div className="inline-flex items-center gap-2 bg-gold-500/10 backdrop-blur-sm border border-gold-500/20 rounded-full px-4 py-1.5 mb-4">
             <span className="w-1.5 h-1.5 bg-gold-400 rounded-full animate-pulse" />
-
             <span className="text-gold-400 text-xs font-medium tracking-wide">
               Founded May 2026 · First Cohort Stories
             </span>
@@ -264,9 +282,7 @@ export default function Testimonials({ data }: any) {
 
           <p className="text-gold-500 font-semibold text-sm tracking-widest uppercase mb-3 flex items-center justify-center gap-2">
             <span className="w-8 h-px bg-gold-500/50" aria-hidden="true" />
-
             {testimonialsSection?.preHeading || "Student Voices"}
-
             <span className="w-8 h-px bg-gold-500/50" aria-hidden="true" />
           </p>
 
@@ -281,7 +297,6 @@ export default function Testimonials({ data }: any) {
                 What Our First{" "}
                 <span className="relative inline-block group">
                   <span className="text-gold-400">Pioneers Say</span>
-
                   <svg
                     className="absolute -bottom-2 left-0 w-full"
                     height="3"
@@ -309,7 +324,7 @@ export default function Testimonials({ data }: any) {
         </div>
 
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-5 lg:gap-6">
-          {testimonials.map((testimonial: TestimonialType, i: number) => (
+          {(testimonials || []).map((testimonial: TestimonialType, i: number) => (
             <div
               key={testimonial.id || testimonial.name}
               onMouseEnter={() => setActiveIndex(i)}
@@ -344,10 +359,7 @@ export default function Testimonials({ data }: any) {
                   d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"
                 />
               </svg>
-
-              <span className="text-navy-300 text-xs">
-                100% Real Stories
-              </span>
+              <span className="text-navy-300 text-xs">100% Real Stories</span>
             </div>
 
             <div className="w-px h-4 bg-navy-700" aria-hidden="true" />
@@ -366,10 +378,7 @@ export default function Testimonials({ data }: any) {
                   d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"
                 />
               </svg>
-
-              <span className="text-navy-300 text-xs">
-                50+ Student Community
-              </span>
+              <span className="text-navy-300 text-xs">50+ Student Community</span>
             </div>
 
             <div className="w-px h-4 bg-navy-700" aria-hidden="true" />
@@ -388,10 +397,7 @@ export default function Testimonials({ data }: any) {
                   d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"
                 />
               </svg>
-
-              <span className="text-navy-300 text-xs">
-                95% Placed in Startups
-              </span>
+              <span className="text-navy-300 text-xs">95% Placed in Startups</span>
             </div>
           </div>
         </div>
@@ -402,7 +408,6 @@ export default function Testimonials({ data }: any) {
             className="inline-flex items-center gap-2 text-gold-400 hover:text-gold-300 text-sm transition-colors duration-300 group"
           >
             <span>Share your IPBM journey</span>
-
             <svg
               className="w-4 h-4 group-hover:translate-x-1 transition-transform duration-300"
               fill="none"
@@ -426,7 +431,6 @@ export default function Testimonials({ data }: any) {
       >
         <div className="flex flex-col items-center gap-1 opacity-30">
           <span className="text-white text-xs">Explore</span>
-
           <svg
             className="w-4 h-4 text-white animate-bounce"
             fill="none"
@@ -445,8 +449,7 @@ export default function Testimonials({ data }: any) {
 
       <style jsx global>{`
         @keyframes floatParticle {
-          0%,
-          100% {
+          0%, 100% {
             transform: translateY(0px) translateX(0px);
             opacity: 0;
           }
@@ -455,35 +458,27 @@ export default function Testimonials({ data }: any) {
             opacity: 0.3;
           }
         }
-
         @keyframes dash {
-          to {
-            stroke-dashoffset: -8;
-          }
+          to { stroke-dashoffset: -8; }
         }
-
         @keyframes pulse-slow {
-          0%,
-          100% {
-            opacity: 0.6;
-            transform: scale(1);
-          }
-          50% {
-            opacity: 1;
-            transform: scale(1.05);
-          }
+          0%, 100% { opacity: 0.6; transform: scale(1); }
+          50% { opacity: 1; transform: scale(1.05); }
         }
-
         .animate-dash {
           animation: dash 1.5s linear infinite;
         }
-
         .animate-pulse-slow {
           animation: pulse-slow 3s ease-in-out infinite;
         }
-
         .animation-delay-2000 {
           animation-delay: 2s;
+        }
+        @media (prefers-reduced-motion: reduce) {
+          [style*="animation"] { animation: none !important; }
+          .animate-pulse, .animate-ping, .animate-bounce, .animate-dash, .animate-pulse-slow {
+            animation: none !important;
+          }
         }
       `}</style>
     </section>
