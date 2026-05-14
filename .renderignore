@@ -1,0 +1,9 @@
+**/*.config.js
+**/*.config.ts
+app/
+components/
+lib/
+public/
+node_modules/
+**/node_modules/
+**/stubs/
