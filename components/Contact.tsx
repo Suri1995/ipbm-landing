@@ -93,7 +93,7 @@ const LiveEnquiries = () => {
     return () => clearInterval(interval);
   }, []);
   return (
-    <span className="font-semibold text-gold-400">{count}</span>
+    <span className="font-semibold text-[#eb4800]">{count}</span>
   );
 };
 
@@ -171,9 +171,9 @@ const StepDots = ({ current }: { current: number }) => (
           <div
             className={`w-7 h-7 rounded-full flex items-center justify-center text-xs font-bold transition-all duration-300 ${
               i < current
-                ? "bg-gold-500 text-white scale-90"
+                ? "bg-[#eb4800] text-white scale-90"
                 : i === current
-                ? "bg-gold-500 text-white ring-4 ring-gold-500/25"
+                ? "bg-[#eb4800] text-white ring-4 ring-[#eb4800]/25"
                 : "bg-white/10 text-navy-400"
             }`}
             aria-hidden="true"
@@ -186,12 +186,12 @@ const StepDots = ({ current }: { current: number }) => (
               i + 1
             )}
           </div>
-          <span className={`text-xs transition-colors duration-300 ${i === current ? "text-gold-400" : "text-navy-500"}`}>
+          <span className={`text-xs transition-colors duration-300 ${i === current ? "text-[#eb4800]" : "text-navy-500"}`}>
             {s}
           </span>
         </div>
         {i < steps.length - 1 && (
-          <div className={`h-px w-8 mb-4 transition-all duration-500 ${i < current ? "bg-gold-500" : "bg-white/10"}`} aria-hidden="true" />
+          <div className={`h-px w-8 mb-4 transition-all duration-500 ${i < current ? "bg-[#eb4800]" : "bg-white/10"}`} aria-hidden="true" />
         )}
       </div>
     ))}
@@ -207,7 +207,7 @@ const Field = ({
   <div className="relative">
     <label htmlFor={id} className="block text-navy-200 text-sm font-medium mb-1.5">
       {label}
-      {required && <span aria-hidden="true" className="text-gold-400 ml-0.5">*</span>}
+      {required && <span aria-hidden="true" className="text-[#eb4800] ml-0.5">*</span>}
       {required && <span className="sr-only">(required)</span>}
     </label>
     {children}
@@ -217,9 +217,9 @@ const Field = ({
 
 // ── Input / Select base classes ───────────────────────────────────────────
 const inputCls =
-  "w-full bg-white/8 border border-white/15 text-white placeholder-navy-500 rounded-xl px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-gold-400 focus:border-transparent transition-all hover:border-white/25";
+  "w-full bg-white/8 border border-white/15 text-white placeholder-navy-500 rounded-xl px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-[#eb4800] focus:border-transparent transition-all hover:border-white/25";
 const selectCls =
-  "w-full bg-navy-800 border border-white/15 text-white rounded-xl px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-gold-400 focus:border-transparent transition-all appearance-none cursor-pointer hover:border-white/25";
+  "w-full bg-navy-800 border border-white/15 text-white rounded-xl px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-[#eb4800] focus:border-transparent transition-all appearance-none cursor-pointer hover:border-white/25";
 
 // ── SSR-safe deterministic particles (no Math.random) ─────────────────────
 const useParticles = (n: number) =>
@@ -325,17 +325,17 @@ export default function Contact() {
         <div
           className="absolute inset-0 opacity-[0.04]"
           style={{
-            backgroundImage: "radial-gradient(circle at 2px 2px, rgba(212,175,55,0.5) 1px, transparent 1px)",
+            backgroundImage: "radial-gradient(circle at 2px 2px, rgba(235,72,0,0.5) 1px, transparent 1px)",
             backgroundSize: "40px 40px",
           }}
         />
-        <div className="absolute top-0 right-1/4 w-80 h-80 bg-gold-500/5 rounded-full blur-3xl" />
+        <div className="absolute top-0 right-1/4 w-80 h-80 bg-[#eb4800]/5 rounded-full blur-3xl" />
         <div className="absolute bottom-0 left-1/4 w-80 h-80 bg-navy-600/20 rounded-full blur-3xl" />
         {/* Deterministic particles — SSR-safe */}
         {particles.map((p) => (
           <div
             key={p.id}
-            className="absolute rounded-full bg-gold-400/8"
+            className="absolute rounded-full bg-[#044dd4]/8"
             style={{
               width: `${p.w}px`,
               height: `${p.h}px`,
@@ -356,17 +356,17 @@ export default function Contact() {
             visible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
           }`}
         >
-          <div className="inline-flex items-center gap-2 bg-gold-500/10 border border-gold-500/20 rounded-full px-4 py-1.5 mb-4">
+          <div className="inline-flex items-center gap-2 bg-[#eb4800]/10 border border-[#eb4800]/20 rounded-full px-4 py-1.5 mb-4">
             <span className="relative flex h-2 w-2" aria-hidden="true">
-              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-gold-400 opacity-75" />
-              <span className="relative inline-flex rounded-full h-2 w-2 bg-gold-400" />
+              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#eb4800] opacity-75" />
+              <span className="relative inline-flex rounded-full h-2 w-2 bg-[#eb4800]" />
             </span>
-            <span className="text-gold-400 text-xs font-medium tracking-wide">
+            <span className="text-[#eb4800] text-xs font-medium tracking-wide">
               <LiveEnquiries /> people enquired this week
             </span>
           </div>
 
-          <p className="text-gold-500 font-semibold text-sm tracking-widest uppercase mb-3">
+          <p className="text-[#eb4800] font-semibold text-sm tracking-widest uppercase mb-3">
             Admissions &amp; Enquiries
           </p>
 
@@ -375,7 +375,7 @@ export default function Contact() {
             className="font-display text-2xl sm:text-3xl lg:text-4xl font-bold text-white mb-4 text-balance"
           >
             Start Your Journey{" "}
-            <span className="text-gold-400">With IPBM</span>
+            <span className="text-[#044dd4]">With IPBM</span>
           </h2>
 
           <p className="text-navy-300 text-sm sm:text-base lg:text-lg max-w-2xl mx-auto text-pretty">
@@ -384,22 +384,22 @@ export default function Contact() {
           </p>
         </div>
 
-        <div className="grid lg:grid-cols-5 gap-6 lg:gap-10 xl:gap-12">
+        <div className="flex flex-col lg:flex-row gap-6 lg:gap-10 xl:gap-12 items-start">
 
-          {/* ── Left info panel ── */}
+          {/* ── Left info panel (scrolls normally, takes ~40% width) ── */}
           <div
-            className={`lg:col-span-2 flex flex-col gap-5 sm:gap-6 transition-all duration-700 delay-100 ${
+            className={`w-full lg:w-5/12 flex flex-col gap-5 sm:gap-6 transition-all duration-700 delay-100 ${
               visible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
             }`}
           >
             {/* Intake countdown card */}
             <div className="bg-white/5 border border-white/10 rounded-2xl p-4 sm:p-5">
               <p className="text-navy-400 text-xs uppercase tracking-wide font-medium mb-3 flex items-center gap-2">
-                <span className="w-1.5 h-1.5 bg-gold-400 rounded-full animate-pulse" aria-hidden="true" />
+                <span className="w-1.5 h-1.5 bg-[#eb4800] rounded-full animate-pulse" aria-hidden="true" />
                 Inaugural Intake — Aug 2026
               </p>
               <IntakeCountdown />
-              <div className="mt-3 h-px bg-gradient-to-r from-gold-500/40 to-transparent" aria-hidden="true" />
+              <div className="mt-3 h-px bg-gradient-to-r from-[#eb4800]/40 to-transparent" aria-hidden="true" />
               <p className="mt-3 text-xs text-navy-400">Applications close 30 July 2026.</p>
             </div>
 
@@ -412,7 +412,7 @@ export default function Contact() {
                 }`}
                 style={{ transitionDelay: `${200 + i * 80}ms` }}
               >
-                <div className="w-9 h-9 sm:w-10 sm:h-10 bg-gold-500/15 border border-gold-500/30 rounded-xl flex items-center justify-center text-gold-400 flex-shrink-0 transition-all duration-300 hover:bg-gold-500/25 hover:scale-105">
+                <div className="w-9 h-9 sm:w-10 sm:h-10 bg-[#044dd4]/15 border border-[#044dd4]/30 rounded-xl flex items-center justify-center text-[#044dd4] flex-shrink-0 transition-all duration-300 hover:bg-[#044dd4]/25 hover:scale-105">
                   {item.icon}
                 </div>
                 <div className="min-w-0">
@@ -422,7 +422,7 @@ export default function Contact() {
                   {item.href ? (
                     <a
                       href={item.href}
-                      className="text-white text-sm hover:text-gold-400 transition-colors focus:outline-none focus:underline break-words"
+                      className="text-white text-sm hover:text-[#044dd4] transition-colors focus:outline-none focus:underline break-words"
                     >
                       {item.value}
                     </a>
@@ -457,9 +457,9 @@ export default function Contact() {
                 <a
                   href="tel:+919876543210"
                   aria-label="Call IPBM admissions"
-                  className="flex items-center gap-3 px-4 py-2.5 rounded-xl bg-white/5 border border-white/10 text-navy-200 text-sm font-semibold hover:bg-white/10 transition-all duration-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-gold-400 focus-visible:ring-offset-2 focus-visible:ring-offset-navy-900 group"
+                  className="flex items-center gap-3 px-4 py-2.5 rounded-xl bg-white/5 border border-white/10 text-navy-200 text-sm font-semibold hover:bg-white/10 transition-all duration-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-[#eb4800] focus-visible:ring-offset-2 focus-visible:ring-offset-navy-900 group"
                 >
-                  <svg className="w-4 h-4 shrink-0 text-gold-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                  <svg className="w-4 h-4 shrink-0 text-[#eb4800]" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
                   </svg>
                   Call Admissions Desk
@@ -482,7 +482,7 @@ export default function Contact() {
                     href="#"
                     role="listitem"
                     aria-label={`Follow IPBM on ${s.name}`}
-                    className="w-9 h-9 bg-white/8 border border-white/15 rounded-xl flex items-center justify-center text-navy-300 hover:bg-gold-500 hover:text-white hover:border-gold-500 hover:-translate-y-0.5 hover:shadow-md transition-all duration-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-gold-400 focus-visible:ring-offset-2 focus-visible:ring-offset-navy-900"
+                    className="w-9 h-9 bg-white/8 border border-white/15 rounded-xl flex items-center justify-center text-navy-300 hover:bg-[#044dd4] hover:text-white hover:border-[#044dd4] hover:-translate-y-0.5 hover:shadow-md transition-all duration-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-[#eb4800] focus-visible:ring-offset-2 focus-visible:ring-offset-navy-900"
                   >
                     {s.icon}
                   </a>
@@ -491,246 +491,248 @@ export default function Contact() {
             </div>
           </div>
 
-          {/* ── Form panel ── */}
-          <div
-            className={`lg:col-span-3 bg-white/5 backdrop-blur-sm border border-white/10 rounded-2xl p-5 sm:p-6 lg:p-8 transition-all duration-700 delay-200 ${
-              visible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
-            }`}
-          >
-            {status === "sent" ? (
-              /* ── Success state ── */
-              <div className="flex flex-col items-center justify-center h-full py-8 sm:py-12 text-center">
-                <div
-                  className="w-14 h-14 sm:w-16 sm:h-16 bg-gold-500 rounded-full flex items-center justify-center mb-4 animate-bounce-once"
-                  aria-hidden="true"
-                >
-                  <svg className="w-7 h-7 sm:w-8 sm:h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M5 13l4 4L19 7" />
-                  </svg>
-                </div>
+          {/* ── Form panel (sticky on large screens) ── */}
+          <div className="w-full lg:w-7/12 lg:sticky lg:top-6 transition-all duration-700 delay-200">
+            <div
+              className={`bg-white/5 backdrop-blur-sm border border-white/10 rounded-2xl p-5 sm:p-6 lg:p-8 ${
+                visible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
+              }`}
+            >
+              {status === "sent" ? (
+                /* ── Success state ── */
+                <div className="flex flex-col items-center justify-center h-full py-8 sm:py-12 text-center">
+                  <div
+                    className="w-14 h-14 sm:w-16 sm:h-16 bg-[#eb4800] rounded-full flex items-center justify-center mb-4 animate-bounce-once"
+                    aria-hidden="true"
+                  >
+                    <svg className="w-7 h-7 sm:w-8 sm:h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M5 13l4 4L19 7" />
+                    </svg>
+                  </div>
 
-                <div className="flex gap-1.5 mb-4" aria-hidden="true">
-                  {["bg-gold-400","bg-navy-300","bg-gold-600","bg-white/40","bg-gold-300"].map((c,i) => (
-                    <span key={i} className={`w-2 h-2 rounded-full ${c}`} style={{ animation: `confettiPop .5s ease ${i * 80}ms both` }} />
-                  ))}
-                </div>
+                  <div className="flex gap-1.5 mb-4" aria-hidden="true">
+                    {["bg-[#eb4800]","bg-navy-300","bg-[#044dd4]","bg-white/40","bg-[#eb4800]"].map((c,i) => (
+                      <span key={i} className={`w-2 h-2 rounded-full ${c}`} style={{ animation: `confettiPop .5s ease ${i * 80}ms both` }} />
+                    ))}
+                  </div>
 
-                <h3 className="font-display font-bold text-white text-xl sm:text-2xl mb-2">
-                  Enquiry Received!
-                </h3>
-                <p className="text-navy-300 text-sm max-w-sm mb-1">
-                  Thank you,{" "}
-                  <strong className="text-white">{form.name}</strong>. Our
-                  admissions team will contact you within{" "}
-                  <strong className="text-gold-400">24 hours</strong>.
-                </p>
-                <p className="text-navy-500 text-xs max-w-xs mb-6">
-                  A confirmation has been sent to{" "}
-                  <span className="text-navy-300">{form.email}</span>.
-                </p>
-
-                <div className="w-full max-w-sm bg-white/5 border border-white/10 rounded-xl p-4 text-left mb-6">
-                  <p className="text-gold-400 text-xs font-semibold uppercase tracking-wide mb-3">
-                    What happens next?
+                  <h3 className="font-display font-bold text-white text-xl sm:text-2xl mb-2">
+                    Enquiry Received!
+                  </h3>
+                  <p className="text-navy-300 text-sm max-w-sm mb-1">
+                    Thank you,{" "}
+                    <strong className="text-white">{form.name}</strong>. Our
+                    admissions team will contact you within{" "}
+                    <strong className="text-[#eb4800]">24 hours</strong>.
                   </p>
-                  {[
-                    "Our counsellor calls you within 24 hours",
-                    "Receive your personalised programme brochure",
-                    "Schedule a campus or virtual tour",
-                    "Complete your application for Aug 2026 intake",
-                  ].map((s, i) => (
-                    <div key={s} className="flex items-start gap-2.5 mb-2 last:mb-0">
-                      <span className="w-5 h-5 rounded-full bg-gold-500/20 text-gold-400 text-xs font-bold flex items-center justify-center shrink-0 mt-0.5">{i + 1}</span>
-                      <p className="text-navy-300 text-xs leading-relaxed">{s}</p>
-                    </div>
-                  ))}
-                </div>
+                  <p className="text-navy-500 text-xs max-w-xs mb-6">
+                    A confirmation has been sent to{" "}
+                    <span className="text-navy-300">{form.email}</span>.
+                  </p>
 
-                <button
-                  onClick={resetForm}
-                  className="text-gold-400 text-sm hover:text-gold-300 underline focus:outline-none focus-visible:ring-2 focus-visible:ring-gold-400 rounded"
-                >
-                  Submit another enquiry
-                </button>
-              </div>
-            ) : (
-              /* ── Multi-step form ── */
-              <form onSubmit={handleSubmit} noValidate aria-label="Admissions enquiry form">
-
-                <StepDots current={step} />
-
-                {/* Step 0 — Personal details */}
-                {step === 0 && (
-                  <div className="space-y-4">
-                    <p className="text-white text-sm font-semibold mb-4">Tell us about yourself</p>
-                    <div className="grid sm:grid-cols-2 gap-4">
-                      <Field id="name" label="Full Name" required>
-                        <input
-                          id="name" name="name" type="text" required autoComplete="name"
-                          value={form.name} onChange={handleChange} onBlur={handleBlur}
-                          placeholder="Your full name"
-                          className={inputCls}
-                          aria-describedby={errors.name ? "name-err" : undefined}
-                          aria-invalid={!!errors.name}
-                        />
-                        {errors.name && (
-                          <p id="name-err" role="alert" className="mt-1 text-xs text-red-400 flex items-center gap-1">
-                            <svg className="w-3 h-3" fill="currentColor" viewBox="0 0 20 20" aria-hidden="true"><path fillRule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z" clipRule="evenodd" /></svg>
-                            {errors.name}
-                          </p>
-                        )}
-                      </Field>
-                      <Field id="email" label="Email Address" required>
-                        <input
-                          id="email" name="email" type="email" required autoComplete="email"
-                          value={form.email} onChange={handleChange} onBlur={handleBlur}
-                          placeholder="you@email.com"
-                          className={inputCls}
-                          aria-describedby={errors.email ? "email-err" : undefined}
-                          aria-invalid={!!errors.email}
-                        />
-                        {errors.email && (
-                          <p id="email-err" role="alert" className="mt-1 text-xs text-red-400 flex items-center gap-1">
-                            <svg className="w-3 h-3" fill="currentColor" viewBox="0 0 20 20" aria-hidden="true"><path fillRule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z" clipRule="evenodd" /></svg>
-                            {errors.email}
-                          </p>
-                        )}
-                      </Field>
-                    </div>
-                    <Field id="phone" label="Phone Number">
-                      <input
-                        id="phone" name="phone" type="tel" autoComplete="tel"
-                        value={form.phone} onChange={handleChange} onBlur={handleBlur}
-                        placeholder="+91 XXXXX XXXXX"
-                        className={inputCls}
-                      />
-                    </Field>
+                  <div className="w-full max-w-sm bg-white/5 border border-white/10 rounded-xl p-4 text-left mb-6">
+                    <p className="text-[#044dd4] text-xs font-semibold uppercase tracking-wide mb-3">
+                      What happens next?
+                    </p>
+                    {[
+                      "Our counsellor calls you within 24 hours",
+                      "Receive your personalised programme brochure",
+                      "Schedule a campus or virtual tour",
+                      "Complete your application for Aug 2026 intake",
+                    ].map((s, i) => (
+                      <div key={s} className="flex items-start gap-2.5 mb-2 last:mb-0">
+                        <span className="w-5 h-5 rounded-full bg-[#eb4800]/20 text-[#eb4800] text-xs font-bold flex items-center justify-center shrink-0 mt-0.5">{i + 1}</span>
+                        <p className="text-navy-300 text-xs leading-relaxed">{s}</p>
+                      </div>
+                    ))}
                   </div>
-                )}
 
-                {/* Step 1 — Programme interest */}
-                {step === 1 && (
-                  <div className="space-y-4">
-                    <p className="text-white text-sm font-semibold mb-4">Which programme interests you?</p>
-                    <div className="grid grid-cols-1 gap-3" role="group" aria-label="Select programme of interest">
-                      {[
-                        { val: "mba",  label: "MBA in Business Management",  sub: "2 Years · Full-time · Aug 2026" },
-                        { val: "pgdm", label: "PGDM – Post Graduate Diploma", sub: "1 Year · Full-time / Part-time · Aug 2026" },
-                        { val: "emba", label: "Executive MBA",                sub: "18 Months · Weekend / Online · Sep 2026" },
-                        { val: "cert", label: "Short-Term Certification",     sub: "3–6 Months · Online & Offline · Rolling" },
-                      ].map((opt) => (
-                        <label
-                          key={opt.val}
-                          className={`flex items-start gap-3 p-3.5 rounded-xl border cursor-pointer transition-all duration-200 group ${
-                            form.program === opt.val
-                              ? "border-gold-500/60 bg-gold-500/10"
-                              : "border-white/10 bg-white/5 hover:border-white/20 hover:bg-white/8"
-                          }`}
-                        >
+                  <button
+                    onClick={resetForm}
+                    className="text-[#044dd4] text-sm hover:text-[#eb4800] underline focus:outline-none focus-visible:ring-2 focus-visible:ring-[#eb4800] rounded"
+                  >
+                    Submit another enquiry
+                  </button>
+                </div>
+              ) : (
+                /* ── Multi-step form ── */
+                <form onSubmit={handleSubmit} noValidate aria-label="Admissions enquiry form">
+
+                  <StepDots current={step} />
+
+                  {/* Step 0 — Personal details */}
+                  {step === 0 && (
+                    <div className="space-y-4">
+                      <p className="text-white text-sm font-semibold mb-4">Tell us about yourself</p>
+                      <div className="grid sm:grid-cols-2 gap-4">
+                        <Field id="name" label="Full Name" required>
                           <input
-                            type="radio" name="program" value={opt.val}
-                            checked={form.program === opt.val}
-                            onChange={handleChange}
-                            className="sr-only"
+                            id="name" name="name" type="text" required autoComplete="name"
+                            value={form.name} onChange={handleChange} onBlur={handleBlur}
+                            placeholder="Your full name"
+                            className={inputCls}
+                            aria-describedby={errors.name ? "name-err" : undefined}
+                            aria-invalid={!!errors.name}
                           />
-                          <span
-                            className={`mt-0.5 w-4 h-4 rounded-full border-2 flex items-center justify-center shrink-0 transition-colors ${
-                              form.program === opt.val ? "border-gold-500 bg-gold-500" : "border-white/30"
-                            }`}
-                            aria-hidden="true"
-                          >
-                            {form.program === opt.val && <span className="w-1.5 h-1.5 bg-white rounded-full" />}
-                          </span>
-                          <div>
-                            <p className={`text-sm font-semibold transition-colors ${form.program === opt.val ? "text-gold-400" : "text-white"}`}>
-                              {opt.label}
+                          {errors.name && (
+                            <p id="name-err" role="alert" className="mt-1 text-xs text-red-400 flex items-center gap-1">
+                              <svg className="w-3 h-3" fill="currentColor" viewBox="0 0 20 20" aria-hidden="true"><path fillRule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z" clipRule="evenodd" /></svg>
+                              {errors.name}
                             </p>
-                            <p className="text-navy-400 text-xs mt-0.5">{opt.sub}</p>
-                          </div>
-                        </label>
-                      ))}
+                          )}
+                        </Field>
+                        <Field id="email" label="Email Address" required>
+                          <input
+                            id="email" name="email" type="email" required autoComplete="email"
+                            value={form.email} onChange={handleChange} onBlur={handleBlur}
+                            placeholder="you@email.com"
+                            className={inputCls}
+                            aria-describedby={errors.email ? "email-err" : undefined}
+                            aria-invalid={!!errors.email}
+                          />
+                          {errors.email && (
+                            <p id="email-err" role="alert" className="mt-1 text-xs text-red-400 flex items-center gap-1">
+                              <svg className="w-3 h-3" fill="currentColor" viewBox="0 0 20 20" aria-hidden="true"><path fillRule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z" clipRule="evenodd" /></svg>
+                              {errors.email}
+                            </p>
+                          )}
+                        </Field>
+                      </div>
+                      <Field id="phone" label="Phone Number">
+                        <input
+                          id="phone" name="phone" type="tel" autoComplete="tel"
+                          value={form.phone} onChange={handleChange} onBlur={handleBlur}
+                          placeholder="+91 XXXXX XXXXX"
+                          className={inputCls}
+                        />
+                      </Field>
                     </div>
-                  </div>
-                )}
+                  )}
 
-                {/* Step 2 — Message */}
-                {step === 2 && (
-                  <div className="space-y-4">
-                    <p className="text-white text-sm font-semibold mb-4">Any questions or context for us?</p>
-                    <Field id="message" label="Message / Questions" hint="Tell us about your background, goals, or anything else we should know.">
-                      <textarea
-                        id="message" name="message" rows={5}
-                        value={form.message} onChange={handleChange} onBlur={handleBlur}
-                        placeholder="e.g. I have 3 years of sales experience and want to move into marketing leadership..."
-                        className={`${inputCls} resize-none`}
-                      />
-                    </Field>
-
-                    <div className="bg-white/5 border border-white/10 rounded-xl p-4" aria-label="Review your details">
-                      <p className="text-navy-400 text-xs uppercase tracking-wide font-medium mb-3">Review your details</p>
-                      <dl className="space-y-1.5">
+                  {/* Step 1 — Programme interest */}
+                  {step === 1 && (
+                    <div className="space-y-4">
+                      <p className="text-white text-sm font-semibold mb-4">Which programme interests you?</p>
+                      <div className="grid grid-cols-1 gap-3" role="group" aria-label="Select programme of interest">
                         {[
-                          { dt: "Name",    dd: form.name  || "—" },
-                          { dt: "Email",   dd: form.email || "—" },
-                          { dt: "Phone",   dd: form.phone || "—" },
-                          { dt: "Program", dd: { mba:"MBA in Business Management", pgdm:"PGDM", emba:"Executive MBA", cert:"Short-Term Certification" }[form.program] || "—" },
-                        ].map(({ dt, dd }) => (
-                          <div key={dt} className="flex items-start gap-2 text-xs">
-                            <dt className="text-navy-400 w-16 shrink-0">{dt}</dt>
-                            <dd className="text-white">{dd}</dd>
-                          </div>
+                          { val: "mba",  label: "MBA in Business Management",  sub: "2 Years · Full-time · Aug 2026" },
+                          { val: "pgdm", label: "PGDM – Post Graduate Diploma", sub: "1 Year · Full-time / Part-time · Aug 2026" },
+                          { val: "emba", label: "Executive MBA",                sub: "18 Months · Weekend / Online · Sep 2026" },
+                          { val: "cert", label: "Short-Term Certification",     sub: "3–6 Months · Online & Offline · Rolling" },
+                        ].map((opt) => (
+                          <label
+                            key={opt.val}
+                            className={`flex items-start gap-3 p-3.5 rounded-xl border cursor-pointer transition-all duration-200 group ${
+                              form.program === opt.val
+                                ? "border-[#eb4800]/60 bg-[#eb4800]/10"
+                                : "border-white/10 bg-white/5 hover:border-white/20 hover:bg-white/8"
+                            }`}
+                          >
+                            <input
+                              type="radio" name="program" value={opt.val}
+                              checked={form.program === opt.val}
+                              onChange={handleChange}
+                              className="sr-only"
+                            />
+                            <span
+                              className={`mt-0.5 w-4 h-4 rounded-full border-2 flex items-center justify-center shrink-0 transition-colors ${
+                                form.program === opt.val ? "border-[#eb4800] bg-[#eb4800]" : "border-white/30"
+                              }`}
+                              aria-hidden="true"
+                            >
+                              {form.program === opt.val && <span className="w-1.5 h-1.5 bg-white rounded-full" />}
+                            </span>
+                            <div>
+                              <p className={`text-sm font-semibold transition-colors ${form.program === opt.val ? "text-[#eb4800]" : "text-white"}`}>
+                                {opt.label}
+                              </p>
+                              <p className="text-navy-400 text-xs mt-0.5">{opt.sub}</p>
+                            </div>
+                          </label>
                         ))}
-                      </dl>
+                      </div>
                     </div>
+                  )}
+
+                  {/* Step 2 — Message */}
+                  {step === 2 && (
+                    <div className="space-y-4">
+                      <p className="text-white text-sm font-semibold mb-4">Any questions or context for us?</p>
+                      <Field id="message" label="Message / Questions" hint="Tell us about your background, goals, or anything else we should know.">
+                        <textarea
+                          id="message" name="message" rows={5}
+                          value={form.message} onChange={handleChange} onBlur={handleBlur}
+                          placeholder="e.g. I have 3 years of sales experience and want to move into marketing leadership..."
+                          className={`${inputCls} resize-none`}
+                        />
+                      </Field>
+
+                      <div className="bg-white/5 border border-white/10 rounded-xl p-4" aria-label="Review your details">
+                        <p className="text-navy-400 text-xs uppercase tracking-wide font-medium mb-3">Review your details</p>
+                        <dl className="space-y-1.5">
+                          {[
+                            { dt: "Name",    dd: form.name  || "—" },
+                            { dt: "Email",   dd: form.email || "—" },
+                            { dt: "Phone",   dd: form.phone || "—" },
+                            { dt: "Program", dd: { mba:"MBA in Business Management", pgdm:"PGDM", emba:"Executive MBA", cert:"Short-Term Certification" }[form.program] || "—" },
+                          ].map(({ dt, dd }) => (
+                            <div key={dt} className="flex items-start gap-2 text-xs">
+                              <dt className="text-navy-400 w-16 shrink-0">{dt}</dt>
+                              <dd className="text-white">{dd}</dd>
+                            </div>
+                          ))}
+                        </dl>
+                      </div>
+                    </div>
+                  )}
+
+                  {/* Navigation buttons */}
+                  <div className={`flex gap-3 mt-6 ${step > 0 ? "justify-between" : "justify-end"}`}>
+                    {step > 0 && (
+                      <button
+                        type="button"
+                        onClick={prevStep}
+                        className="px-5 py-2.5 rounded-full border border-white/15 text-navy-200 text-sm font-semibold hover:bg-white/8 transition-all duration-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-[#eb4800] focus-visible:ring-offset-2 focus-visible:ring-offset-navy-900"
+                      >
+                        ← Back
+                      </button>
+                    )}
+
+                    {step < steps.length - 1 ? (
+                      <button
+                        type="button"
+                        onClick={nextStep}
+                        className="ml-auto px-6 py-2.5 rounded-full bg-[#eb4800] hover:bg-[#044dd4] text-white text-sm font-semibold transition-all duration-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-[#eb4800] focus-visible:ring-offset-2 focus-visible:ring-offset-navy-900 flex items-center gap-2 group"
+                      >
+                        Continue
+                        <svg className="w-4 h-4 group-hover:translate-x-0.5 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                        </svg>
+                      </button>
+                    ) : (
+                      <button
+                        type="submit"
+                        disabled={status === "sending"}
+                        aria-disabled={status === "sending"}
+                        className="ml-auto w-full sm:w-auto px-8 py-3 rounded-full bg-[#eb4800] hover:bg-[#044dd4] disabled:opacity-70 disabled:cursor-not-allowed text-white font-semibold text-sm transition-all duration-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-[#eb4800] focus-visible:ring-offset-2 focus-visible:ring-offset-navy-900 flex items-center justify-center gap-2"
+                      >
+                        {status === "sending" ? (
+                          <>
+                            <svg className="w-4 h-4 animate-spin" fill="none" viewBox="0 0 24 24" aria-hidden="true">
+                              <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
+                              <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z" />
+                            </svg>
+                            <span>Sending...</span>
+                          </>
+                        ) : (
+                          "Submit Enquiry →"
+                        )}
+                      </button>
+                    )}
                   </div>
-                )}
-
-                {/* Navigation buttons */}
-                <div className={`flex gap-3 mt-6 ${step > 0 ? "justify-between" : "justify-end"}`}>
-                  {step > 0 && (
-                    <button
-                      type="button"
-                      onClick={prevStep}
-                      className="px-5 py-2.5 rounded-full border border-white/15 text-navy-200 text-sm font-semibold hover:bg-white/8 transition-all duration-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-gold-400 focus-visible:ring-offset-2 focus-visible:ring-offset-navy-900"
-                    >
-                      ← Back
-                    </button>
-                  )}
-
-                  {step < steps.length - 1 ? (
-                    <button
-                      type="button"
-                      onClick={nextStep}
-                      className="ml-auto px-6 py-2.5 rounded-full bg-gold-500 hover:bg-gold-400 text-white text-sm font-semibold transition-all duration-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-gold-400 focus-visible:ring-offset-2 focus-visible:ring-offset-navy-900 flex items-center gap-2 group"
-                    >
-                      Continue
-                      <svg className="w-4 h-4 group-hover:translate-x-0.5 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-                      </svg>
-                    </button>
-                  ) : (
-                    <button
-                      type="submit"
-                      disabled={status === "sending"}
-                      aria-disabled={status === "sending"}
-                      className="ml-auto w-full sm:w-auto px-8 py-3 rounded-full bg-gold-500 hover:bg-gold-400 disabled:opacity-70 disabled:cursor-not-allowed text-white font-semibold text-sm transition-all duration-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-gold-400 focus-visible:ring-offset-2 focus-visible:ring-offset-navy-900 flex items-center justify-center gap-2"
-                    >
-                      {status === "sending" ? (
-                        <>
-                          <svg className="w-4 h-4 animate-spin" fill="none" viewBox="0 0 24 24" aria-hidden="true">
-                            <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
-                            <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z" />
-                          </svg>
-                          <span>Sending...</span>
-                        </>
-                      ) : (
-                        "Submit Enquiry →"
-                      )}
-                    </button>
-                  )}
-                </div>
-              </form>
-            )}
+                </form>
+              )}
+            </div>
           </div>
         </div>
       </div>

@@ -62,14 +62,14 @@ function StarRating({ count }: { count: number }) {
       {Array.from({ length: count }).map((_, i) => (
         <svg
           key={i}
-          className="w-4 h-4 text-gold-500 fill-current transition-all duration-300 hover:scale-110 cursor-default"
+          className="w-4 h-4 text-[#eb4800] fill-current transition-all duration-300 hover:scale-110 cursor-default"
           viewBox="0 0 20 20"
           aria-hidden="true"
           onMouseEnter={() => setHoveredIndex(i)}
           style={{
             filter:
               hoveredIndex !== null && hoveredIndex >= i
-                ? "drop-shadow(0 0 3px rgba(212,175,55,0.5))"
+                ? "drop-shadow(0 0 3px rgba(235,72,0,0.5))"
                 : "none",
           }}
         >
@@ -112,7 +112,7 @@ const TestimonialCard = ({
         visible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
       } ${
         isHovered
-          ? "border-gold-500/40 shadow-[0_0_30px_rgba(212,175,55,0.1)]"
+          ? "border-[#eb4800]/40 shadow-[0_0_30px_rgba(235,72,0,0.1)]"
           : ""
       }`}
       style={{
@@ -122,7 +122,7 @@ const TestimonialCard = ({
       <div
         className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none"
         style={{
-          background: `radial-gradient(circle at ${mousePosition.x}% ${mousePosition.y}%, rgba(212,175,55,0.08) 0%, transparent 70%)`,
+          background: `radial-gradient(circle at ${mousePosition.x}% ${mousePosition.y}%, rgba(235,72,0,0.08) 0%, transparent 70%)`,
         }}
       />
 
@@ -130,8 +130,8 @@ const TestimonialCard = ({
 
       {testimonial.isPioneer && (
         <div className="absolute top-4 right-4">
-          <div className="bg-gold-500/20 border border-gold-500/40 text-gold-400 text-[10px] font-bold px-2 py-0.5 rounded-full flex items-center gap-1 animate-pulse-slow">
-            <span className="w-1 h-1 bg-gold-400 rounded-full animate-ping" />
+          <div className="bg-[#044dd4]/20 border border-[#6699f8]/40 text-[#6699f8] text-[10px] font-bold px-2 py-0.5 rounded-full flex items-center gap-1 animate-pulse-slow">
+            <span className="w-1 h-1 bg-[#6699f8] rounded-full animate-ping" />
             Pioneer
           </div>
         </div>
@@ -158,14 +158,14 @@ const TestimonialCard = ({
 
       <div className="flex items-center gap-3 pt-4 border-t border-white/10 relative z-10">
         <div
-          className="w-9 h-9 sm:w-10 sm:h-10 rounded-full bg-gradient-to-br from-gold-400 to-gold-600 flex items-center justify-center text-white font-display font-bold text-xs sm:text-sm flex-shrink-0 transition-all duration-300 group-hover:scale-110 group-hover:rotate-3"
+          className="w-9 h-9 sm:w-10 sm:h-10 rounded-full bg-gradient-to-br from-[#044dd4] to-[#eb4800] flex items-center justify-center text-white font-display font-bold text-xs sm:text-sm flex-shrink-0 transition-all duration-300 group-hover:scale-110 group-hover:rotate-3"
           aria-hidden="true"
         >
           {testimonial.initials}
         </div>
 
         <div className="min-w-0">
-          <p className="text-white text-xs sm:text-sm font-semibold truncate group-hover:text-gold-400 transition-colors duration-300">
+          <p className="text-white text-xs sm:text-sm font-semibold truncate group-hover:text-[#eb4800] transition-colors duration-300">
             {testimonial.name}
           </p>
 
@@ -181,7 +181,7 @@ const TestimonialCard = ({
       </div>
 
       <div
-        className="absolute bottom-0 left-0 w-12 h-12 border-l-2 border-b-2 border-gold-500/10 group-hover:border-gold-500/30 transition-all duration-500"
+        className="absolute bottom-0 left-0 w-12 h-12 border-l-2 border-b-2 border-[#eb4800]/10 group-hover:border-[#eb4800]/30 transition-all duration-500"
         aria-hidden="true"
       />
     </article>
@@ -221,14 +221,14 @@ export default function Testimonials({ data }: any) {
         aria-hidden="true"
         className="absolute inset-0 overflow-hidden pointer-events-none"
       >
-        <div className="absolute top-20 -left-32 w-96 h-96 bg-gold-500/5 rounded-full blur-3xl animate-pulse-slow" />
-        <div className="absolute bottom-20 -right-32 w-96 h-96 bg-gold-500/5 rounded-full blur-3xl animate-pulse-slow animation-delay-2000" />
+        <div className="absolute top-20 -left-32 w-96 h-96 bg-[#eb4800]/5 rounded-full blur-3xl animate-pulse-slow" />
+        <div className="absolute bottom-20 -right-32 w-96 h-96 bg-[#044dd4]/5 rounded-full blur-3xl animate-pulse-slow animation-delay-2000" />
 
         {/* Floating dots — deterministic, SSR-safe */}
         {particles.map((p) => (
           <div
             key={p.id}
-            className="absolute rounded-full bg-gold-400/5"
+            className="absolute rounded-full bg-[#eb4800]/5"
             style={{
               width: `${p.width}px`,
               height: `${p.height}px`,
@@ -258,7 +258,7 @@ export default function Testimonials({ data }: any) {
                 y1="50"
                 x2="50"
                 y2="0"
-                stroke="#C6A43F"
+                stroke="#eb4800"
                 strokeWidth="0.5"
               />
             </pattern>
@@ -273,17 +273,17 @@ export default function Testimonials({ data }: any) {
             visible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
           }`}
         >
-          <div className="inline-flex items-center gap-2 bg-gold-500/10 backdrop-blur-sm border border-gold-500/20 rounded-full px-4 py-1.5 mb-4">
-            <span className="w-1.5 h-1.5 bg-gold-400 rounded-full animate-pulse" />
-            <span className="text-gold-400 text-xs font-medium tracking-wide">
+          <div className="inline-flex items-center gap-2 bg-[#eb4800]/10 backdrop-blur-sm border border-[#eb4800]/20 rounded-full px-4 py-1.5 mb-4">
+            <span className="w-1.5 h-1.5 bg-[#eb4800] rounded-full animate-pulse" />
+            <span className="text-[#eb4800] text-xs font-medium tracking-wide">
               Founded May 2026 · First Cohort Stories
             </span>
           </div>
 
-          <p className="text-gold-500 font-semibold text-sm tracking-widest uppercase mb-3 flex items-center justify-center gap-2">
-            <span className="w-8 h-px bg-gold-500/50" aria-hidden="true" />
+          <p className="text-[#eb4800] font-semibold text-sm tracking-widest uppercase mb-3 flex items-center justify-center gap-2">
+            <span className="w-8 h-px bg-[#eb4800]/50" aria-hidden="true" />
             {testimonialsSection?.preHeading || "Student Voices"}
-            <span className="w-8 h-px bg-gold-500/50" aria-hidden="true" />
+            <span className="w-8 h-px bg-[#eb4800]/50" aria-hidden="true" />
           </p>
 
           <h2
@@ -296,7 +296,7 @@ export default function Testimonials({ data }: any) {
               <>
                 What Our First{" "}
                 <span className="relative inline-block group">
-                  <span className="text-gold-400">Pioneers Say</span>
+                  <span className="text-[#eb4800]">Pioneers Say</span>
                   <svg
                     className="absolute -bottom-2 left-0 w-full"
                     height="3"
@@ -307,7 +307,7 @@ export default function Testimonials({ data }: any) {
                       y1="1.5"
                       x2="100%"
                       y2="1.5"
-                      stroke="#C6A43F"
+                      stroke="#eb4800"
                       strokeWidth="2"
                       strokeDasharray="4 4"
                       className="animate-dash"
@@ -347,7 +347,7 @@ export default function Testimonials({ data }: any) {
           <div className="flex flex-wrap items-center justify-center gap-6 sm:gap-8">
             <div className="flex items-center gap-2">
               <svg
-                className="w-5 h-5 text-gold-500"
+                className="w-5 h-5 text-[#eb4800]"
                 fill="none"
                 stroke="currentColor"
                 viewBox="0 0 24 24"
@@ -366,7 +366,7 @@ export default function Testimonials({ data }: any) {
 
             <div className="flex items-center gap-2">
               <svg
-                className="w-5 h-5 text-gold-500"
+                className="w-5 h-5 text-[#044dd4]"
                 fill="none"
                 stroke="currentColor"
                 viewBox="0 0 24 24"
@@ -385,7 +385,7 @@ export default function Testimonials({ data }: any) {
 
             <div className="flex items-center gap-2">
               <svg
-                className="w-5 h-5 text-gold-500"
+                className="w-5 h-5 text-[#eb4800]"
                 fill="none"
                 stroke="currentColor"
                 viewBox="0 0 24 24"
@@ -405,7 +405,7 @@ export default function Testimonials({ data }: any) {
         <div className="text-center mt-10">
           <a
             href="#contact"
-            className="inline-flex items-center gap-2 text-gold-400 hover:text-gold-300 text-sm transition-colors duration-300 group"
+            className="inline-flex items-center gap-2 text-[#044dd4] hover:text-[#eb4800] text-sm transition-colors duration-300 group"
           >
             <span>Share your IPBM journey</span>
             <svg

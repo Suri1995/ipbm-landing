@@ -14,11 +14,11 @@ export default function Header() {
           {/* Logo */}
           <a>
             <Image
-            src="/ipbmLogo.png"
+            src="/ipbm-logo.png"
             alt="Logo"
-            width={300}
+            width={350}
             height={40}
-            className="w-36 sm:w-72"
+            className="w-40 sm:w-80"
             priority
             />
           </a>

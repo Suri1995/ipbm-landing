@@ -103,12 +103,12 @@ const Helpful = ({ id }: { id: string }) => {
           disabled={voted !== null}
           aria-pressed={voted === v}
           aria-label={v === "yes" ? "Yes, this was helpful" : "No, this was not helpful"}
-          className={`text-xs px-2.5 py-1 rounded-full border transition-all duration-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-gold-500 focus-visible:ring-offset-1 disabled:cursor-default ${
+          className={`text-xs px-2.5 py-1 rounded-full border transition-all duration-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-[#eb4800] focus-visible:ring-offset-1 disabled:cursor-default ${
             voted === v
               ? v === "yes"
                 ? "bg-emerald-50 border-emerald-300 text-emerald-700"
                 : "bg-red-50 border-red-200 text-red-600"
-              : "border-navy-200 text-navy-400 hover:border-gold-400 hover:text-gold-600"
+              : "border-navy-200 text-navy-400 hover:border-[#eb4800] hover:text-[#eb4800]"
           }`}
         >
           {v === "yes" ? "👍 Yes" : "👎 No"}
@@ -118,7 +118,7 @@ const Helpful = ({ id }: { id: string }) => {
         <span className="text-xs text-navy-400 ml-1">
           {voted === "yes" ? "Thanks!" : (
             <>
-              <a href="#contact" className="text-gold-600 underline underline-offset-2 hover:text-gold-700">Ask us directly →</a>
+              <a href="#contact" className="text-[#044dd4] underline underline-offset-2 hover:text-[#eb4800]">Ask us directly →</a>
             </>
           )}
         </span>
@@ -143,7 +143,7 @@ function FAQItem({
     const parts = text.split(regex);
     return parts.map((part, i) =>
       regex.test(part)
-        ? <mark key={i} className="bg-gold-200 text-navy-900 rounded px-0.5">{part}</mark>
+        ? <mark key={i} className="bg-[#eb4800]/20 text-navy-900 rounded px-0.5">{part}</mark>
         : part
     );
   };
@@ -156,16 +156,16 @@ function FAQItem({
           aria-expanded={isOpen}
           aria-controls={panelId}
           onClick={onToggle}
-          className="w-full flex items-start justify-between gap-4 py-4 sm:py-5 text-left focus:outline-none focus-visible:ring-2 focus-visible:ring-gold-500 focus-visible:ring-inset rounded-lg transition-all duration-200 hover:bg-navy-50/40 px-2 -mx-2 group"
+          className="w-full flex items-start justify-between gap-4 py-4 sm:py-5 text-left focus:outline-none focus-visible:ring-2 focus-visible:ring-[#eb4800] focus-visible:ring-inset rounded-lg transition-all duration-200 hover:bg-navy-50/40 px-2 -mx-2 group"
         >
           <div className="flex items-start gap-2.5 min-w-0">
             <span
               className={`mt-1.5 w-1.5 h-1.5 rounded-full flex-shrink-0 transition-colors duration-300 ${
-                isOpen ? "bg-gold-500" : "bg-navy-300 group-hover:bg-gold-400"
+                isOpen ? "bg-[#eb4800]" : "bg-navy-300 group-hover:bg-[#eb4800]"
               }`}
               aria-hidden="true"
             />
-            <span className="font-display font-semibold text-navy-900 text-sm sm:text-base lg:text-lg transition-colors duration-200 group-hover:text-gold-600">
+            <span className="font-display font-semibold text-navy-900 text-sm sm:text-base lg:text-lg transition-colors duration-200 group-hover:text-[#044dd4]">
               {highlight(q)}
             </span>
           </div>
@@ -177,14 +177,14 @@ function FAQItem({
             <span
               className={`w-6 h-6 sm:w-7 sm:h-7 rounded-full border-2 flex items-center justify-center transition-all duration-300 flex-shrink-0 ${
                 isOpen
-                  ? "bg-gold-500 border-gold-500 rotate-45"
-                  : "border-navy-300 group-hover:border-gold-400 group-hover:bg-gold-50"
+                  ? "bg-[#eb4800] border-[#eb4800] rotate-45"
+                  : "border-navy-300 group-hover:border-[#044dd4] group-hover:bg-[#044dd4]/5"
               }`}
               aria-hidden="true"
             >
               <svg
                 className={`w-3 h-3 transition-all duration-300 ${
-                  isOpen ? "text-white" : "text-navy-500 group-hover:text-gold-500"
+                  isOpen ? "text-white" : "text-navy-500 group-hover:text-[#044dd4]"
                 }`}
                 fill="none"
                 stroke="currentColor"
@@ -211,10 +211,10 @@ function FAQItem({
             }`}
           >
             <span className={`inline-flex items-center gap-1 text-xs font-semibold px-2 py-0.5 rounded-full mb-2 
-              ${category === "Admissions" ? "bg-blue-50 text-blue-700" :
-                category === "Fees" ? "bg-emerald-50 text-emerald-700" :
-                category === "Career" ? "bg-amber-50 text-amber-700" :
-                "bg-purple-50 text-purple-700"}`}
+              ${category === "Admissions" ? "bg-[#044dd4]/10 text-[#044dd4]" :
+                category === "Fees" ? "bg-[#eb4800]/10 text-[#eb4800]" :
+                category === "Career" ? "bg-[#044dd4]/10 text-[#044dd4]" :
+                "bg-[#eb4800]/10 text-[#eb4800]"}`}
             >
               {catIcons[category]}
               {category}
@@ -228,7 +228,7 @@ function FAQItem({
 
             <a
               href="#contact"
-              className="inline-flex items-center gap-1 text-gold-600 text-xs font-medium hover:text-gold-700 transition-colors mt-2 group/link focus:outline-none focus-visible:underline"
+              className="inline-flex items-center gap-1 text-[#044dd4] text-xs font-medium hover:text-[#eb4800] transition-colors mt-2 group/link focus:outline-none focus-visible:underline"
             >
               <span>Need more details?</span>
               <svg
@@ -270,7 +270,7 @@ const FAQSearch = ({
       <div className="relative">
         <div className="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none" aria-hidden="true">
           <svg
-            className={`w-4 h-4 transition-colors duration-200 ${focused ? "text-gold-500" : "text-navy-400"}`}
+            className={`w-4 h-4 transition-colors duration-200 ${focused ? "text-[#eb4800]" : "text-navy-400"}`}
             fill="none" stroke="currentColor" viewBox="0 0 24 24"
           >
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
@@ -286,7 +286,7 @@ const FAQSearch = ({
           onBlur={() => setFocused(false)}
           placeholder="Search questions…"
           aria-label="Search frequently asked questions"
-          className="w-full pl-10 pr-14 py-2.5 text-sm bg-white border rounded-xl focus:outline-none focus:ring-2 focus:ring-gold-500/30 focus:border-gold-500 transition-all duration-200 border-navy-200 text-navy-900 placeholder-navy-400"
+          className="w-full pl-10 pr-14 py-2.5 text-sm bg-white border rounded-xl focus:outline-none focus:ring-2 focus:ring-[#eb4800]/30 focus:border-[#eb4800] transition-all duration-200 border-navy-200 text-navy-900 placeholder-navy-400"
         />
 
         {value ? (
@@ -325,11 +325,11 @@ const AnsweredBar = ({ opened, total }: { opened: number; total: number }) => (
   <div className="mb-4 pb-3 border-b border-navy-100" aria-label={`${opened} of ${total} questions answered`}>
     <div className="flex justify-between text-xs text-navy-400 mb-1.5">
       <span>{total} questions answered</span>
-      {opened > 0 && <span className="text-gold-600 font-medium">{opened} explored</span>}
+      {opened > 0 && <span className="text-[#eb4800] font-medium">{opened} explored</span>}
     </div>
     <div className="h-1 bg-navy-100 rounded-full overflow-hidden" role="presentation">
       <div
-        className="h-full bg-gradient-to-r from-gold-500 to-gold-300 rounded-full transition-all duration-500"
+        className="h-full bg-gradient-to-r from-[#eb4800] to-[#044dd4] rounded-full transition-all duration-500"
         style={{ width: total ? `${(opened / total) * 100}%` : "0%" }}
       />
     </div>
@@ -421,8 +421,8 @@ export default function FAQs() {
     >
       {/* ── Background ── */}
       <div aria-hidden="true" className="absolute inset-0 overflow-hidden pointer-events-none">
-        <div className="absolute top-0 right-0 w-96 h-96 bg-gold-500/5 rounded-full blur-3xl" />
-        <div className="absolute bottom-0 left-0 w-96 h-96 bg-navy-500/5 rounded-full blur-3xl" />
+        <div className="absolute top-0 right-0 w-96 h-96 bg-[#eb4800]/5 rounded-full blur-3xl" />
+        <div className="absolute bottom-0 left-0 w-96 h-96 bg-[#044dd4]/5 rounded-full blur-3xl" />
         {[0, 1, 2].map((i) => (
           <div
             key={i}
@@ -441,7 +441,7 @@ export default function FAQs() {
         {particles.map((p) => (
           <div
             key={p.id}
-            className="absolute rounded-full bg-gold-400/8"
+            className="absolute rounded-full bg-[#eb4800]/8"
             style={{
               width: `${p.size}px`, height: `${p.size}px`,
               left: `${p.left}%`, top: `${p.top}%`,
@@ -460,13 +460,13 @@ export default function FAQs() {
               visible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
             }`}
           >
-            <div className="inline-flex items-center gap-2 bg-gold-500/10 backdrop-blur-sm border border-gold-500/20 rounded-full px-3 py-1 mb-4">
-              <span className="w-1.5 h-1.5 bg-gold-400 rounded-full animate-pulse" aria-hidden="true" />
-              <span className="text-gold-600 text-xs font-medium tracking-wide">Founded May 2026</span>
+            <div className="inline-flex items-center gap-2 bg-[#eb4800]/10 backdrop-blur-sm border border-[#eb4800]/20 rounded-full px-3 py-1 mb-4">
+              <span className="w-1.5 h-1.5 bg-[#eb4800] rounded-full animate-pulse" aria-hidden="true" />
+              <span className="text-[#eb4800] text-xs font-medium tracking-wide">Founded May 2026</span>
             </div>
 
-            <p className="text-gold-600 font-semibold text-sm tracking-widest uppercase mb-3 flex items-center gap-2">
-              <span className="w-8 h-px bg-gold-400" aria-hidden="true" />
+            <p className="text-[#eb4800] font-semibold text-sm tracking-widest uppercase mb-3 flex items-center gap-2">
+              <span className="w-8 h-px bg-[#eb4800]" aria-hidden="true" />
               Got Questions?
             </p>
 
@@ -476,9 +476,9 @@ export default function FAQs() {
             >
               Startup{" "}
               <span className="relative inline-block">
-                <span className="text-navy-600">FAQs</span>
+                <span className="text-[#044dd4]">FAQs</span>
                 <span
-                  className={`absolute -bottom-1 left-0 h-0.5 bg-gradient-to-r from-gold-500 to-gold-200 rounded-full transition-all duration-700 delay-500 ${
+                  className={`absolute -bottom-1 left-0 h-0.5 bg-gradient-to-r from-[#eb4800] to-[#044dd4] rounded-full transition-all duration-700 delay-500 ${
                     visible ? "w-full" : "w-0"
                   }`}
                   aria-hidden="true"
@@ -519,10 +519,10 @@ export default function FAQs() {
                     key={cat}
                     onClick={() => handleCategoryChange(cat)}
                     aria-pressed={activeCategory === cat}
-                    className={`inline-flex items-center gap-2 px-3.5 py-2 rounded-xl text-xs font-semibold transition-all duration-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-gold-500 focus-visible:ring-offset-2 ${
+                    className={`inline-flex items-center gap-2 px-3.5 py-2 rounded-xl text-xs font-semibold transition-all duration-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-[#eb4800] focus-visible:ring-offset-2 ${
                       activeCategory === cat
-                        ? "bg-navy-700 text-white shadow-sm"
-                        : "bg-white border border-navy-200 text-navy-600 hover:border-gold-400 hover:text-gold-600"
+                        ? "bg-[#044dd4] text-white shadow-sm"
+                        : "bg-white border border-navy-200 text-navy-600 hover:border-[#eb4800] hover:text-[#eb4800]"
                     }`}
                   >
                     {catIcons[cat]}
@@ -543,7 +543,7 @@ export default function FAQs() {
 
             <a
               href="#contact"
-              className="group inline-flex items-center gap-2 bg-navy-700 hover:bg-gold-500 text-white px-4 sm:px-5 py-2.5 sm:py-3 rounded-full text-sm font-medium transition-all duration-300 focus:outline-none focus-visible:ring-2 focus-visible:ring-gold-500 focus-visible:ring-offset-2 shadow-md"
+              className="group inline-flex items-center gap-2 bg-[#044dd4] hover:bg-[#eb4800] text-white px-4 sm:px-5 py-2.5 sm:py-3 rounded-full text-sm font-medium transition-all duration-300 focus:outline-none focus-visible:ring-2 focus-visible:ring-[#eb4800] focus-visible:ring-offset-2 shadow-md"
               aria-label="Go to contact section to ask a question"
             >
               <span>Ask a Question</span>
@@ -571,7 +571,7 @@ export default function FAQs() {
               {filtered.length > 0 && (
                 <button
                   onClick={toggleAll}
-                  className="text-xs text-navy-400 hover:text-gold-600 transition-colors whitespace-nowrap focus:outline-none focus-visible:underline mb-3"
+                  className="text-xs text-navy-400 hover:text-[#eb4800] transition-colors whitespace-nowrap focus:outline-none focus-visible:underline mb-3"
                   aria-label={allExpanded ? "Collapse all questions" : "Expand all questions"}
                 >
                   {openIndices.size === filtered.length ? "Collapse all" : "Expand all"}
@@ -588,7 +588,7 @@ export default function FAQs() {
                 <p className="text-navy-400 text-xs mt-1">Try a different keyword or browse all categories.</p>
                 <button
                   onClick={() => { setSearchTerm(""); setActiveCategory("All"); }}
-                  className="mt-3 text-gold-600 text-sm font-medium hover:text-gold-700 transition-colors focus:outline-none focus-visible:underline"
+                  className="mt-3 text-[#044dd4] text-sm font-medium hover:text-[#eb4800] transition-colors focus:outline-none focus-visible:underline"
                 >
                   Clear filters →
                 </button>
@@ -616,14 +616,14 @@ export default function FAQs() {
               <div className="flex items-center justify-center gap-3 mt-3">
                 <a
                   href="#contact"
-                  className="text-gold-600 text-sm font-medium hover:text-gold-700 transition-colors focus:outline-none focus-visible:underline"
+                  className="text-[#044dd4] text-sm font-medium hover:text-[#eb4800] transition-colors focus:outline-none focus-visible:underline"
                 >
                   Contact Admissions →
                 </a>
                 <span className="w-1 h-1 bg-navy-300 rounded-full" aria-hidden="true" />
                 <a
                   href="#"
-                  className="text-navy-500 text-sm hover:text-navy-600 transition-colors focus:outline-none focus-visible:underline"
+                  className="text-navy-500 text-sm hover:text-[#044dd4] transition-colors focus:outline-none focus-visible:underline"
                   aria-label="Download IPBM programme brochure"
                 >
                   Download Brochure

@@ -293,7 +293,7 @@ export default function Hero() {
                 className="font-display text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-bold text-white leading-tight mb-4 sm:mb-5 lg:mb-6 text-balance"
               >
                 Build Your{" "}
-                <span className="text-gold-400 italic relative inline-block group">
+                <span className="text-[#eb4800] italic relative inline-block group">
                   Startup Career
                   <span className="absolute bottom-0 left-0 w-full h-0.5 bg-gold-400 scale-x-0 group-hover:scale-x-100 transition-transform duration-500 origin-left" />
                 </span>{" "}
@@ -308,7 +308,7 @@ export default function Hero() {
               <div className="flex flex-col sm:flex-row gap-3 sm:gap-4">
                 <a
                   href="#contact"
-                  className="group inline-flex items-center justify-center gap-2 bg-gold-500 hover:bg-gold-400 text-white font-semibold px-5 sm:px-6 py-3 sm:py-3.5 rounded-full transition-all duration-200 hover:shadow-gold-glow focus:outline-none focus:ring-2 focus:ring-gold-400 focus:ring-offset-2 focus:ring-offset-navy-900 text-sm sm:text-base relative overflow-hidden"
+                  className="group inline-flex items-center justify-center gap-2 bg-[#eb4800]/90 hover:bg-[#eb4800] text-white font-semibold px-5 sm:px-6 py-3 sm:py-3.5 rounded-full transition-all duration-200 hover:shadow-gold-glow focus:outline-none focus:ring-2 focus:ring-gold-400 focus:ring-offset-2 focus:ring-offset-navy-900 text-sm sm:text-base relative overflow-hidden"
                   aria-label="Apply now – join the first batch"
                 >
                   <span className="absolute inset-0 bg-white/20 translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-500" />
@@ -364,7 +364,7 @@ export default function Hero() {
                   {/* Main card with hover glow */}
                   <div className="bg-white/8 backdrop-blur-sm border border-white/15 rounded-2xl p-6 xl:p-8 transition-all duration-300 hover:border-gold-500/40 hover:shadow-[0_0_30px_rgba(212,175,55,0.15)]">
                     <div className="flex items-center gap-3 mb-5 xl:mb-6">
-                      <div className="w-10 h-10 bg-gold-500 rounded-xl flex items-center justify-center font-display font-bold text-white relative overflow-hidden group">
+                      <div className="w-10 h-10 bg-[#eb4800] rounded-xl flex items-center justify-center font-display font-bold text-white relative overflow-hidden group">
                         <span className="relative z-10">IP</span>
                         <div className="absolute inset-0 bg-white/20 translate-y-full group-hover:translate-y-0 transition-transform duration-300" />
                       </div>
@@ -417,7 +417,7 @@ export default function Hero() {
                   </div>
 
                   {/* Floating badge with rocket */}
-                  <div className="absolute -top-3 -right-3 xl:-top-4 xl:-right-4 bg-gold-500 text-white rounded-full p-2.5 xl:p-3 shadow-lg animate-float">
+                  <div className="absolute -top-3 -right-3 xl:-top-4 xl:-right-4 bg-[#eb4800] text-white rounded-full p-2.5 xl:p-3 shadow-lg animate-float">
                     <svg
                       className="w-4 h-4 xl:w-5 xl:h-5"
                       fill="none"
@@ -451,7 +451,7 @@ export default function Hero() {
                     key={stat.label}
                     className="group text-center bg-white/5 border border-white/10 rounded-xl sm:rounded-2xl p-3 sm:p-4 lg:p-5 transition-all duration-300 hover:bg-white/10 hover:border-gold-500/30 hover:-translate-y-1 cursor-default"
                   >
-                    <p className="font-display text-xl sm:text-2xl lg:text-3xl font-bold text-gold-400">
+                    <p className="font-display text-xl sm:text-2xl lg:text-3xl font-bold text-[#eb4800]/90">
                       0→1
                     </p>
                     <p className="text-navy-300 text-xs sm:text-sm mt-0.5 sm:mt-1 group-hover:text-gold-300 transition-colors duration-300">
@@ -471,7 +471,7 @@ export default function Hero() {
                   {!isNaN(numericValue) ? (
                     <AnimatedCounter target={numericValue} suffix={suffix} />
                   ) : (
-                    <p className="font-display text-xl sm:text-2xl lg:text-3xl font-bold text-gold-400">
+                    <p className="font-display text-xl sm:text-2xl lg:text-3xl font-bold text-[#eb4800]/90">
                       {stat.value}
                     </p>
                   )}

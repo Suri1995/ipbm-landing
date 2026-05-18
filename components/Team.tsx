@@ -110,7 +110,7 @@ const ProfileCard = ({ member, index, visible }: { member: typeof team[0]; index
       <div 
         className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none"
         style={{
-          background: `radial-gradient(circle at ${mousePosition.x}% ${mousePosition.y}%, rgba(212,175,55,0.08) 0%, transparent 70%)`,
+          background: `radial-gradient(circle at ${mousePosition.x}% ${mousePosition.y}%, rgba(235,72,0,0.08) 0%, transparent 70%)`,
         }}
       />
       
@@ -123,22 +123,22 @@ const ProfileCard = ({ member, index, visible }: { member: typeof team[0]; index
           <div
             className={`w-12 h-12 sm:w-14 sm:h-14 rounded-2xl flex items-center justify-center text-base sm:text-lg font-display font-bold flex-shrink-0 transition-all duration-300 group-hover:scale-110 group-hover:rotate-3 ${
               member.color === "navy"
-                ? "bg-navy-600 text-white"
-                : "bg-gold-500 text-white"
+                ? "bg-[#044dd4] text-white"
+                : "bg-[#eb4800] text-white"
             }`}
             aria-hidden="true"
           >
             {member.initials}
           </div>
           {/* Animated pulse ring */}
-          <div className="absolute inset-0 rounded-2xl border-2 border-gold-400 opacity-0 group-hover:opacity-100 group-hover:scale-150 transition-all duration-500 pointer-events-none" />
+          <div className="absolute inset-0 rounded-2xl border-2 border-[#eb4800] opacity-0 group-hover:opacity-100 group-hover:scale-150 transition-all duration-500 pointer-events-none" />
         </div>
         <div className="min-w-0 flex-1">
-          <h3 className="font-display font-bold text-navy-900 text-sm sm:text-base leading-tight truncate group-hover:text-gold-600 transition-colors duration-300">
+          <h3 className="font-display font-bold text-navy-900 text-sm sm:text-base leading-tight truncate group-hover:text-[#044dd4] transition-colors duration-300">
             {member.name}
           </h3>
-          <p className="text-gold-600 text-xs font-semibold mt-0.5 truncate flex items-center gap-1">
-            <span className="w-1 h-1 bg-gold-500 rounded-full animate-pulse" aria-hidden="true" />
+          <p className="text-[#eb4800] text-xs font-semibold mt-0.5 truncate flex items-center gap-1">
+            <span className="w-1 h-1 bg-[#eb4800] rounded-full animate-pulse" aria-hidden="true" />
             {member.role}
           </p>
         </div>
@@ -149,7 +149,7 @@ const ProfileCard = ({ member, index, visible }: { member: typeof team[0]; index
         <p className="text-navy-400 text-xs font-medium tracking-wide uppercase inline-block">
           {member.expertise}
         </p>
-        <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-gold-400 group-hover:w-full transition-all duration-500" />
+        <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-[#eb4800] group-hover:w-full transition-all duration-500" />
       </div>
       
       <p className="text-navy-500 text-xs sm:text-sm leading-relaxed flex-1 relative z-10">
@@ -161,14 +161,14 @@ const ProfileCard = ({ member, index, visible }: { member: typeof team[0]; index
         <a
           href="#"
           aria-label={`Connect with ${member.name} on LinkedIn`}
-          className="inline-flex items-center gap-2 text-navy-400 hover:text-navy-700 text-xs font-medium transition-all duration-300 group-hover:gap-3 focus:outline-none focus:underline"
+          className="inline-flex items-center gap-2 text-navy-400 hover:text-[#044dd4] text-xs font-medium transition-all duration-300 group-hover:gap-3 focus:outline-none focus:underline"
         >
           <svg className="w-4 h-4 transition-transform duration-300 group-hover:scale-110" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
             <path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z" />
           </svg>
           <span className="relative">
             Connect
-            <span className="absolute bottom-0 left-0 w-0 h-px bg-navy-600 group-hover:w-full transition-all duration-300" />
+            <span className="absolute bottom-0 left-0 w-0 h-px bg-[#044dd4] group-hover:w-full transition-all duration-300" />
           </span>
           <svg className="w-3 h-3 opacity-0 -translate-x-2 group-hover:opacity-100 group-hover:translate-x-0 transition-all duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
@@ -177,7 +177,7 @@ const ProfileCard = ({ member, index, visible }: { member: typeof team[0]; index
       </div>
 
       {/* Decorative corner accent */}
-      <div className="absolute bottom-3 right-3 w-8 h-8 border-r-2 border-b-2 border-gold-200 opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none" aria-hidden="true" />
+      <div className="absolute bottom-3 right-3 w-8 h-8 border-r-2 border-b-2 border-[#eb4800]/20 opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none" aria-hidden="true" />
     </article>
   );
 };
@@ -213,7 +213,7 @@ export default function Team() {
           {particles.map((p) => (
             <div
               key={p.id}
-              className="absolute rounded-full bg-gold-400/5"
+              className="absolute rounded-full bg-[#eb4800]/5"
               style={{
                 width: `${p.width}px`,
                 height: `${p.height}px`,
@@ -227,8 +227,8 @@ export default function Team() {
         </div>
         
         {/* Animated gradient blobs */}
-        <div className="absolute top-20 -left-32 w-64 h-64 bg-gold-500/5 rounded-full blur-3xl animate-pulse-slow" />
-        <div className="absolute bottom-20 -right-32 w-64 h-64 bg-navy-500/5 rounded-full blur-3xl animate-pulse-slow animation-delay-3000" />
+        <div className="absolute top-20 -left-32 w-64 h-64 bg-[#eb4800]/5 rounded-full blur-3xl animate-pulse-slow" />
+        <div className="absolute bottom-20 -right-32 w-64 h-64 bg-[#044dd4]/5 rounded-full blur-3xl animate-pulse-slow animation-delay-3000" />
         
         {/* Subtle grid pattern */}
         <svg className="absolute inset-0 w-full h-full opacity-[0.02]" aria-hidden="true">
@@ -249,15 +249,15 @@ export default function Team() {
           }`}
         >
           {/* Founding badge */}
-          <div className="inline-flex items-center gap-2 bg-gold-500/10 backdrop-blur-sm border border-gold-500/20 rounded-full px-4 py-1.5 mb-4 animate-pulse-slow">
-            <span className="w-1.5 h-1.5 bg-gold-400 rounded-full animate-ping" />
-            <span className="text-gold-600 text-xs font-medium tracking-wide">Founded May 2026 · First Batch Starting Soon</span>
+          <div className="inline-flex items-center gap-2 bg-[#eb4800]/10 backdrop-blur-sm border border-[#eb4800]/20 rounded-full px-4 py-1.5 mb-4 animate-pulse-slow">
+            <span className="w-1.5 h-1.5 bg-[#eb4800] rounded-full animate-ping" />
+            <span className="text-[#eb4800] text-xs font-medium tracking-wide">Founded May 2026 · First Batch Starting Soon</span>
           </div>
           
-          <p className="text-gold-600 font-semibold text-sm tracking-widest uppercase mb-3 flex items-center justify-center gap-2">
-            <span className="w-8 h-px bg-gold-400" aria-hidden="true" />
+          <p className="text-[#eb4800] font-semibold text-sm tracking-widest uppercase mb-3 flex items-center justify-center gap-2">
+            <span className="w-8 h-px bg-[#eb4800]" aria-hidden="true" />
             Meet Your Mentors
-            <span className="w-8 h-px bg-gold-400" aria-hidden="true" />
+            <span className="w-8 h-px bg-[#eb4800]" aria-hidden="true" />
           </p>
           <h2
             id="team-heading"
@@ -265,7 +265,7 @@ export default function Team() {
           >
             Learn From Those Who{" "}
             <span className="relative inline-block group">
-              <span className="text-navy-600">Built It</span>
+              <span className="text-[#044dd4]">Built It</span>
               <svg className="absolute -bottom-2 left-0 w-full" height="3" aria-hidden="true">
                 <line x1="0" y1="1.5" x2="100%" y2="1.5" stroke="#C6A43F" strokeWidth="2" strokeDasharray="4 4" className="animate-dash" />
               </svg>
@@ -296,7 +296,7 @@ export default function Team() {
             <p className="text-navy-500 text-sm">Want to join our expert faculty?</p>
             <a
               href="#contact"
-              className="inline-flex items-center gap-2 px-6 py-3 rounded-full bg-navy-800 text-white hover:bg-gold-500 hover:text-white transition-all duration-300 text-sm font-semibold group shadow-lg hover:shadow-xl"
+              className="inline-flex items-center gap-2 px-6 py-3 rounded-full bg-[#044dd4] text-white hover:bg-[#eb4800] hover:text-white transition-all duration-300 text-sm font-semibold group shadow-lg hover:shadow-xl"
             >
               <span>Become a Mentor</span>
               <svg className="w-4 h-4 group-hover:translate-x-1 group-hover:translate-y-[-1px] transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">

@@ -13,7 +13,6 @@ const particles = [
   { id: 7, width: 3, height: 3, left: 75, top: 25, duration: 8, delay: 1 },
   { id: 8, width: 2, height: 2, left: 85, top: 35, duration: 10, delay: 4 },
   { id: 9, width: 4, height: 4, left: 95, top: 45, duration: 7, delay: 0.8 },
-
   { id: 10, width: 2, height: 2, left: 8, top: 55, duration: 9, delay: 2 },
   { id: 11, width: 3, height: 3, left: 18, top: 65, duration: 11, delay: 1.2 },
   { id: 12, width: 4, height: 4, left: 28, top: 75, duration: 8, delay: 2.8 },
@@ -194,7 +193,7 @@ const ProgressBar = ({
           style={{
             width: `${width}%`,
             transitionDuration: "1300ms",
-            background: "linear-gradient(90deg, #c6a43f, #2a4a72)",
+            background: "linear-gradient(90deg, #eb4800, #044dd4)",
           }}
           role="presentation"
         />
@@ -214,8 +213,6 @@ export default function About() {
   const [progressVisible, setProgressVisible] = useState(false);
   const [mousePosition, setMousePosition] = useState<{ x: number; y: number } | null>(null);
   const decorativeRef = useRef<HTMLDivElement>(null);
-
-  
 
   useEffect(() => {
     const observer = new IntersectionObserver(
@@ -275,20 +272,21 @@ export default function About() {
           className="absolute w-[500px] h-[500px] rounded-full opacity-[0.03] transition-all duration-300"
           style={{
             background: mousePosition
-  ? `radial-gradient(circle at ${mousePosition.x}% ${mousePosition.y}%, #1a2a3a 0%, transparent 70%)`
-  : "transparent",
+              ? `radial-gradient(circle at ${mousePosition.x}% ${mousePosition.y}%, #1a2a3a 0%, transparent 70%)`
+              : "transparent",
           }}
         />
         <div className="absolute inset-0">
           {particles.map((p) => (
             <div
               key={p.id}
-              className="absolute rounded-full bg-gold-400/5"
+              className="absolute rounded-full"
               style={{
                 width: `${p.width}px`,
                 height: `${p.height}px`,
                 left: `${p.left}%`,
                 top: `${p.top}%`,
+                backgroundColor: "rgba(4, 77, 212, 0.05)",
                 animation: `floatDot ${p.duration}s ease-in-out infinite`,
                 animationDelay: `${p.delay}s`,
               }}
@@ -315,16 +313,29 @@ export default function About() {
             }`}
           >
             {/* Founding badge */}
-            <div className="inline-flex items-center gap-2 bg-gold-100/50 backdrop-blur-sm border border-gold-200 rounded-full px-3 py-1.5 mb-4 group hover:bg-gold-100 hover:border-gold-300 hover:-translate-y-0.5 transition-all duration-300 cursor-default">
-              <span className="w-1.5 h-1.5 bg-gold-500 rounded-full animate-pulse-ring" aria-hidden="true" />
-              <span className="text-gold-700 text-xs font-medium tracking-wide">
+            <div
+              className="inline-flex items-center gap-2 backdrop-blur-sm border rounded-full px-3 py-1.5 mb-4 group hover:-translate-y-0.5 transition-all duration-300 cursor-default"
+              style={{
+                backgroundColor: "rgba(235, 72, 0, 0.06)",
+                borderColor: "rgba(235, 72, 0, 0.25)",
+              }}
+            >
+              <span
+                className="w-1.5 h-1.5 rounded-full animate-pulse-ring"
+                style={{ backgroundColor: "#eb4800" }}
+                aria-hidden="true"
+              />
+              <span className="text-xs font-medium tracking-wide" style={{ color: "#eb4800" }}>
                 Founded May <AnimatedYear />
               </span>
             </div>
 
             {/* Section label */}
-            <p className="text-gold-600 font-semibold text-sm tracking-widest uppercase mb-3 flex items-center gap-2">
-              <span className="w-8 h-px bg-gold-400" aria-hidden="true" />
+            <p
+              className="font-semibold text-sm tracking-widest uppercase mb-3 flex items-center gap-2"
+              style={{ color: "#044dd4" }}
+            >
+              <span className="w-8 h-px" style={{ backgroundColor: "#044dd4" }} aria-hidden="true" />
               Who We Are
             </p>
 
@@ -337,9 +348,10 @@ export default function About() {
               <span className="text-navy-600 relative inline-block group">
                 A Launchpad
                 <span
-                  className={`absolute -bottom-1 left-0 h-0.5 bg-gradient-to-r from-gold-500 to-gold-200 rounded-full transition-all duration-700 delay-300 ${
+                  className={`absolute -bottom-1 left-0 h-0.5 rounded-full transition-all duration-700 delay-300 ${
                     sectionVisible ? "w-full" : "w-0"
                   }`}
+                  style={{ background: "linear-gradient(to right, #eb4800, rgba(235,72,0,0.2))" }}
                   aria-hidden="true"
                 />
               </span>
@@ -367,8 +379,11 @@ export default function About() {
                 <span
                   key={badge}
                   role="listitem"
-                  className="bg-navy-600 text-white px-3 sm:px-4 py-1.5 rounded-full text-xs font-semibold tracking-wide transition-all duration-300 hover:bg-gold-600 hover:-translate-y-0.5 hover:shadow-md cursor-default group relative overflow-hidden"
-                  style={{ transitionDelay: `${idx * 50}ms` }}
+                  className="text-white px-3 sm:px-4 py-1.5 rounded-full text-xs font-semibold tracking-wide transition-all duration-300 hover:-translate-y-0.5 hover:shadow-md cursor-default group relative overflow-hidden"
+                  style={{
+                    backgroundColor: "#044dd4",
+                    transitionDelay: `${idx * 50}ms`,
+                  }}
                 >
                   <span className="relative z-10">{badge}</span>
                   <span
@@ -382,10 +397,11 @@ export default function About() {
             {/* Stats row */}
             <div className="pt-6 border-t border-navy-100/50 flex gap-6 mb-8">
               <div className="group cursor-default">
-                <p className="text-2xl font-bold text-gold-600 relative inline-block">
+                <p className="text-2xl font-bold relative inline-block" style={{ color: "#eb4800" }}>
                   <AnimatedCounter target={20} suffix="+" />
                   <span
-                    className="absolute -bottom-1 left-0 w-full h-0.5 bg-gold-400 scale-x-0 group-hover:scale-x-100 transition-transform duration-300 origin-left"
+                    className="absolute -bottom-1 left-0 w-full h-0.5 scale-x-0 group-hover:scale-x-100 transition-transform duration-300 origin-left"
+                    style={{ backgroundColor: "#eb4800" }}
                     aria-hidden="true"
                   />
                 </p>
@@ -395,10 +411,11 @@ export default function About() {
               <div className="w-px bg-navy-100" aria-hidden="true" />
 
               <div className="group cursor-default">
-                <p className="text-2xl font-bold text-gold-600 relative inline-block">
+                <p className="text-2xl font-bold relative inline-block" style={{ color: "#eb4800" }}>
                   <AnimatedCounter target={30} suffix="+" />
                   <span
-                    className="absolute -bottom-1 left-0 w-full h-0.5 bg-gold-400 scale-x-0 group-hover:scale-x-100 transition-transform duration-300 origin-left"
+                    className="absolute -bottom-1 left-0 w-full h-0.5 scale-x-0 group-hover:scale-x-100 transition-transform duration-300 origin-left"
+                    style={{ backgroundColor: "#eb4800" }}
                     aria-hidden="true"
                   />
                 </p>
@@ -408,10 +425,11 @@ export default function About() {
               <div className="w-px bg-navy-100" aria-hidden="true" />
 
               <div className="group cursor-default">
-                <p className="text-2xl font-bold text-gold-600 relative inline-block">
+                <p className="text-2xl font-bold relative inline-block" style={{ color: "#eb4800" }}>
                   <AnimatedCounter target={1} suffix="st" />
                   <span
-                    className="absolute -bottom-1 left-0 w-full h-0.5 bg-gold-400 scale-x-0 group-hover:scale-x-100 transition-transform duration-300 origin-left"
+                    className="absolute -bottom-1 left-0 w-full h-0.5 scale-x-0 group-hover:scale-x-100 transition-transform duration-300 origin-left"
+                    style={{ backgroundColor: "#eb4800" }}
                     aria-hidden="true"
                   />
                 </p>
@@ -422,12 +440,16 @@ export default function About() {
             {/* ── Launch Readiness progress bars ── */}
             <div
               ref={progressRef}
-              className={`bg-white/70 backdrop-blur-sm border border-gold-200/50 rounded-xl p-4 sm:p-5 mb-6 transition-all duration-700 delay-100 ${
+              className={`bg-white/70 backdrop-blur-sm rounded-xl p-4 sm:p-5 mb-6 transition-all duration-700 delay-100 ${
                 sectionVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"
               }`}
+              style={{ border: "1px solid rgba(4, 77, 212, 0.15)" }}
               aria-label="Launch readiness"
             >
-              <p className="text-xs font-semibold text-navy-600 uppercase tracking-widest mb-4">
+              <p
+                className="text-xs font-semibold uppercase tracking-widest mb-4"
+                style={{ color: "#044dd4" }}
+              >
                 Launch Readiness
               </p>
               {outcomes.map((o, i) => (
@@ -443,12 +465,16 @@ export default function About() {
 
             {/* ── Journey timeline ── */}
             <div
-              className={`border-l-2 border-gold-500 pl-4 transition-all duration-700 delay-200 ${
+              className={`pl-4 transition-all duration-700 delay-200 ${
                 sectionVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"
               }`}
+              style={{ borderLeft: "2px solid #044dd4" }}
               aria-label="Our journey so far"
             >
-              <p className="text-xs font-semibold text-gold-700 uppercase tracking-widest mb-3">
+              <p
+                className="text-xs font-semibold uppercase tracking-widest mb-3"
+                style={{ color: "#044dd4" }}
+              >
                 Our Journey
               </p>
               <ol className="space-y-2.5" role="list">
@@ -461,8 +487,16 @@ export default function About() {
                     style={{ transitionDelay: `${300 + i * 100}ms` }}
                   >
                     <span className="text-xs font-bold text-navy-800 w-16 shrink-0">{m.year}</span>
-                    <span className="w-2 h-2 bg-gold-400 rounded-full shrink-0" aria-hidden="true" />
-                    <span className="flex-1 h-px bg-gradient-to-r from-gold-300/50 to-transparent" aria-hidden="true" />
+                    <span
+                      className="w-2 h-2 rounded-full shrink-0"
+                      style={{ backgroundColor: "#eb4800" }}
+                      aria-hidden="true"
+                    />
+                    <span
+                      className="flex-1 h-px"
+                      style={{ background: "linear-gradient(to right, rgba(4,77,212,0.25), transparent)" }}
+                      aria-hidden="true"
+                    />
                     <span className="text-xs text-navy-500 text-right">{m.label}</span>
                   </li>
                 ))}
@@ -479,15 +513,24 @@ export default function About() {
                   tabIndex={0}
                   className={`group bg-white border border-navy-100 rounded-2xl p-5 sm:p-6 relative overflow-hidden cursor-default outline-none
                     transition-all duration-300
-                    hover:shadow-card-hover hover:-translate-y-1 hover:border-gold-200/60
-                    focus-visible:ring-2 focus-visible:ring-gold-400 focus-visible:ring-offset-2
+                    hover:shadow-card-hover hover:-translate-y-1
+                    focus-visible:ring-2 focus-visible:ring-offset-2
                     ${pillarsVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-6"}`}
-                  style={{ transitionDelay: pillarsVisible ? `${i * 80}ms` : "0ms" }}
+                  style={{
+                    transitionDelay: pillarsVisible ? `${i * 80}ms` : "0ms",
+                  }}
                   aria-label={p.title}
+                  onMouseEnter={(e) => {
+                    (e.currentTarget as HTMLElement).style.borderColor = "rgba(4, 77, 212, 0.25)";
+                  }}
+                  onMouseLeave={(e) => {
+                    (e.currentTarget as HTMLElement).style.borderColor = "";
+                  }}
                 >
                   {/* Hover gradient overlay */}
                   <div
-                    className="absolute inset-0 bg-gradient-to-br from-gold-50/0 to-gold-50/0 group-hover:from-gold-50/40 group-hover:to-transparent transition-all duration-500"
+                    className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-all duration-500"
+                    style={{ background: "linear-gradient(135deg, rgba(4,77,212,0.03), transparent)" }}
                     aria-hidden="true"
                   />
 
@@ -495,7 +538,7 @@ export default function About() {
                   <div
                     className="absolute top-0 right-0 w-10 h-10 opacity-0 group-hover:opacity-100 transition-opacity duration-300"
                     style={{
-                      background: "linear-gradient(135deg, transparent 50%, rgba(198,164,63,0.1) 50%)",
+                      background: "linear-gradient(135deg, transparent 50%, rgba(4,77,212,0.08) 50%)",
                       borderRadius: "0 16px 0 0",
                     }}
                     aria-hidden="true"
@@ -504,17 +547,23 @@ export default function About() {
                   {/* Icon */}
                   <div className="relative mb-3">
                     <div
-                      className="w-10 h-10 bg-gold-100 text-gold-600 rounded-xl flex items-center justify-center transition-all duration-300 group-hover:bg-gold-500 group-hover:text-white group-hover:scale-110 group-hover:rotate-3 relative"
+                      className="w-10 h-10 rounded-xl flex items-center justify-center transition-all duration-300 group-hover:scale-110 group-hover:rotate-3 relative"
+                      style={{
+                        backgroundColor: "rgba(4, 77, 212, 0.08)",
+                        color: "#044dd4",
+                      }}
                       aria-hidden="true"
                     >
                       {p.icon}
                       <span
-                        className="absolute -inset-1.5 border border-dashed border-gold-300 rounded-[14px] opacity-0 scale-90 group-hover:opacity-100 group-hover:scale-100 transition-all duration-300"
+                        className="absolute -inset-1.5 border border-dashed rounded-[14px] opacity-0 scale-90 group-hover:opacity-100 group-hover:scale-100 transition-all duration-300"
+                        style={{ borderColor: "rgba(4,77,212,0.35)" }}
                         aria-hidden="true"
                       />
                     </div>
                     <span
-                      className="absolute -top-1 -right-1 w-2 h-2 bg-gold-400 rounded-full border-2 border-white opacity-0 scale-0 group-hover:opacity-100 group-hover:scale-100 transition-all duration-300 delay-100"
+                      className="absolute -top-1 -right-1 w-2 h-2 rounded-full border-2 border-white opacity-0 scale-0 group-hover:opacity-100 group-hover:scale-100 transition-all duration-300 delay-100"
+                      style={{ backgroundColor: "#eb4800" }}
                       aria-hidden="true"
                     />
                   </div>
@@ -522,7 +571,8 @@ export default function About() {
                   <h3 className="font-display font-semibold text-navy-900 text-sm sm:text-base mb-2 relative inline-block">
                     {p.title}
                     <span
-                      className="absolute -bottom-1 left-0 w-0 h-0.5 bg-gold-400 group-hover:w-full transition-all duration-300 origin-left"
+                      className="absolute -bottom-1 left-0 w-0 h-0.5 group-hover:w-full transition-all duration-300 origin-left"
+                      style={{ backgroundColor: "#044dd4" }}
                       aria-hidden="true"
                     />
                   </h3>
@@ -535,7 +585,7 @@ export default function About() {
                     className="mt-3 opacity-0 group-hover:opacity-100 translate-x-[-6px] group-hover:translate-x-0 transition-all duration-250"
                     aria-hidden="true"
                   >
-                    <span className="text-gold-500 text-xs flex items-center gap-1">
+                    <span className="text-xs flex items-center gap-1" style={{ color: "#eb4800" }}>
                       Learn more
                       <svg className="w-3 h-3 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
@@ -548,14 +598,16 @@ export default function About() {
 
             {/* ── Founder's note ── */}
             <blockquote
-              className={`bg-white border border-gold-200/40 rounded-2xl p-5 sm:p-6 relative transition-all duration-700 delay-500 ${
+              className={`bg-white rounded-2xl p-5 sm:p-6 relative transition-all duration-700 delay-500 ${
                 pillarsVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"
               }`}
+              style={{ border: "1px solid rgba(4, 77, 212, 0.15)" }}
               aria-label="Founder's note"
             >
               {/* Decorative quote mark */}
               <span
-                className="absolute top-3 left-4 text-5xl leading-none text-gold-300/40 font-serif select-none pointer-events-none"
+                className="absolute top-3 left-4 text-5xl leading-none font-serif select-none pointer-events-none"
+                style={{ color: "rgba(235, 72, 0, 0.2)" }}
                 aria-hidden="true"
               >
                 &ldquo;
@@ -570,7 +622,7 @@ export default function About() {
               <footer className="flex items-center gap-3 mt-4 pl-5">
                 <div
                   className="w-9 h-9 rounded-full flex items-center justify-center text-xs font-bold text-white shrink-0"
-                  style={{ background: "linear-gradient(135deg, #1e3a5f, #c6a43f)" }}
+                  style={{ background: "linear-gradient(135deg, #044dd4, #eb4800)" }}
                   aria-hidden="true"
                 >
                   AK
@@ -602,9 +654,9 @@ export default function About() {
           50% { transform: translateY(-30px) translateX(15px); opacity: 1; }
         }
         @keyframes pulse-ring {
-          0% { box-shadow: 0 0 0 0 rgba(198, 164, 63, 0.5); }
-          50% { box-shadow: 0 0 0 6px rgba(198, 164, 63, 0); }
-          100% { box-shadow: 0 0 0 0 rgba(198, 164, 63, 0); }
+          0% { box-shadow: 0 0 0 0 rgba(235, 72, 0, 0.5); }
+          50% { box-shadow: 0 0 0 6px rgba(235, 72, 0, 0); }
+          100% { box-shadow: 0 0 0 0 rgba(235, 72, 0, 0); }
         }
         .animate-pulse-ring {
           animation: pulse-ring 2.4s ease-in-out infinite;
