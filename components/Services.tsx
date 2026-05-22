@@ -712,7 +712,7 @@ export default function Services() {
         <div className="text-center mt-10 sm:mt-12">
           <a
             href="#contact"
-            className="inline-flex items-center gap-2 px-6 py-3 rounded-full border text-sm font-semibold group focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-offset-navy-900 transition-all duration-300"
+            className="inline-flex items-center gap-2 px-6 py-3 rounded-full border text-sm bg-white font-semibold group focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-offset-navy-900 transition-all duration-300"
             style={{
               borderColor: "rgba(4,77,212,0.35)",
               color: "#044dd4",
@@ -723,7 +723,7 @@ export default function Services() {
               (e.currentTarget as HTMLElement).style.color = "#ffffff";
             }}
             onMouseLeave={(e) => {
-              (e.currentTarget as HTMLElement).style.backgroundColor = "transparent";
+              (e.currentTarget as HTMLElement).style.backgroundColor = "#f4f4f4";
               (e.currentTarget as HTMLElement).style.borderColor = "rgba(4,77,212,0.35)";
               (e.currentTarget as HTMLElement).style.color = "#044dd4";
             }}

@@ -9,8 +9,8 @@ export default function Header() {
       role="banner"
       className="fixed top-0 left-0 right-0 z-50 bg-white transition-all duration-300"
     >
-      <div className="max-w-7xl mx-auto px-4 py-2">
-        <div className="flex items-center justify-between h-14 sm:h-16 lg:h-20">
+      <div className="max-w-7xl mx-auto px-4 pt-3.5 pb-2">
+        <div className="flex items-center justify-between">
           {/* Logo */}
           <a>
             <Image
@@ -18,7 +18,7 @@ export default function Header() {
             alt="Logo"
             width={350}
             height={40}
-            className="w-40 sm:w-80"
+            className="w-40 sm:w-96"
             priority
             />
           </a>

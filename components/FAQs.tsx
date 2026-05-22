@@ -426,7 +426,7 @@ export default function FAQs() {
         {[0, 1, 2].map((i) => (
           <div
             key={i}
-            className="absolute text-navy-200/10 font-bold text-6xl select-none"
+            className="absolute text-rose-800/20 font-bold text-6xl select-none"
             style={{
               left: `${10 + i * 30}%`,
               top: `${20 + i * 25}%`,
@@ -494,7 +494,7 @@ export default function FAQs() {
             <div className="flex flex-col gap-2.5 mb-6">
               {[
                 { icon: "⏱", text: "Response within 24 hours" },
-                { icon: "🎓", text: "Founding batch — Aug 2026" },
+                { icon: "🎓", text: "Founding batch — Jun 2026" },
                 { icon: "💡", text: "10 questions answered below" },
               ].map(({ icon, text }) => (
                 <div key={text} className="flex items-center gap-2.5">

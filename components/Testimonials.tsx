@@ -405,7 +405,7 @@ export default function Testimonials({ data }: any) {
         <div className="text-center mt-10">
           <a
             href="#contact"
-            className="inline-flex items-center gap-2 text-[#044dd4] hover:text-[#eb4800] text-sm transition-colors duration-300 group"
+            className="inline-flex items-center gap-2 text-white hover:text-[#eb4800] font-semibold text-sm transition-colors duration-300 group"
           >
             <span>Share your IPBM journey</span>
             <svg

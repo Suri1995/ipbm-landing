@@ -268,7 +268,7 @@ export default function Hero() {
           }}
         />
 
-        <div className="relative max-w-7xl mx-auto px-4 pt-7 pb-7 sm:pt-28 sm:pb-20 w-full">
+        <div className="relative max-w-7xl mx-auto px-4 pt-7 pb-7 sm:pt-32 sm:pb-20 w-full">
           <div className="grid lg:grid-cols-2 gap-8 sm:gap-10 lg:gap-16 items-center">
             {/* Left content */}
             <div
@@ -398,7 +398,7 @@ export default function Hero() {
                         🚀 First Batch
                       </span>
                       <span className="text-gold-400 text-xs sm:text-sm font-bold flex items-center gap-1">
-                        Starting Aug 2026
+                        Starting Jun 2026
                         <svg
                           className="w-3 h-3 animate-pulse"
                           fill="none"

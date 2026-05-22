@@ -23,7 +23,7 @@ export default function Footer() {
                 priority
               />
             </a>
-            <p className="text-navy-400 text-sm leading-relaxed max-w-xs">
+            <p className="text-navy-400 text-sm leading-relaxed max-w-xs mt-4">
               Shaping India&apos;s future business leaders through practical,
               industry-aligned education since 2009.
             </p>
