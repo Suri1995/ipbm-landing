@@ -2,763 +2,508 @@
 
 import { useEffect, useRef, useState, useMemo, useCallback } from "react";
 
-const programs = [
+// ─── DATA ────────────────────────────────────────────────────────────────────
+
+const modules = [
   {
-    tag: "Flagship",
-    title: "MBA in Business Management",
-    duration: "2 Years",
-    mode: "Full-time",
-    seats: "60 seats",
-    intake: "Aug 2026",
-    status: "Enrolling Now",
-    highlights: [
-      "Strategic Management",
-      "Finance & Accounting",
-      "HR Management",
-      "Marketing Strategy",
+    id: "foundations", label: "Business Foundations", color: "#044dd4",
+    topics: [
+      { num: "01", title: "Startup Management", essentials: ["Business models & org structures", "Operational vs strategic thinking", "Basic business planning"], performance: ["Validate ideas before scaling", "MVP thinking — start lean, iterate fast", "Real startup case studies"] },
+      { num: "02", title: "Financial Management", essentials: ["Reading P&L, balance sheet, cash flow", "Budgeting — departmental & project level", "Revenue vs profit vs cost"], performance: ["ROI analysis for decisions", "Forecast planning & variance reporting", "Cost control mindset"] },
+      { num: "03", title: "Risk Management", essentials: ["Types of risk — financial, operational, reputational", "Basic risk identification & assessment", "Escalation protocols"], performance: ["Build risk matrices for projects", "Scenario planning & contingency development", "Communicate risks upward without panic"] },
+      { num: "04", title: "Project Management", essentials: ["Project lifecycle: Initiation → Planning → Execution → Closure", "Setting SMART goals & milestones", "Gantt charts, task trackers"], performance: ["Agile vs Waterfall methodology", "Stakeholder management during projects", "Managing scope creep & deadline pressure"] },
+      { num: "05", title: "Operations Management", essentials: ["Workflows & standard operating procedures", "Resource allocation fundamentals", "Quality vs efficiency tradeoffs"], performance: ["Process mapping & Kaizen basics", "KPI setting & performance monitoring", "Bottleneck identification & resolution"] },
+      { num: "06", title: "Family Business Management", essentials: ["Family-run vs professionally run businesses", "Role clarity & avoiding nepotism", "Governance structures"], performance: ["Succession planning fundamentals", "Conflict resolution in personal-professional overlap", "Professionalizing for scale"] },
     ],
-    isDark: true,
   },
   {
-    tag: "Popular",
-    title: "PGDM – Post Graduate Diploma",
-    duration: "1 Year",
-    mode: "Full-time / Part-time",
-    seats: "80 seats",
-    intake: "Aug 2026",
-    status: "Applications Open",
-    highlights: [
-      "Business Analytics",
-      "Operations",
-      "Entrepreneurship",
-      "Digital Marketing",
+    id: "sales", label: "Sales & Marketing", color: "#eb4800",
+    topics: [
+      { num: "07", title: "Sales & Marketing Management", essentials: ["Sales funnel — awareness to conversion", "B2B vs B2C selling", "Basic target setting & tracking"], performance: ["Leading a sales team", "Integrating marketing into sales cycles", "Data-driven sales forecasting"] },
+      { num: "08", title: "E-Commerce & Digital Marketing", essentials: ["SEO, SEM, Social Media basics", "E-commerce platforms & customer journeys", "Key metrics: CTR, CAC, conversion rate"], performance: ["Running & analyzing digital campaigns", "Content strategy & omnichannel thinking", "Google Analytics, Meta Ads Manager"] },
+      { num: "09", title: "Business Networking", essentials: ["Why networking matters for managers", "How to introduce yourself & your org", "Building genuine professional relationships"], performance: ["Strategic networking — who & why", "Leveraging LinkedIn & industry events", "Creating value before asking for anything"] },
+      { num: "10", title: "Brand Management", essentials: ["Visual identity vs brand value", "How managers represent the brand", "Consistency in communication & behavior"], performance: ["Brand positioning & competitive differentiation", "Internal brand culture", "Crisis communication & brand protection"] },
+      { num: "11", title: "Market Research", essentials: ["Primary vs secondary research", "Understanding your customer", "Reading & interpreting basic market data"], performance: ["Competitive benchmarking techniques", "Consumer insight translation", "Using research to support business cases"] },
     ],
-    isDark: false,
   },
   {
-    tag: "Executive",
-    title: "Executive MBA",
-    duration: "18 Months",
-    mode: "Weekend / Online",
-    seats: "40 seats",
-    intake: "Sep 2026",
-    status: "Early Access",
-    highlights: [
-      "Leadership Development",
-      "Corporate Finance",
-      "Supply Chain",
-      "Innovation Strategy",
+    id: "tech", label: "Tech & Analytics", color: "#0891b2",
+    topics: [
+      { num: "12", title: "Data Analytics", essentials: ["Data your team/org generates", "Reading dashboards & reports intelligently", "KPIs vs vanity metrics"], performance: ["Basic Excel/Google Sheets analysis", "Interpreting trend data for decisions", "Presenting data stories to non-technical audiences"] },
+      { num: "13", title: "AI & Productivity in Management", essentials: ["AI tools for managers (ChatGPT, Copilot, Notion AI)", "Automating repetitive tasks", "AI ethics basics"], performance: ["Integrating AI into team workflows", "AI for faster research, content & decisions", "Staying updated in a rapidly changing landscape"] },
     ],
-    isDark: false,
   },
   {
-    tag: "Certificate",
-    title: "Short-Term Certification",
-    duration: "3–6 Months",
-    mode: "Online & Offline",
-    seats: "Open enrollment",
-    intake: "Rolling",
-    status: "Always Open",
-    highlights: [
-      "Sales Leadership",
-      "Financial Modeling",
-      "Brand Management",
-      "Startup Fundamentals",
+    id: "people", label: "People & Communication", color: "#7c3aed",
+    topics: [
+      { num: "14", title: "HR Management", essentials: ["Recruitment basics — JDs, interviewing, selecting", "Onboarding a new team member", "Leave policies, performance cycles, disciplinary processes"], performance: ["Performance management & PIPs", "Building psychologically safe teams", "Talent retention & career development"] },
+      { num: "15", title: "Public Speaking", essentials: ["Overcoming fear of speaking", "Structuring a clear message", "Eye contact, voice modulation, body language"], performance: ["Leading town halls, presentations & pitches", "Storytelling as a leadership tool", "Handling Q&A & tough questions"] },
+      { num: "16", title: "Time & Stress Management", essentials: ["Time auditing — where does time actually go?", "Eisenhower Matrix, 80/20 rule", "Recognizing early signs of burnout"], performance: ["Deep work habits & focus blocks", "Managing team workload", "Sustainable high-performance routines"] },
+      { num: "17", title: "Business Communication", essentials: ["Written communication — emails, reports, memos", "Meeting management — agenda, facilitation, minutes", "Active listening as a management skill"], performance: ["Adapting style for different audiences", "Difficult conversations — feedback, conflict", "Cross-cultural communication"] },
     ],
-    isDark: false,
+  },
+  {
+    id: "global", label: "Global & Operations", color: "#059669",
+    topics: [
+      { num: "18", title: "International Business", essentials: ["How global markets differ", "Import/export basics & trade fundamentals", "Understanding global supply chains"], performance: ["Cross-cultural business etiquette & negotiation", "Managing remote/international teams", "Market entry strategies"] },
+      { num: "19", title: "Event Management", essentials: ["Planning a team/org event from scratch", "Budget management for events", "Coordinating vendors, timelines & logistics"], performance: ["Large-scale event planning with multiple stakeholders", "Risk planning for events", "Events as leadership visibility & team building"] },
+      { num: "20", title: "Logistics & Supply Chain", essentials: ["What is a supply chain?", "Inventory basics — too much vs too little", "Procurement & vendor relationships"], performance: ["Supply chain disruption management", "Cost optimization in procurement & distribution", "ERP basics & tracking systems"] },
+    ],
   },
 ];
 
-const statusStyles: Record<string, string> = {
-  "Enrolling Now":     "bg-emerald-500/15 text-emerald-400 border-emerald-500/30",
-  "Applications Open": "bg-blue-500/15   text-blue-400   border-blue-500/30",
-  "Early Access":      "bg-amber-500/15  text-amber-400  border-amber-500/30",
-  "Always Open":       "bg-purple-500/15 text-purple-400 border-purple-500/30",
-};
+type TopicType = typeof modules[0]["topics"][0];
+type ModuleType = typeof modules[0];
 
-const statusStylesLight: Record<string, string> = {
-  "Enrolling Now":     "bg-emerald-50 text-emerald-700 border-emerald-200",
-  "Applications Open": "bg-blue-50   text-blue-700   border-blue-200",
-  "Early Access":      "bg-amber-50  text-amber-700  border-amber-200",
-  "Always Open":       "bg-purple-50 text-purple-700 border-purple-200",
-};
+const allTopics = modules.flatMap(m =>
+  m.topics.map(t => ({ ...t, moduleColor: m.color, moduleLabel: m.label }))
+);
 
-const SeatCounter = ({
-  seats,
-  isDark,
-}: {
-  seats: string;
-  isDark: boolean;
-}) => {
-  const [count, setCount] = useState(0);
-  const elementRef = useRef<HTMLSpanElement>(null);
-  const hasAnimated = useRef(false);
-  const targetCount = parseInt(seats) || 0;
-  const isOpen = seats === "Open enrollment";
+// ─── TILT CARD ────────────────────────────────────────────────────────────────
 
-  useEffect(() => {
-    if (isOpen) return;
-    const prefersReduced = window.matchMedia(
-      "(prefers-reduced-motion: reduce)"
-    ).matches;
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (
-            entry.isIntersecting &&
-            !hasAnimated.current &&
-            targetCount > 0
-          ) {
-            hasAnimated.current = true;
-            if (prefersReduced) {
-              setCount(targetCount);
-              return;
-            }
-            const duration = 1800;
-            const startTime = performance.now();
-            const animate = (currentTime: number) => {
-              const elapsed = currentTime - startTime;
-              const progress = Math.min(elapsed / duration, 1);
-              const ease = 1 - Math.pow(1 - progress, 3);
-              setCount(Math.floor(ease * targetCount));
-              if (progress < 1) requestAnimationFrame(animate);
-              else setCount(targetCount);
-            };
-            requestAnimationFrame(animate);
-          }
-        });
-      },
-      { threshold: 0.3 }
-    );
-    if (elementRef.current) observer.observe(elementRef.current);
-    return () => observer.disconnect();
-  }, [targetCount, isOpen]);
+const TiltCard = ({ children, accent }: { children: React.ReactNode; accent: string }) => {
+  const ref = useRef<HTMLDivElement>(null);
+  const [rot, setRot] = useState({ x: 0, y: 0 });
+  const [hov, setHov] = useState(false);
+  const raf = useRef(0);
 
-  if (isOpen)
-    return (
-      <span ref={elementRef} className="flex items-center gap-1">
-        ✨ {seats}
-      </span>
-    );
-  return (
-    <span ref={elementRef} aria-live="polite">
-      {count === 0 ? seats : `${count} seats`}
-    </span>
-  );
-};
-
-const TiltCard = ({
-  children,
-  isDark,
-}: {
-  children: React.ReactNode;
-  isDark: boolean;
-}) => {
-  const cardRef = useRef<HTMLDivElement>(null);
-  const [rotate, setRotate] = useState({ x: 0, y: 0 });
-  const [isHovered, setIsHovered] = useState(false);
-  const rafRef = useRef<number>(0);
-
-  const handleMouseMove = useCallback(
-    (e: React.MouseEvent<HTMLDivElement>) => {
-      if (!cardRef.current) return;
-      cancelAnimationFrame(rafRef.current);
-      rafRef.current = requestAnimationFrame(() => {
-        if (!cardRef.current) return;
-        const rect = cardRef.current.getBoundingClientRect();
-        const x = e.clientX - rect.left;
-        const y = e.clientY - rect.top;
-        setRotate({
-          x: ((y - rect.height / 2) / rect.height) * 8,
-          y: ((x - rect.width / 2) / rect.width) * 8,
-        });
+  const onMove = useCallback((e: React.MouseEvent<HTMLDivElement>) => {
+    if (!ref.current) return;
+    cancelAnimationFrame(raf.current);
+    raf.current = requestAnimationFrame(() => {
+      if (!ref.current) return;
+      const r = ref.current.getBoundingClientRect();
+      setRot({
+        x: ((e.clientY - r.top - r.height / 2) / r.height) * 7,
+        y: ((e.clientX - r.left - r.width / 2) / r.width) * 7,
       });
-    },
-    []
-  );
-
-  const handleMouseLeave = useCallback(() => {
-    cancelAnimationFrame(rafRef.current);
-    setRotate({ x: 0, y: 0 });
-    setIsHovered(false);
+    });
   }, []);
 
   return (
     <div
-      ref={cardRef}
-      onMouseMove={handleMouseMove}
-      onMouseLeave={handleMouseLeave}
-      onMouseEnter={() => setIsHovered(true)}
-      style={{
-        transform: `perspective(1000px) rotateX(${rotate.x}deg) rotateY(${rotate.y}deg)`,
-        transition: "transform 0.1s ease-out",
-        willChange: "transform",
-      }}
-      className="relative"
+      ref={ref}
+      onMouseMove={onMove}
+      onMouseEnter={() => setHov(true)}
+      onMouseLeave={() => { cancelAnimationFrame(raf.current); setRot({ x: 0, y: 0 }); setHov(false); }}
+      style={{ transform: `perspective(1000px) rotateX(${rot.x}deg) rotateY(${rot.y}deg)`, transition: "transform 0.12s ease-out", willChange: "transform", position: "relative" }}
     >
       {children}
-      {isHovered && (
+      {hov && (
         <div
+          aria-hidden
           className="absolute inset-0 rounded-2xl pointer-events-none"
-          aria-hidden="true"
-          style={{
-            background: `radial-gradient(circle at ${50 + rotate.y * 2}% ${
-              50 + rotate.x * 2
-            }%, ${
-              isDark
-                ? "rgba(4,77,212,0.15)"
-                : "rgba(235,72,0,0.08)"
-            }, transparent 70%)`,
-          }}
+          style={{ background: `radial-gradient(circle at ${50 + rot.y * 3}% ${50 + rot.x * 3}%, ${accent}1f, transparent 65%)` }}
         />
       )}
     </div>
   );
 };
 
-const SeatsBar = ({
-  seats,
-  isDark,
-  visible,
-  delay,
+// ─── TOPIC ROW ────────────────────────────────────────────────────────────────
+
+const TopicRow = ({
+  topic, color, index, visible,
 }: {
-  seats: string;
-  isDark: boolean;
-  visible: boolean;
-  delay: number;
+  topic: TopicType; color: string; index: number; visible: boolean;
 }) => {
-  const isOpen = seats === "Open enrollment";
-  const total = parseInt(seats) || 0;
-  const filledPct = isOpen ? 0 : Math.min(Math.floor((total / 120) * 55 + 20), 78);
-  const [width, setWidth] = useState(0);
-
-  useEffect(() => {
-    if (!visible || isOpen) return;
-    const prefersReduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-    const timer = setTimeout(
-      () => setWidth(filledPct),
-      prefersReduced ? 0 : delay
-    );
-    return () => clearTimeout(timer);
-  }, [visible, filledPct, isOpen, delay]);
-
-  if (isOpen) return null;
-
-  const remaining = Math.round(total * (1 - filledPct / 100));
+  const [open, setOpen] = useState(false);
 
   return (
-    <div className="mt-4 mb-1">
-      <div
-        className={`flex justify-between text-xs mb-1.5 ${
-          isDark ? "text-navy-300" : "text-navy-500"
-        }`}
+    <div
+      style={{
+        borderRadius: 12,
+        border: open ? `1.5px solid ${color}45` : "1.5px solid rgba(255,255,255,0.06)",
+        background: open ? `linear-gradient(135deg, ${color}10, rgba(255,255,255,0.02))` : "rgba(255,255,255,0.025)",
+        marginBottom: 8,
+        transition: "all 0.3s cubic-bezier(0.4,0,0.2,1)",
+        opacity: visible ? 1 : 0,
+        transform: visible ? "translateY(0)" : "translateY(10px)",
+        transitionDelay: visible ? `${(index % 8) * 30}ms` : "0ms",
+        boxShadow: open ? `0 4px 24px ${color}15` : "none",
+      }}
+    >
+      <button
+        onClick={() => setOpen(o => !o)}
+        aria-expanded={open}
+        style={{ width: "100%", background: "none", border: "none", cursor: "pointer", padding: "16px 20px", display: "flex", alignItems: "center", gap: 14, textAlign: "left" }}
       >
-        <span>Seats filling fast</span>
-        <span
-          className="font-semibold"
-          style={{ color: isDark ? "#eb4800" : "#044dd4" }}
-          aria-label={`${remaining} seats remaining`}
+        <span style={{ fontFamily: "monospace", fontSize: 13, fontWeight: 700, color, opacity: 0.85, minWidth: 28, letterSpacing: "0.05em", flexShrink: 0 }}>{topic.num}</span>
+        <span style={{ flex: 1, color: "rgba(255,255,255,0.92)", fontWeight: 600, fontSize: 15, lineHeight: 1.4 }}>{topic.title}</span>
+        <svg
+          style={{ width: 16, height: 16, color: "rgba(255,255,255,0.4)", transform: open ? "rotate(180deg)" : "none", transition: "transform 0.25s", flexShrink: 0 }}
+          fill="none" stroke="currentColor" viewBox="0 0 24 24"
         >
-          {remaining} left
-        </span>
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M19 9l-7 7-7-7" />
+        </svg>
+      </button>
+      {open && (
+        <div style={{ padding: "0 20px 18px 62px", display: "grid", gridTemplateColumns: "1fr 1fr", gap: 20 }}>
+          <div>
+            <p style={{ fontSize: 12, fontWeight: 700, color: "rgba(255,255,255,0.4)", textTransform: "uppercase", letterSpacing: "0.1em", marginBottom: 10, fontFamily: "monospace" }}>Essentials</p>
+            <ul style={{ listStyle: "none", padding: 0, margin: 0 }}>
+              {topic.essentials.map((e: string, i: number) => (
+                <li key={i} style={{ display: "flex", alignItems: "flex-start", gap: 8, marginBottom: 6 }}>
+                  <span style={{ width: 5, height: 5, borderRadius: "50%", background: "rgba(255,255,255,0.3)", flexShrink: 0, marginTop: 6 }} />
+                  <span style={{ fontSize: 13, color: "rgba(255,255,255,0.65)", lineHeight: 1.55 }}>{e}</span>
+                </li>
+              ))}
+            </ul>
+          </div>
+          <div>
+            <p style={{ fontSize: 12, fontWeight: 700, color, textTransform: "uppercase", letterSpacing: "0.1em", marginBottom: 10, fontFamily: "monospace", opacity: 0.9 }}>Best Performance</p>
+            <ul style={{ listStyle: "none", padding: 0, margin: 0 }}>
+              {topic.performance.map((p: string, i: number) => (
+                <li key={i} style={{ display: "flex", alignItems: "flex-start", gap: 8, marginBottom: 6 }}>
+                  <span style={{ width: 5, height: 5, borderRadius: "50%", background: color, flexShrink: 0, marginTop: 6, opacity: 0.8 }} />
+                  <span style={{ fontSize: 13, color: "rgba(255,255,255,0.85)", lineHeight: 1.55, fontWeight: 500 }}>{p}</span>
+                </li>
+              ))}
+            </ul>
+          </div>
+        </div>
+      )}
+    </div>
+  );
+};
+
+// ─── SEAT BAR ─────────────────────────────────────────────────────────────────
+
+const SeatBar = ({ pct, color, visible, delay }: { pct: number; color: string; visible: boolean; delay: number }) => {
+  const [w, setW] = useState(0);
+  const left = Math.round(parseInt(String(pct)) > 0 ? 100 * (1 - pct / 100) : 0);
+  useEffect(() => {
+    if (!visible) return;
+    const t = setTimeout(() => setW(pct), delay);
+    return () => clearTimeout(t);
+  }, [visible, pct, delay]);
+  return (
+    <div style={{ marginTop: 12 }}>
+      <div style={{ display: "flex", justifyContent: "space-between", fontSize: 12, color: "rgba(255,255,255,0.4)", marginBottom: 6, fontFamily: "monospace" }}>
+        <span>Seats filling fast</span>
+        <span style={{ color, fontWeight: 700 }}>{left} left</span>
       </div>
-      <div
-        className={`h-1 rounded-full overflow-hidden ${
-          isDark ? "bg-white/10" : "bg-navy-100"
-        }`}
-        role="meter"
-        aria-valuenow={filledPct}
-        aria-valuemin={0}
-        aria-valuemax={100}
-        aria-label={`${filledPct}% of seats filled`}
-      >
-        <div
-          className="h-full rounded-full transition-all ease-out"
-          style={{
-            width: `${width}%`,
-            transitionDuration: "1400ms",
-            background: isDark
-              ? "linear-gradient(90deg, #eb4800, #044dd4)"
-              : "linear-gradient(90deg, #044dd4, #eb4800)",
-          }}
-          role="presentation"
-        />
+      <div style={{ height: 4, borderRadius: 999, background: "rgba(255,255,255,0.07)", overflow: "hidden" }} role="meter" aria-valuenow={pct} aria-valuemin={0} aria-valuemax={100}>
+        <div style={{ height: "100%", borderRadius: 999, width: `${w}%`, transition: "width 1.4s cubic-bezier(0.4,0,0.2,1)", background: `linear-gradient(90deg, ${color}, ${color}88)` }} />
       </div>
     </div>
   );
 };
 
-const IntakeCountdown = ({
-  intake,
-  isDark,
-}: {
-  intake: string;
-  isDark: boolean;
-}) => {
-  const [days, setDays] = useState<number | null>(null);
+// ─── COUNTDOWN ────────────────────────────────────────────────────────────────
 
+const Countdown = ({ intake, color }: { intake: string; color: string }) => {
+  const [days, setDays] = useState<number | null>(null);
   useEffect(() => {
     if (intake === "Rolling") return;
     const target = new Date(`${intake} 1`);
-    const now = new Date();
-    const diff = Math.ceil(
-      (target.getTime() - now.getTime()) / (1000 * 60 * 60 * 24)
-    );
-    setDays(diff > 0 ? diff : 0);
+    const diff = Math.max(0, Math.ceil((target.getTime() - Date.now()) / 86400000));
+    setDays(diff);
   }, [intake]);
-
   if (days === null) return null;
-
   return (
-    <span
-      className="inline-flex items-center gap-1 text-xs font-semibold px-2 py-0.5 rounded-full border"
-      style={
-        isDark
-          ? {
-              borderColor: "rgba(235,72,0,0.35)",
-              color: "#eb4800",
-              backgroundColor: "rgba(235,72,0,0.10)",
-            }
-          : {
-              borderColor: "rgba(4,77,212,0.2)",
-              color: "#044dd4",
-              backgroundColor: "rgba(4,77,212,0.05)",
-            }
-      }
-      aria-label={`Intake starts in ${days} days`}
-    >
-      <svg className="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
-        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+    <span style={{ display: "inline-flex", alignItems: "center", gap: 6, fontSize: 12, fontWeight: 700, padding: "4px 10px", borderRadius: 999, border: `1px solid ${color}38`, color, background: `${color}10`, fontFamily: "monospace" }}>
+      <svg style={{ width: 12, height: 12 }} fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
       </svg>
       {days}d to intake
     </span>
   );
 };
 
-const useParticles = (count: number) =>
-  useMemo(
-    () =>
-      Array.from({ length: count }, (_, i) => ({
-        id: i,
-        w: Math.random() * 3 + 1,
-        h: Math.random() * 3 + 1,
-        left: Math.random() * 100,
-        top: Math.random() * 100,
-        dur: Math.random() * 8 + 6,
-        delay: Math.random() * 5,
-      })),
-    [count]
-  );
+// ─── PARTICLES ────────────────────────────────────────────────────────────────
+
+const useParticles = (n: number) => useMemo(() =>
+  Array.from({ length: n }, (_, i) => ({
+    id: i,
+    left: Math.random() * 100,
+    top: Math.random() * 100,
+    size: Math.random() * 2.5 + 1,
+    dur: Math.random() * 8 + 6,
+    delay: Math.random() * 5,
+  })), [n]);
+
+// ─── MAIN EXPORT ─────────────────────────────────────────────────────────────
 
 export default function Services() {
   const sectionRef = useRef<HTMLElement>(null);
   const [visible, setVisible] = useState(false);
-  const [activeCard, setActiveCard] = useState<number | null>(null);
-  const [filter, setFilter] = useState<"All" | "Full-time" | "Online" | "Certificate">("All");
+  const [activeModule, setActiveModule] = useState("foundations");
+  const [search, setSearch] = useState("");
   const [isMounted, setIsMounted] = useState(false);
+  const particles = useParticles(22);
 
   useEffect(() => {
     setIsMounted(true);
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting) setVisible(true);
-      },
-      { threshold: 0.08 }
+    const obs = new IntersectionObserver(
+      ([e]) => { if (e.isIntersecting) setVisible(true); },
+      { threshold: 0.05 }
     );
-    if (sectionRef.current) observer.observe(sectionRef.current);
-    return () => observer.disconnect();
+    if (sectionRef.current) obs.observe(sectionRef.current);
+    return () => obs.disconnect();
   }, []);
 
-  const particles = useParticles(30);
+  const currentModule = modules.find(m => m.id === activeModule)!;
+  const isSearching = search.trim().length > 0;
 
-  const filtered = useMemo(() => {
-    if (filter === "All") return programs;
-    if (filter === "Full-time")
-      return programs.filter((p) => p.mode.includes("Full-time"));
-    if (filter === "Online")
-      return programs.filter(
-        (p) => p.mode.includes("Online") || p.mode.includes("Weekend")
-      );
-    if (filter === "Certificate") return programs.filter((p) => p.tag === "Certificate");
-    return programs;
-  }, [filter]);
+  const displayTopics = useMemo(() => {
+    if (!isSearching) return currentModule.topics.map(t => ({ ...t, moduleColor: currentModule.color }));
+    const q = search.toLowerCase();
+    return allTopics.filter(t =>
+      t.title.toLowerCase().includes(q) ||
+      t.essentials.some((e: string) => e.toLowerCase().includes(q))
+    );
+  }, [search, isSearching, currentModule]);
 
-  const filterTabs = ["All", "Full-time", "Online", "Certificate"] as const;
+  const programs = [
+    { tag: "Flagship", title: "45-Day Business Foundations", sub: "20 topics · 3 hrs/day · Certification included", duration: "45 Days", mode: "Online & Offline", seats: "50", intake: "Jun 2026", status: "Enrolling Now", color: "#eb4800", seatPct: 62, isDark: true },
+    { tag: "Diploma", title: "Business Management Diploma", sub: "Deep-dive into core business disciplines", duration: "6 Months", mode: "Full-time", seats: "60", intake: "Aug 2026", status: "Applications Open", color: "#044dd4", seatPct: 38, isDark: false },
+    { tag: "Executive", title: "Executive Leadership Program", sub: "For working professionals & team leaders", duration: "3 Months", mode: "Weekend / Online", seats: "40", intake: "Sep 2026", status: "Early Access", color: "#7c3aed", seatPct: 25, isDark: false },
+    { tag: "Certificate", title: "Short-Term Certification", sub: "Targeted skills in 3–6 months per domain", duration: "3–6 Months", mode: "Online & Offline", seats: "Open", intake: "Rolling", status: "Always Open", color: "#059669", seatPct: 0, isDark: false },
+  ] as const;
+
+  const statusBadge: Record<string, { bg: string; border: string; text: string }> = {
+    "Enrolling Now":     { bg: "rgba(235,72,0,0.18)",     border: "rgba(235,72,0,0.4)",     text: "#eb4800" },
+    "Applications Open": { bg: "rgba(4,77,212,0.18)",     border: "rgba(4,77,212,0.4)",     text: "#6699ff" },
+    "Early Access":      { bg: "rgba(124,58,237,0.18)",   border: "rgba(124,58,237,0.4)",   text: "#a78bfa" },
+    "Always Open":       { bg: "rgba(5,150,105,0.18)",    border: "rgba(5,150,105,0.4)",    text: "#34d399" },
+  };
+
+  const modIcons: Record<string, string> = { foundations: "🏛️", sales: "📈", tech: "⚡", people: "🤝", global: "🌐" };
 
   return (
     <section
       id="services"
       ref={sectionRef}
       aria-labelledby="services-heading"
-      className="py-7 sm:py-20 bg-navy-900 px-4 sm:px-6 relative overflow-hidden"
+      className="relative overflow-hidden py-20 sm:py-28"
+      style={{ background: "linear-gradient(175deg, #0a1628 0%, #0d1f45 55%, #0a1628 100%)" }}
     >
-      <div aria-hidden="true" className="absolute inset-0 overflow-hidden pointer-events-none">
-        <div
-          className="absolute inset-0 opacity-[0.07]"
-          style={{
-            backgroundImage: `radial-gradient(circle at 2px 2px, rgba(4,77,212,0.4) 1px, transparent 1px)`,
-            backgroundSize: "40px 40px",
-            animation: "gridPulse 4s ease-in-out infinite",
-          }}
-        />
-
-        <div>
-          {isMounted && particles.map((p) => (
-            <div
-              key={p.id}
-              className="absolute rounded-full"
-              style={{
-                width: `${p.w}px`,
-                height: `${p.h}px`,
-                left: `${p.left}%`,
-                top: `${p.top}%`,
-                backgroundColor: "rgba(235,72,0,0.10)",
-                animation: `floatParticle ${p.dur}s ease-in-out infinite`,
-                animationDelay: `${p.delay}s`,
-                willChange: "transform",
-              }}
-            />
-          ))}
-        </div>
-
-        <div className="absolute top-1/4 -right-48 w-96 h-96 rounded-full blur-3xl animate-pulse-slow" style={{ backgroundColor: "rgba(4,77,212,0.06)" }} />
-        <div className="absolute bottom-1/4 -left-48 w-96 h-96 rounded-full blur-3xl animate-pulse-slow animation-delay-2000" style={{ backgroundColor: "rgba(235,72,0,0.05)" }} />
+      {/* ── Atmosphere ── */}
+      <div aria-hidden className="absolute inset-0 overflow-hidden pointer-events-none">
+        <div style={{ position: "absolute", inset: 0, backgroundImage: "radial-gradient(circle at 2px 2px, rgba(4,77,212,0.32) 1px, transparent 1px)", backgroundSize: "38px 38px", opacity: 0.065 }} />
+        <div style={{ position: "absolute", top: "8%",   right: "-140px", width: 520, height: 520, borderRadius: "50%", background: "radial-gradient(circle, rgba(4,77,212,0.09) 0%, transparent 70%)", filter: "blur(50px)" }} />
+        <div style={{ position: "absolute", bottom: "12%", left: "-100px", width: 420, height: 420, borderRadius: "50%", background: "radial-gradient(circle, rgba(235,72,0,0.07) 0%, transparent 70%)", filter: "blur(50px)" }} />
+        {isMounted && particles.map(p => (
+          <div key={p.id} style={{ position: "absolute", left: `${p.left}%`, top: `${p.top}%`, width: p.size, height: p.size, borderRadius: "50%", background: "rgba(235,72,0,0.12)", animation: `floatP ${p.dur}s ease-in-out ${p.delay}s infinite`, willChange: "transform" }} />
+        ))}
       </div>
 
-      <div className="max-w-7xl mx-auto relative z-10">
-        {/* Header */}
-        <div className={`text-center mb-8 sm:mb-12 transition-all duration-700 ${visible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"}`}>
-          <div
-            className="inline-flex items-center gap-2 backdrop-blur-sm border rounded-full px-4 py-1.5 mb-4"
-            style={{ backgroundColor: "rgba(235,72,0,0.10)", borderColor: "rgba(235,72,0,0.25)" }}
-          >
-            <span className="relative flex h-2 w-2" aria-hidden="true">
-              <span className="animate-ping absolute inline-flex h-full w-full rounded-full opacity-75" style={{ backgroundColor: "#eb4800" }} />
-              <span className="relative inline-flex rounded-full h-2 w-2" style={{ backgroundColor: "#eb4800" }} />
-            </span>
-            <span className="text-xs font-medium tracking-wide" style={{ color: "#eb4800" }}>
-              2026 Inaugural Intake — Now Open
-            </span>
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 relative z-10">
+
+        {/* ══ HEADER ══ */}
+        <div
+          className="text-center mb-14"
+          style={{ opacity: visible ? 1 : 0, transform: visible ? "translateY(0)" : "translateY(24px)", transition: "all 0.7s ease" }}
+        >
+          <div className="inline-flex items-center gap-2 rounded-full px-4 py-1.5 mb-5" style={{ background: "rgba(235,72,0,0.12)", border: "1px solid rgba(235,72,0,0.28)" }}>
+            <span className="w-2 h-2 rounded-full" style={{ background: "#eb4800", animation: "ping 2s ease-in-out infinite" }} />
+            <span className="text-xs font-bold tracking-widest" style={{ color: "#eb4800", fontFamily: "monospace" }}>2026 INAUGURAL INTAKE — NOW OPEN</span>
           </div>
 
-          <p className="font-semibold text-sm tracking-widest uppercase mb-3 flex items-center justify-center gap-2" style={{ color: "#044dd4" }}>
-            <span className="w-8 h-px" style={{ backgroundColor: "rgba(4,77,212,0.5)" }} aria-hidden="true" />
+          <p className="flex items-center justify-center gap-2.5 text-xs font-bold tracking-widest uppercase mb-3" style={{ color: "#044dd4" }}>
+            <span className="w-8 h-px" style={{ background: "rgba(4,77,212,0.45)" }} />
             Our Programs
-            <span className="w-8 h-px" style={{ backgroundColor: "rgba(4,77,212,0.5)" }} aria-hidden="true" />
+            <span className="w-8 h-px" style={{ background: "rgba(4,77,212,0.45)" }} />
           </p>
 
-          <h2 id="services-heading" className="font-display text-2xl sm:text-3xl lg:text-4xl font-bold text-white mb-4 text-balance">
+          <h2 id="services-heading" className="font-bold text-white mb-4" style={{ fontSize: "clamp(28px,5vw,50px)", lineHeight: 1.1, letterSpacing: "-0.02em" }}>
             Education Designed for{" "}
-            <span className="relative inline-block" style={{ color: "#eb4800" }}>
+            <span className="relative inline-block" style={{ color: "#eb4800", fontStyle: "italic" }}>
               Real Careers
-              <svg className="absolute -bottom-2 left-0 w-full" height="3" aria-hidden="true">
-                <line x1="0" y1="1.5" x2="100%" y2="1.5" stroke="#eb4800" strokeWidth="2" strokeDasharray="6 6" className="animate-dash" />
+              <svg className="absolute -bottom-2 left-0 w-full" height="4" aria-hidden>
+                <line x1="0" y1="2" x2="100%" y2="2" stroke="#eb4800" strokeWidth="2.5" strokeDasharray="8 6" style={{ animation: "dash 2s linear infinite" }} />
               </svg>
             </span>
           </h2>
 
-          <p className="text-navy-300 text-sm sm:text-base lg:text-lg max-w-2xl mx-auto text-pretty mb-6">
-            Every programme in our inaugural 2026 lineup is purpose-built with industry input — so you graduate ready, not just qualified.
+          <p className="text-base sm:text-lg max-w-xl mx-auto mb-10" style={{ color: "rgba(255,255,255,0.55)", lineHeight: 1.75 }}>
+            Every programme is purpose-built with industry input — so you graduate ready, not just qualified.
           </p>
 
-          {/* Filter tabs */}
-          <div className="inline-flex items-center gap-1 bg-white/5 border border-white/10 rounded-full p-1" role="tablist" aria-label="Filter programs by type">
-            {filterTabs.map((tab) => (
-              <button
-                key={tab}
-                role="tab"
-                aria-selected={filter === tab}
-                onClick={() => setFilter(tab)}
-                className="px-4 py-1.5 rounded-full text-xs font-semibold transition-all duration-250 focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-offset-navy-900"
-                style={
-                  filter === tab
-                    ? { backgroundColor: "#044dd4", color: "#ffffff" }
-                    : { color: "#94a3b8" }
-                }
-                onMouseEnter={(e) => {
-                  if (filter !== tab) {
-                    (e.currentTarget as HTMLElement).style.color = "#ffffff";
-                    (e.currentTarget as HTMLElement).style.backgroundColor = "rgba(255,255,255,0.1)";
-                  }
-                }}
-                onMouseLeave={(e) => {
-                  if (filter !== tab) {
-                    (e.currentTarget as HTMLElement).style.color = "#94a3b8";
-                    (e.currentTarget as HTMLElement).style.backgroundColor = "transparent";
-                  }
-                }}
-              >
-                {tab}
-              </button>
+          <div className="flex justify-center gap-10 flex-wrap">
+            {([
+              { val: "20", label: "Topics" },
+              { val: "45", label: "Days" },
+              { val: "3 Hrs", label: "Daily" },
+              { val: "100%", label: "Practical" },
+            ] as const).map((s, i) => (
+              <div key={s.label} className="text-center">
+                <div className="font-black leading-none" style={{ fontSize: 26, color: i % 2 === 0 ? "#eb4800" : "#6699ff" }}>{s.val}</div>
+                <div className="mt-1 text-sm tracking-widest uppercase" style={{ color: "rgba(255,255,255,0.4)", fontFamily: "monospace" }}>{s.label}</div>
+              </div>
             ))}
           </div>
         </div>
 
-        {/* Cards grid */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-4 sm:gap-5 lg:gap-6" role="tabpanel" aria-label={`Programs: ${filter}`}>
-          {filtered.map((prog, i) => (
-            <TiltCard key={prog.title} isDark={prog.isDark}>
-              <article
-                className={`relative rounded-2xl p-5 sm:p-6 border flex flex-col transition-all duration-300 hover:shadow-2xl ${
-                  prog.isDark
-                    ? "bg-gradient-to-br from-navy-800 via-navy-800 to-navy-700 border-white/10"
-                    : "bg-gradient-to-br from-white via-white to-navy-50 border-navy-100"
-                } ${visible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"} overflow-hidden group`}
-                style={{ transitionDelay: visible ? `${i * 100}ms` : "0ms" }}
-                onMouseEnter={() => setActiveCard(i)}
-                onMouseLeave={() => setActiveCard(null)}
-                onFocus={() => setActiveCard(i)}
-                onBlur={() => setActiveCard(null)}
-              >
-                {/* Hover shimmer overlay */}
-                <div
-                  className="absolute inset-0 rounded-2xl pointer-events-none opacity-0 group-hover:opacity-100 transition-opacity duration-500"
-                  style={{
-                    background: prog.isDark
-                      ? "linear-gradient(135deg, rgba(4,77,212,0.12), transparent 60%)"
-                      : "linear-gradient(135deg, rgba(235,72,0,0.07), transparent 60%)",
-                  }}
-                  aria-hidden="true"
-                />
-                <div className="absolute inset-0 -translate-x-full group-hover:translate-x-full transition-transform duration-1000 bg-gradient-to-r from-transparent via-white/5 to-transparent pointer-events-none" aria-hidden="true" />
-
-                <div className="relative z-10 flex flex-col h-full">
-                  {/* Tag + status */}
-                  <div className="flex justify-between items-start mb-3 gap-2 flex-wrap">
-                    <span
-                      className="text-xs font-bold px-3 py-1 rounded-full transition-all duration-300 text-white"
-                      style={{ backgroundColor: prog.isDark ? "#eb4800" : "#044dd4" }}
-                      onMouseEnter={(e) => {
-                        (e.currentTarget as HTMLElement).style.backgroundColor = prog.isDark ? "#c73d00" : "#0340b0";
-                      }}
-                      onMouseLeave={(e) => {
-                        (e.currentTarget as HTMLElement).style.backgroundColor = prog.isDark ? "#eb4800" : "#044dd4";
-                      }}
-                    >
-                      {prog.tag}
-                    </span>
-                    <span
-                      className={`text-xs font-semibold px-2.5 py-1 rounded-full border ${
-                        prog.isDark ? statusStyles[prog.status] : statusStylesLight[prog.status]
-                      }`}
-                      aria-label={`Status: ${prog.status}`}
-                    >
-                      {prog.status}
-                    </span>
-                  </div>
-
-                  {/* Title */}
-                  <h3
-                    className={`font-display font-bold text-base sm:text-lg leading-tight mb-3 transition-colors duration-300 ${
-                      prog.isDark ? "text-white" : "text-navy-900"
-                    }`}
-                    style={{ ["--hover-color" as string]: prog.isDark ? "#eb4800" : "#044dd4" }}
-                    onMouseEnter={(e) => {
-                      (e.currentTarget as HTMLElement).style.color = prog.isDark ? "#eb4800" : "#044dd4";
-                    }}
-                    onMouseLeave={(e) => {
-                      (e.currentTarget as HTMLElement).style.color = "";
-                    }}
-                  >
-                    {prog.title}
-                  </h3>
-
-                  {/* Countdown */}
-                  <div className="mb-3">
-                    <IntakeCountdown intake={prog.intake} isDark={prog.isDark} />
-                  </div>
-
-                  {/* Meta info */}
-                  <div className={`flex flex-wrap gap-x-3 gap-y-1 text-xs mb-4 ${prog.isDark ? "text-navy-300" : "text-navy-500"}`}>
-                    {[
-                      { icon: <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />, text: prog.duration },
-                      { icon: <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />, text: prog.mode },
-                    ].map(({ icon, text }) => (
-                      <span
-                        key={text}
-                        className="flex items-center gap-1 transition-colors duration-300"
-                        onMouseEnter={(e) => {
-                          (e.currentTarget as HTMLElement).style.color = prog.isDark ? "#eb4800" : "#044dd4";
-                        }}
-                        onMouseLeave={(e) => {
-                          (e.currentTarget as HTMLElement).style.color = "";
-                        }}
-                      >
-                        <svg className="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">{icon}</svg>
-                        {text}
-                      </span>
-                    ))}
-                    <span
-                      className="flex items-center gap-1 transition-colors duration-300"
-                      onMouseEnter={(e) => {
-                        (e.currentTarget as HTMLElement).style.color = prog.isDark ? "#eb4800" : "#044dd4";
-                      }}
-                      onMouseLeave={(e) => {
-                        (e.currentTarget as HTMLElement).style.color = "";
-                      }}
-                    >
-                      <svg className="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197m13.5-9a2.5 2.5 0 11-5 0 2.5 2.5 0 015 0z" />
-                      </svg>
-                      <SeatCounter seats={prog.seats} isDark={prog.isDark} />
-                    </span>
-                  </div>
-
-                  {/* Highlights */}
-                  <ul className="space-y-1.5 flex-1" aria-label={`${prog.title} highlights`}>
-                    {prog.highlights.map((h, idx) => (
-                      <li
-                        key={h}
-                        className={`text-xs sm:text-sm flex items-center gap-2 transition-all duration-300 ${
-                          prog.isDark ? "text-navy-200" : "text-navy-600"
-                        }`}
-                        style={{
-                          transitionDelay: activeCard === i ? `${idx * 30}ms` : "0ms",
-                          transform: activeCard === i ? `translateX(${(idx + 1) * 3}px)` : "translateX(0)",
-                        }}
-                      >
-                        <span
-                          className="w-1.5 h-1.5 rounded-full flex-shrink-0 transition-all duration-300 group-hover:scale-125"
-                          style={{ backgroundColor: prog.isDark ? "#eb4800" : "#044dd4" }}
-                          aria-hidden="true"
-                        />
-                        {h}
-                      </li>
-                    ))}
-                  </ul>
-
-                  {/* Seats bar */}
-                  <SeatsBar seats={prog.seats} isDark={prog.isDark} visible={visible} delay={300 + i * 120} />
-
-                  {/* CTA */}
-                  <a
-                    href="#contact"
-                    aria-label={`Apply for ${prog.title}`}
-                    className="mt-4 sm:mt-5 inline-flex items-center gap-1 text-sm font-semibold transition-all duration-300 group-hover:gap-2 focus:outline-none focus-visible:underline"
-                    style={{ color: prog.isDark ? "#eb4800" : "#044dd4" }}
-                  >
-                    <span>Apply Now</span>
-                    <svg className="w-4 h-4 transition-transform duration-300 group-hover:translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-                    </svg>
-                  </a>
-                </div>
-              </article>
-            </TiltCard>
-          ))}
-
-          {filtered.length === 0 && (
-            <div className="col-span-full text-center py-16 text-navy-400">
-              <p className="text-sm">No programmes match this filter.</p>
-            </div>
-          )}
-        </div>
-
-        {/* Bottom feature strip */}
+        {/* ══ CURRICULUM EXPLORER ══ */}
         <div
-          className={`mt-10 sm:mt-12 grid grid-cols-1 sm:grid-cols-3 gap-4 border border-white/8 rounded-2xl p-5 sm:p-6 bg-white/3 backdrop-blur-sm transition-all duration-700 delay-500 ${
-            visible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-6"
-          }`}
-          aria-label="Why join IPBM"
+          className="rounded-3xl overflow-hidden"
+          style={{
+            background: "rgba(255,255,255,0.025)",
+            border: "1.5px solid rgba(255,255,255,0.07)",
+            opacity: visible ? 1 : 0,
+            transform: visible ? "translateY(0)" : "translateY(28px)",
+            transition: "all 0.7s ease 0.38s",
+          }}
         >
-          {[
-            {
-              icon: (
-                <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M9 12l2 2 4-4M7.835 4.697a3.42 3.42 0 001.946-.806 3.42 3.42 0 014.438 0 3.42 3.42 0 001.946.806 3.42 3.42 0 013.138 3.138 3.42 3.42 0 00.806 1.946 3.42 3.42 0 010 4.438 3.42 3.42 0 00-.806 1.946 3.42 3.42 0 01-3.138 3.138 3.42 3.42 0 00-1.946.806 3.42 3.42 0 01-4.438 0 3.42 3.42 0 00-1.946-.806 3.42 3.42 0 01-3.138-3.138 3.42 3.42 0 00-.806-1.946 3.42 3.42 0 010-4.438 3.42 3.42 0 00.806-1.946 3.42 3.42 0 013.138-3.138z" />
-                </svg>
-              ),
-              label: "Founding Cohort Advantage",
-              desc: "Be among the first. Shape IPBM's culture, get lifetime alumni recognition, and access founding-batch benefits.",
-            },
-            {
-              icon: (
-                <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0z" />
-                </svg>
-              ),
-              label: "30+ Industry Mentors",
-              desc: "Every student is paired with a practising professional from their chosen domain from week one.",
-            },
-            {
-              icon: (
-                <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6" />
-                </svg>
-              ),
-              label: "Live Client Projects",
-              desc: "From semester one, you work on briefs from real companies — not case studies from a textbook.",
-            },
-          ].map((item, idx) => (
-            <div key={item.label} className="flex items-start gap-3">
-              <div
-                className="w-9 h-9 rounded-xl flex items-center justify-center shrink-0 mt-0.5"
-                style={{
-                  backgroundColor: idx % 2 === 0 ? "rgba(4,77,212,0.12)" : "rgba(235,72,0,0.12)",
-                  color: idx % 2 === 0 ? "#044dd4" : "#eb4800",
-                }}
-              >
-                {item.icon}
-              </div>
-              <div>
-                <p className="text-white text-sm font-semibold mb-1">{item.label}</p>
-                <p className="text-navy-300 text-xs leading-relaxed">{item.desc}</p>
-              </div>
+          {/* Curriculum header bar */}
+          <div className="flex flex-wrap items-end justify-between gap-4 px-6 sm:px-8 pt-7 pb-6" style={{ borderBottom: "1px solid rgba(255,255,255,0.06)" }}>
+            <div>
+              <p className="text-sm font-bold tracking-widest uppercase mb-1.5" style={{ color: "#044dd4", fontFamily: "monospace" }}>Full Curriculum · 20 Topics</p>
+              <h3 className="font-bold text-white" style={{ fontSize: "clamp(20px,3vw,28px)", letterSpacing: "-0.01em" }}>
+                One Course.{" "}
+                <span style={{ color: "rgba(255,255,255,0.45)", fontStyle: "italic", fontWeight: 400 }}>Complete Business Foundation.</span>
+              </h3>
             </div>
-          ))}
+            {/* Search input */}
+            <div className="relative" style={{ width: 240 }}>
+              <svg className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4" style={{ color: "rgba(255,255,255,0.3)" }} fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-4.35-4.35M17 11A6 6 0 105 11a6 6 0 0012 0z" />
+              </svg>
+              <input
+                value={search}
+                onChange={(e: React.ChangeEvent<HTMLInputElement>) => setSearch(e.target.value)}
+                placeholder="Search topics…"
+                className="w-full text-sm text-white placeholder-white/30 outline-none"
+                style={{ background: "rgba(255,255,255,0.06)", border: "1.5px solid rgba(255,255,255,0.09)", borderRadius: 10, padding: "10px 12px 10px 36px", fontFamily: "inherit", transition: "border-color 0.2s" }}
+                onFocus={(e: React.FocusEvent<HTMLInputElement>) => (e.currentTarget.style.borderColor = "rgba(4,77,212,0.55)")}
+                onBlur={(e: React.FocusEvent<HTMLInputElement>) => (e.currentTarget.style.borderColor = "rgba(255,255,255,0.09)")}
+              />
+            </div>
+          </div>
+
+          <div className="flex flex-col lg:flex-row">
+            {/* ── Module sidebar ── */}
+            {!isSearching && (
+              <div className="flex flex-row lg:flex-col gap-2 p-4 lg:p-5 overflow-x-auto lg:overflow-visible" style={{ borderRight: "1px solid rgba(255,255,255,0.06)", minWidth: 220, flexShrink: 0 }}>
+                {modules.map((m: ModuleType, i: number) => (
+                  <button
+                    key={m.id}
+                    onClick={() => setActiveModule(m.id)}
+                    aria-pressed={activeModule === m.id}
+                    className="flex items-center gap-3 rounded-xl text-left whitespace-nowrap lg:whitespace-normal transition-all duration-250"
+                    style={{
+                      padding: "12px 16px",
+                      background: activeModule === m.id ? `${m.color}1a` : "transparent",
+                      border: activeModule === m.id ? `1.5px solid ${m.color}45` : "1.5px solid transparent",
+                      boxShadow: activeModule === m.id ? `0 4px 20px ${m.color}1a` : "none",
+                      opacity: visible ? 1 : 0,
+                      transform: visible ? "translateX(0)" : "translateX(-12px)",
+                      transitionDelay: visible ? `${i * 60}ms` : "0ms",
+                    }}
+                  >
+                    <span style={{ fontSize: 18 }}>{modIcons[m.id]}</span>
+                    <div className="flex-1 min-w-0">
+                      <p className="text-sm font-bold leading-snug truncate" style={{ color: activeModule === m.id ? "white" : "rgba(255,255,255,0.6)", transition: "color 0.2s" }}>{m.label}</p>
+                    </div>
+                    <span
+                      className="text-sm font-bold rounded-full px-2 py-0.5 flex-shrink-0"
+                      style={{
+                        background: activeModule === m.id ? m.color : "rgba(255,255,255,0.07)",
+                        color: activeModule === m.id ? "#fff" : "rgba(255,255,255,0.4)",
+                        fontFamily: "monospace",
+                        transition: "all 0.2s",
+                        fontSize: 11,
+                      }}
+                    >
+                      {m.topics.length}
+                    </span>
+                  </button>
+                ))}
+                <div className="hidden lg:block mt-4 rounded-xl p-3 text-center" style={{ background: "rgba(235,72,0,0.08)", border: "1px solid rgba(235,72,0,0.18)" }}>
+                  <p className="text-sm font-bold mb-0.5" style={{ color: "#eb4800" }}>20 Topics Total</p>
+                  <p className="text-sm leading-snug" style={{ color: "rgba(255,255,255,0.35)" }}>Click any topic to expand</p>
+                </div>
+              </div>
+            )}
+
+            {/* ── Topics list ── */}
+            <div className="flex-1 p-4 sm:p-6">
+              {isSearching && (
+                <div className="flex items-center gap-3 mb-5">
+                  <span className="text-sm" style={{ color: "rgba(255,255,255,0.45)" }}>{displayTopics.length} result{displayTopics.length !== 1 ? "s" : ""} for</span>
+                  <span className="text-sm font-bold" style={{ color: "#eb4800" }}>"{search}"</span>
+                  <button onClick={() => setSearch("")} className="ml-auto text-sm underline" style={{ color: "rgba(255,255,255,0.4)", background: "none", border: "none", cursor: "pointer" }}>Clear</button>
+                </div>
+              )}
+
+              {!isSearching && (
+                <div className="flex items-center gap-3 mb-5">
+                  <div className="w-8 h-8 rounded-lg flex items-center justify-center text-base" style={{ background: `${currentModule.color}1a` }}>
+                    {modIcons[currentModule.id]}
+                  </div>
+                  <div>
+                    <h4 className="text-base font-bold text-white leading-none mb-1.5">{currentModule.label}</h4>
+                    <p className="text-sm" style={{ color: "rgba(255,255,255,0.4)" }}>{currentModule.topics.length} topics · tap to expand essentials & outcomes</p>
+                  </div>
+                </div>
+              )}
+
+              {displayTopics.length === 0 ? (
+                <div className="py-12 text-center text-base" style={{ color: "rgba(255,255,255,0.3)" }}>No topics found for "{search}"</div>
+              ) : (
+                displayTopics.map((t, i: number) => (
+                  <TopicRow
+                    key={t.num}
+                    topic={t}
+                    color={"moduleColor" in t ? (t as typeof allTopics[0]).moduleColor : currentModule.color}
+                    index={i}
+                    visible={visible}
+                  />
+                ))
+              )}
+            </div>
+          </div>
         </div>
 
-        {/* View All CTA */}
-        <div className="text-center mt-10 sm:mt-12">
+        {/* ══ BOTTOM FEATURE STRIP (REMOVED) ══ */}
+
+        {/* ══ CTA BUTTON ══ */}
+        <div className="text-center mt-12">
           <a
             href="#contact"
-            className="inline-flex items-center gap-2 px-6 py-3 rounded-full border text-sm bg-white font-semibold group focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-offset-navy-900 transition-all duration-300"
-            style={{
-              borderColor: "rgba(4,77,212,0.35)",
-              color: "#044dd4",
+            className="inline-flex items-center gap-2 text-base font-bold rounded-full transition-all duration-250"
+            style={{ padding: "16px 42px", border: "1.5px solid rgba(4,77,212,0.38)", color: "#6699ff", background: "rgba(4,77,212,0.08)", textDecoration: "none" }}
+            onMouseEnter={(e: React.MouseEvent<HTMLAnchorElement>) => {
+              const el = e.currentTarget as HTMLElement;
+              el.style.background = "#044dd4";
+              el.style.color = "#fff";
+              el.style.borderColor = "#044dd4";
+              el.style.transform = "translateY(-2px)";
+              el.style.boxShadow = "0 8px 32px rgba(4,77,212,0.35)";
             }}
-            onMouseEnter={(e) => {
-              (e.currentTarget as HTMLElement).style.backgroundColor = "#044dd4";
-              (e.currentTarget as HTMLElement).style.borderColor = "#044dd4";
-              (e.currentTarget as HTMLElement).style.color = "#ffffff";
-            }}
-            onMouseLeave={(e) => {
-              (e.currentTarget as HTMLElement).style.backgroundColor = "#f4f4f4";
-              (e.currentTarget as HTMLElement).style.borderColor = "rgba(4,77,212,0.35)";
-              (e.currentTarget as HTMLElement).style.color = "#044dd4";
+            onMouseLeave={(e: React.MouseEvent<HTMLAnchorElement>) => {
+              const el = e.currentTarget as HTMLElement;
+              el.style.background = "rgba(4,77,212,0.08)";
+              el.style.color = "#6699ff";
+              el.style.borderColor = "rgba(4,77,212,0.38)";
+              el.style.transform = "translateY(0)";
+              el.style.boxShadow = "none";
             }}
           >
-            <span>View All Programs</span>
-            <svg className="w-4 h-4 group-hover:translate-x-1 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
+            View All Programs
+            <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M17 8l4 4m0 0l-4 4m4-4H3" />
             </svg>
           </a>
         </div>
       </div>
 
-      {/* Scroll indicator */}
-      <div className="absolute bottom-4 left-1/2 transform -translate-x-1/2 hidden lg:block" aria-hidden="true">
-        <div className="flex flex-col items-center gap-1 opacity-30">
-          <span className="text-white text-xs">Explore</span>
-          <svg className="w-4 h-4 text-white animate-bounce" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 13l-7 7-7-7m14-8l-7 7-7-7" />
-          </svg>
-        </div>
+      {/* Scroll hint */}
+      <div className="absolute bottom-5 left-1/2 -translate-x-1/2 hidden lg:flex flex-col items-center gap-1" style={{ opacity: 0.25 }} aria-hidden>
+        <span className="text-white text-sm">Explore</span>
+        <svg className="w-4 h-4 text-white animate-bounce" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 13l-7 7-7-7m14-8l-7 7-7-7" />
+        </svg>
       </div>
 
       <style jsx global>{`
-        @keyframes gridPulse { 0%, 100% { opacity: 0.07; } 50% { opacity: 0.12; } }
-        @keyframes floatParticle { 
-          0%, 100% { transform: translateY(0) translateX(0); opacity: 0; } 
-          50% { transform: translateY(-40px) translateX(20px); opacity: 0.5; } 
-        }
-        @keyframes dash { to { stroke-dashoffset: -12; } }
-        .animate-dash { animation: dash 2s linear infinite; }
-        @keyframes pulse-slow { 0%, 100% { opacity: 0.05; transform: scale(1); } 50% { opacity: 0.1; transform: scale(1.05); } }
-        .animate-pulse-slow { animation: pulse-slow 6s ease-in-out infinite; }
-        .animation-delay-2000 { animation-delay: 2s; }
+        @keyframes ping   { 0%,100%{transform:scale(1);opacity:1} 50%{transform:scale(1.7);opacity:0.35} }
+        @keyframes dash   { to { stroke-dashoffset: -14; } }
+        @keyframes floatP { 0%,100%{transform:translateY(0) translateX(0);opacity:0} 50%{transform:translateY(-44px) translateX(18px);opacity:0.5} }
         @media (prefers-reduced-motion: reduce) {
-          .animate-dash, .animate-pulse-slow, .animate-ping, [style*="animation"] { animation: none !important; }
+          *,[style*="animation"] { animation: none !important; transition-duration: 10ms !important; }
         }
       `}</style>
     </section>
