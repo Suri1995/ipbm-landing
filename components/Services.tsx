@@ -6,7 +6,7 @@ import { useEffect, useRef, useState, useMemo, useCallback } from "react";
 
 const modules = [
   {
-    id: "foundations", label: "Business Foundations", color: "#044dd4",
+    id: "foundations", label: "Business Foundations", color: "#2e70ea",
     topics: [
       { num: "01", title: "Startup Management", essentials: ["Business models & org structures", "Operational vs strategic thinking", "Basic business planning"], performance: ["Validate ideas before scaling", "MVP thinking — start lean, iterate fast", "Real startup case studies"] },
       { num: "02", title: "Financial Management", essentials: ["Reading P&L, balance sheet, cash flow", "Budgeting — departmental & project level", "Revenue vs profit vs cost"], performance: ["ROI analysis for decisions", "Forecast planning & variance reporting", "Cost control mindset"] },
@@ -255,20 +255,6 @@ export default function Services() {
     );
   }, [search, isSearching, currentModule]);
 
-  const programs = [
-    { tag: "Flagship", title: "45-Day Business Foundations", sub: "20 topics · 3 hrs/day · Certification included", duration: "45 Days", mode: "Online & Offline", seats: "50", intake: "Jun 2026", status: "Enrolling Now", color: "#eb4800", seatPct: 62, isDark: true },
-    { tag: "Diploma", title: "Business Management Diploma", sub: "Deep-dive into core business disciplines", duration: "6 Months", mode: "Full-time", seats: "60", intake: "Aug 2026", status: "Applications Open", color: "#044dd4", seatPct: 38, isDark: false },
-    { tag: "Executive", title: "Executive Leadership Program", sub: "For working professionals & team leaders", duration: "3 Months", mode: "Weekend / Online", seats: "40", intake: "Sep 2026", status: "Early Access", color: "#7c3aed", seatPct: 25, isDark: false },
-    { tag: "Certificate", title: "Short-Term Certification", sub: "Targeted skills in 3–6 months per domain", duration: "3–6 Months", mode: "Online & Offline", seats: "Open", intake: "Rolling", status: "Always Open", color: "#059669", seatPct: 0, isDark: false },
-  ] as const;
-
-  const statusBadge: Record<string, { bg: string; border: string; text: string }> = {
-    "Enrolling Now":     { bg: "rgba(235,72,0,0.18)",     border: "rgba(235,72,0,0.4)",     text: "#eb4800" },
-    "Applications Open": { bg: "rgba(4,77,212,0.18)",     border: "rgba(4,77,212,0.4)",     text: "#6699ff" },
-    "Early Access":      { bg: "rgba(124,58,237,0.18)",   border: "rgba(124,58,237,0.4)",   text: "#a78bfa" },
-    "Always Open":       { bg: "rgba(5,150,105,0.18)",    border: "rgba(5,150,105,0.4)",    text: "#34d399" },
-  };
-
   const modIcons: Record<string, string> = { foundations: "🏛️", sales: "📈", tech: "⚡", people: "🤝", global: "🌐" };
 
   return (
@@ -340,8 +326,8 @@ export default function Services() {
         <div
           className="rounded-3xl overflow-hidden"
           style={{
-            background: "rgba(255,255,255,0.025)",
-            border: "1.5px solid rgba(255,255,255,0.07)",
+            background: "rgba(255,255,255,0.08)",
+            border: "1.5px solid rgba(255,255,255,0.04)",
             opacity: visible ? 1 : 0,
             transform: visible ? "translateY(0)" : "translateY(28px)",
             transition: "all 0.7s ease 0.38s",
@@ -350,7 +336,7 @@ export default function Services() {
           {/* Curriculum header bar */}
           <div className="flex flex-wrap items-end justify-between gap-4 px-6 sm:px-8 pt-7 pb-6" style={{ borderBottom: "1px solid rgba(255,255,255,0.06)" }}>
             <div>
-              <p className="text-sm font-bold tracking-widest uppercase mb-1.5" style={{ color: "#044dd4", fontFamily: "monospace" }}>Full Curriculum · 20 Topics</p>
+              <p className="text-sm font-bold tracking-widest uppercase mb-1.5 text-[#2e70ea]" style={{ fontFamily: "monospace" }}>Full Curriculum · 20 Topics</p>
               <h3 className="font-bold text-white" style={{ fontSize: "clamp(20px,3vw,28px)", letterSpacing: "-0.01em" }}>
                 One Course.{" "}
                 <span style={{ color: "rgba(255,255,255,0.45)", fontStyle: "italic", fontWeight: 400 }}>Complete Business Foundation.</span>
