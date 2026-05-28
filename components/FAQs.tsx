@@ -1,75 +1,75 @@
 "use client";
 import { useEffect, useRef, useState, useCallback, useMemo } from "react";
 
-const categories = ["All", "Admissions", "Curriculum", "Fees", "Career"] as const;
+const categories = ["Program", "Learning", "Fees", "Career"] as const;
 type Category = (typeof categories)[number];
 
 const faqs: { q: string; a: string; category: Category }[] = [
   {
-    category: "Admissions",
-    q: "What makes IPBM different from other business schools?",
-    a: "IPBM is India's first practice-first business school built exclusively for the startup economy. We focus on hands-on learning with live projects, real venture building, and mentorship from active founders and investors — not just textbook theory.",
+    category: "Program",
+    q: "How long is the program, and what is the daily time commitment?",
+    a: "The program lasts 45 days and requires three focused hours daily. This intensive yet manageable structure lets participants learn without disrupting their routines.",
   },
   {
-    category: "Admissions",
-    q: "Who is eligible for IPBM's founding batch?",
-    a: "We're looking for ambitious individuals passionate about startups and entrepreneurship. Applicants must hold a bachelor's degree (any discipline) with 50%+ aggregate. Work experience in startups is preferred but not mandatory — we value drive and curiosity above all.",
+    category: "Program",
+    q: "What topics are covered in the program?",
+    a: "The curriculum covers 20 core business management topics, including Business Foundations, Sales and Marketing, Technology and Analytics, People and Communication, International Business, Event Management, and Logistics and Supply Chain.",
   },
   {
-    category: "Admissions",
-    q: "Is there an entrance exam for admission?",
-    a: "Yes. IPBM accepts CAT, MAT, XAT, CMAT scores, or you can take our own IPBM Admission Test (IPBMAT). Shortlisted candidates participate in a founder-fit interview focusing on entrepreneurial mindset and problem-solving abilities.",
+    category: "Program",
+    q: "Is the program available online or offline?",
+    a: "Participants may attend in person at the Uppal, Hyderabad center or join online from any location in India. Both delivery formats offer an equally effective learning experience.",
+  },
+  {
+    category: "Learning",
+    q: "What distinguishes IPBM from other business programs?",
+    a: "IPBM prioritizes practical learning rather than textbook theory. Sessions are conducted by active industry professionals who utilize real business cases from the Indian market, ensuring participants acquire skills that are immediately applicable.",
+  },
+  {
+    category: "Learning",
+    q: "Who teaches at IPBM?",
+    a: "All instructors are practicing industry experts who bring current, first-hand knowledge from their fields. Participants who successfully complete the course will receive a Certificate of Completion from IPBM on the final day.",
   },
   {
     category: "Fees",
-    q: "What is the fee structure for the founding batch?",
-    a: "As a pioneering student, you'll get special inaugural batch pricing at ₹4.5L for the full program (40% lower than planned fees). Early bird applicants before July 15 get an additional 10% scholarship. Education loans available through partner banks.",
+    q: "What is the program fee?",
+    a: "The program fee is ₹50,000 plus GST, which equates to less than ₹1,200 per day for expert-led, industry-relevant instruction.",
   },
   {
     category: "Fees",
-    q: "Do you offer scholarships?",
-    a: "Yes! We offer merit-based scholarships (up to 100% tuition), need-based grants, and special scholarships for women founders, first-generation learners, and social impact entrepreneurs. Over 60% of our founding batch received financial aid.",
+    q: "What are the payment terms?",
+    a: "Payment is made in two installments: 50% at registration and the remaining 50% between Day 20 and Day 25.",
   },
   {
     category: "Career",
-    q: "What startup career outcomes can I expect?",
-    a: "Our focus is startup roles and entrepreneurship. You'll have access to 50+ startup hiring partners, incubation support, and founder mentorship. Estimated median starting CTC for startup roles: ₹6-8 LPA with high growth potential.",
+    q: "What outcomes can I expect after completing the program?",
+    a: "Graduates develop strong skills in leadership, business communication, team management, strategic thinking, and an entrepreneurial mindset. These competencies support effective management and leadership across various business functions.",
   },
   {
     category: "Career",
-    q: "Can I build my own startup during the program?",
-    a: "Absolutely! We encourage it. You'll have access to our incubation cell, ₹2L seed fund for top student ventures, mentorship from successful founders, and networking with VCs and angel investors.",
+    q: "Does IPBM offer job placement support?",
+    a: "IPBM does not provide formal placement services. However, the program equips participants with the skills and confidence necessary to pursue opportunities independently in employment, entrepreneurship, or within their current organizations.",
   },
   {
-    category: "Curriculum",
-    q: "Is the program online or campus-based?",
-    a: "Our founding batch is fully campus-based in Hyderabad — a thriving startup hub. You'll get 24/7 access to co-working spaces, pitch practice zones, and our founder community. Executive programs will be available hybrid from 2027.",
+    category: "Program",
+    q: "Who is this program best suited for?",
+    a: "IPBM is well-suited for recent graduates, working professionals, homemakers returning to the workforce, technical professionals seeking business knowledge, entrepreneurs, business owners aiming to upskill their teams, and mid-career individuals exploring new career directions.",
   },
   {
-    category: "Admissions",
-    q: "How do I apply for the founding batch?",
-    a: "Applications are open now for our inaugural batch starting August 2026. Deadline: July 31, 2026. Apply through the contact form below or call our admissions helpline. Limited seats — first-come, founder-fit basis.",
-  },
-  {
-    category: "Curriculum",
-    q: "What's unique about the curriculum?",
-    a: "Every module is built around real startup challenges. You'll learn by building MVPs, analyzing live startups, pitching to real investors, and working with our partner startups. No outdated case studies — only current, actionable skills.",
+    category: "Program",
+    q: "How do I enroll, and where is IPBM located?",
+    a: "For enrollment inquiries, contact IPBM via WhatsApp, telephone (9866739499 or 9704859888), or email (director@bmrb.in). The institute is located at Raghavendra Nagar Colony, Uppal, Hyderabad, 500039. Admissions are currently open.",
   },
 ];
 
 // ── Category icon map ─────────────────────────────────────────────────────
 const catIcons: Record<Category, React.ReactNode> = {
-  All: (
+  Program: (
     <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
-      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 10h16M4 14h16M4 18h16" />
+      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
     </svg>
   ),
-  Admissions: (
-    <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
-      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
-    </svg>
-  ),
-  Curriculum: (
+  Learning: (
     <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
     </svg>
@@ -211,7 +211,7 @@ function FAQItem({
             }`}
           >
             <span className={`inline-flex items-center gap-1 text-xs font-semibold px-2 py-0.5 rounded-full mb-2 
-              ${category === "Admissions" ? "bg-[#044dd4]/10 text-[#044dd4]" :
+              ${category === "Program" ? "bg-[#044dd4]/10 text-[#044dd4]" :
                 category === "Fees" ? "bg-[#eb4800]/10 text-[#eb4800]" :
                 category === "Career" ? "bg-[#044dd4]/10 text-[#044dd4]" :
                 "bg-[#eb4800]/10 text-[#eb4800]"}`}
@@ -356,7 +356,7 @@ export default function FAQs() {
   const ref = useRef<HTMLElement>(null);
   const [visible, setVisible] = useState(false);
   const [openIndices, setOpenIndices] = useState<Set<number>>(new Set());
-  const [activeCategory, setActiveCategory] = useState<Category>("All");
+  const [activeCategory, setActiveCategory] = useState<Category>("Program");
   const [searchTerm, setSearchTerm] = useState("");
   const particles = useParticles(10);
 
@@ -380,7 +380,6 @@ export default function FAQs() {
   const handleSearch = useCallback((term: string) => {
     setSearchTerm(term);
     setOpenIndices(new Set());
-    if (term) setActiveCategory("All");
   }, []);
 
   const handleCategoryChange = useCallback((cat: Category) => {
@@ -390,8 +389,7 @@ export default function FAQs() {
   }, []);
 
   const filtered = useMemo(() => {
-    let list = faqs;
-    if (activeCategory !== "All") list = list.filter((f) => f.category === activeCategory);
+    let list = faqs.filter((f) => f.category === activeCategory);
     if (searchTerm.trim())
       list = list.filter(
         (f) =>
@@ -437,7 +435,6 @@ export default function FAQs() {
             ?
           </div>
         ))}
-        {/* Deterministic particles — SSR-safe */}
         {particles.map((p) => (
           <div
             key={p.id}
@@ -462,7 +459,7 @@ export default function FAQs() {
           >
             <div className="inline-flex items-center gap-2 bg-[#eb4800]/10 backdrop-blur-sm border border-[#eb4800]/20 rounded-full px-3 py-1 mb-4">
               <span className="w-1.5 h-1.5 bg-[#eb4800] rounded-full animate-pulse" aria-hidden="true" />
-              <span className="text-[#eb4800] text-xs font-medium tracking-wide">Founded May 2026</span>
+              <span className="text-[#eb4800] text-xs font-medium tracking-wide">IPBM • 45-Day Program</span>
             </div>
 
             <p className="text-[#eb4800] font-semibold text-sm tracking-widest uppercase mb-3 flex items-center gap-2">
@@ -474,9 +471,9 @@ export default function FAQs() {
               id="faqs-heading"
               className="font-display text-2xl sm:text-3xl lg:text-4xl font-bold text-navy-900 mb-4 text-balance"
             >
-              Startup{" "}
+              Everything about{" "}
               <span className="relative inline-block">
-                <span className="text-[#044dd4]">FAQs</span>
+                <span className="text-[#044dd4]">IPBM</span>
                 <span
                   className={`absolute -bottom-1 left-0 h-0.5 bg-gradient-to-r from-[#eb4800] to-[#044dd4] rounded-full transition-all duration-700 delay-500 ${
                     visible ? "w-full" : "w-0"
@@ -487,15 +484,14 @@ export default function FAQs() {
             </h2>
 
             <p className="text-navy-500 leading-relaxed mb-5 sm:mb-6 text-sm sm:text-base">
-              Everything you need to know about joining India&rsquo;s first
-              practice-first business school for the startup economy.
+              Your questions answered about India&rsquo;s most practical business management program — 45 days, expert-led, and designed for real-world impact.
             </p>
 
             <div className="flex flex-col gap-2.5 mb-6">
               {[
-                { icon: "⏱", text: "Response within 24 hours" },
-                { icon: "🎓", text: "Founding batch — Jun 2026" },
-                { icon: "💡", text: "10 questions answered below" },
+                { icon: "⏱", text: "45 days • 3 hours daily" },
+                { icon: "🎓", text: "Certificate of Completion" },
+                { icon: "💡", text: "11 essential questions answered" },
               ].map(({ icon, text }) => (
                 <div key={text} className="flex items-center gap-2.5">
                   <span className="text-base" aria-hidden="true">{icon}</span>
@@ -510,10 +506,7 @@ export default function FAQs() {
               aria-label="Filter questions by category"
             >
               {categories.map((cat) => {
-                const count =
-                  cat === "All"
-                    ? faqs.length
-                    : faqs.filter((f) => f.category === cat).length;
+                const count = faqs.filter((f) => f.category === cat).length;
                 return (
                   <button
                     key={cat}
@@ -587,7 +580,7 @@ export default function FAQs() {
                 <p className="text-navy-500 text-sm">No matching questions found.</p>
                 <p className="text-navy-400 text-xs mt-1">Try a different keyword or browse all categories.</p>
                 <button
-                  onClick={() => { setSearchTerm(""); setActiveCategory("All"); }}
+                  onClick={() => { setSearchTerm(""); }}
                   className="mt-3 text-[#044dd4] text-sm font-medium hover:text-[#eb4800] transition-colors focus:outline-none focus-visible:underline"
                 >
                   Clear filters →
@@ -612,7 +605,7 @@ export default function FAQs() {
             )}
 
             <div className="mt-6 pt-4 border-t border-navy-100 text-center">
-              <p className="text-navy-500 text-sm">Still have questions about the founding batch?</p>
+              <p className="text-navy-500 text-sm">Still have questions about the program?</p>
               <div className="flex items-center justify-center gap-3 mt-3">
                 <a
                   href="#contact"

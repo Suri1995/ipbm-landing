@@ -6,48 +6,322 @@ import { useEffect, useRef, useState, useMemo, useCallback } from "react";
 
 const modules = [
   {
-    id: "foundations", label: "Business Foundations", color: "#2e70ea",
+    id: "foundations",
+    label: "BUSINESS FOUNDATIONS",
+    color: "#2e70ea",
     topics: [
-      { num: "01", title: "Startup Management", essentials: ["Business models & org structures", "Operational vs strategic thinking", "Basic business planning"], performance: ["Validate ideas before scaling", "MVP thinking — start lean, iterate fast", "Real startup case studies"] },
-      { num: "02", title: "Financial Management", essentials: ["Reading P&L, balance sheet, cash flow", "Budgeting — departmental & project level", "Revenue vs profit vs cost"], performance: ["ROI analysis for decisions", "Forecast planning & variance reporting", "Cost control mindset"] },
-      { num: "03", title: "Risk Management", essentials: ["Types of risk — financial, operational, reputational", "Basic risk identification & assessment", "Escalation protocols"], performance: ["Build risk matrices for projects", "Scenario planning & contingency development", "Communicate risks upward without panic"] },
-      { num: "04", title: "Project Management", essentials: ["Project lifecycle: Initiation → Planning → Execution → Closure", "Setting SMART goals & milestones", "Gantt charts, task trackers"], performance: ["Agile vs Waterfall methodology", "Stakeholder management during projects", "Managing scope creep & deadline pressure"] },
-      { num: "05", title: "Operations Management", essentials: ["Workflows & standard operating procedures", "Resource allocation fundamentals", "Quality vs efficiency tradeoffs"], performance: ["Process mapping & Kaizen basics", "KPI setting & performance monitoring", "Bottleneck identification & resolution"] },
-      { num: "06", title: "Family Business Management", essentials: ["Family-run vs professionally run businesses", "Role clarity & avoiding nepotism", "Governance structures"], performance: ["Succession planning fundamentals", "Conflict resolution in personal-professional overlap", "Professionalizing for scale"] },
+      {
+        num: "01",
+        title: "Startup Management",
+        essentials: [
+          "Understanding business models and org structures",
+          "Difference between operational vs strategic thinking",
+          "Basic business planning (vision, mission, goals)",
+        ],
+        performance: [
+          "Learn how to validate ideas before scaling",
+          "Understand MVP thinking — start lean, iterate fast",
+          "Study real startup failure/success case studies",
+        ],
+      },
+      {
+        num: "02",
+        title: "Financial Management",
+        essentials: [
+          "Reading a P&L statement, balance sheet, and cash flow",
+          "Budgeting basics — departmental and project level",
+          "Understanding revenue vs profit vs cost",
+        ],
+        performance: [
+          "Learn ROI analysis for decisions",
+          "Forecast planning and variance reporting",
+          "Cost control mindset in every managerial decision",
+        ],
+      },
+      {
+        num: "03",
+        title: "Risk Management",
+        essentials: [
+          "What is risk? Types — financial, operational, reputational",
+          "Basic risk identification and assessment",
+          "Escalation protocols",
+        ],
+        performance: [
+          "Build risk matrices for projects",
+          "Scenario planning and contingency development",
+          "Learning to communicate risks upward without panic",
+        ],
+      },
+      {
+        num: "04",
+        title: "Project Management",
+        essentials: [
+          "Project lifecycle: Initiation → Planning → Execution → Closure",
+          "Setting SMART goals and milestones",
+          "Basic tools: Gantt charts, task trackers",
+        ],
+        performance: [
+          "Agile vs Waterfall methodology basics",
+          "Stakeholder management during projects",
+          "Managing scope creep and deadline pressure",
+        ],
+      },
+      {
+        num: "05",
+        title: "Operations Management",
+        essentials: [
+          "Understanding workflows and standard operating procedures (SOPs)",
+          "Resource allocation fundamentals",
+          "Quality vs efficiency tradeoffs",
+        ],
+        performance: [
+          "Process mapping and continuous improvement (Kaizen basics)",
+          "KPI setting and performance monitoring",
+          "Bottleneck identification and resolution",
+        ],
+      },
+      {
+        num: "06",
+        title: "Family Business Management",
+        essentials: [
+          "Unique challenges of family-run vs professionally run businesses",
+          "Role clarity and avoiding nepotism pitfalls",
+          "Governance structures in family businesses",
+        ],
+        performance: [
+          "Succession planning fundamentals",
+          "Conflict resolution in personal-professional overlap",
+          "Professionalizing family businesses for scale",
+        ],
+      },
     ],
   },
+
   {
-    id: "sales", label: "Sales & Marketing", color: "#eb4800",
+    id: "sales",
+    label: "SALES & MARKETING",
+    color: "#eb4800",
     topics: [
-      { num: "07", title: "Sales & Marketing Management", essentials: ["Sales funnel — awareness to conversion", "B2B vs B2C selling", "Basic target setting & tracking"], performance: ["Leading a sales team", "Integrating marketing into sales cycles", "Data-driven sales forecasting"] },
-      { num: "08", title: "E-Commerce & Digital Marketing", essentials: ["SEO, SEM, Social Media basics", "E-commerce platforms & customer journeys", "Key metrics: CTR, CAC, conversion rate"], performance: ["Running & analyzing digital campaigns", "Content strategy & omnichannel thinking", "Google Analytics, Meta Ads Manager"] },
-      { num: "09", title: "Business Networking", essentials: ["Why networking matters for managers", "How to introduce yourself & your org", "Building genuine professional relationships"], performance: ["Strategic networking — who & why", "Leveraging LinkedIn & industry events", "Creating value before asking for anything"] },
-      { num: "10", title: "Brand Management", essentials: ["Visual identity vs brand value", "How managers represent the brand", "Consistency in communication & behavior"], performance: ["Brand positioning & competitive differentiation", "Internal brand culture", "Crisis communication & brand protection"] },
-      { num: "11", title: "Market Research", essentials: ["Primary vs secondary research", "Understanding your customer", "Reading & interpreting basic market data"], performance: ["Competitive benchmarking techniques", "Consumer insight translation", "Using research to support business cases"] },
+      {
+        num: "07",
+        title: "Sales & Marketing Management",
+        essentials: [
+          "Understanding the sales funnel — awareness to conversion",
+          "Difference between B2B and B2C selling",
+          "Basic target setting and tracking",
+        ],
+        performance: [
+          "Leading a sales team — motivation, pipeline reviews",
+          "Integrating marketing support into sales cycles",
+          "Data-driven sales forecasting",
+        ],
+      },
+      {
+        num: "08",
+        title: "E-Commerce & Digital Marketing",
+        essentials: [
+          "What is digital marketing? SEO, SEM, Social Media basics",
+          "Understanding e-commerce platforms and customer journeys",
+          "Key metrics: CTR, conversion rate, CAC",
+        ],
+        performance: [
+          "Running and analyzing digital campaigns",
+          "Content strategy and omnichannel thinking",
+          "Using analytics tools (Google Analytics, Meta Ads Manager)",
+        ],
+      },
+      {
+        num: "09",
+        title: "Business Networking",
+        essentials: [
+          "Why networking matters for managers",
+          "How to introduce yourself and your organization",
+          "Building genuine professional relationships",
+        ],
+        performance: [
+          "Strategic networking — who to build relationships with and why",
+          "Leveraging LinkedIn and industry events",
+          "Creating value before asking for anything",
+        ],
+      },
+      {
+        num: "10",
+        title: "Brand Management",
+        essentials: [
+          "What is a brand? Visual identity vs brand value",
+          "How managers represent the brand in daily work",
+          "Consistency in communication and behavior",
+        ],
+        performance: [
+          "Brand positioning and competitive differentiation",
+          "Internal brand culture — employees as brand ambassadors",
+          "Crisis communication and brand protection",
+        ],
+      },
+      {
+        num: "11",
+        title: "Market Research",
+        essentials: [
+          "Primary vs secondary research",
+          "Understanding your customer — surveys, interviews, observation",
+          "Reading and interpreting basic market data",
+        ],
+        performance: [
+          "Competitive benchmarking techniques",
+          "Consumer insight translation into product/service decisions",
+          "Using research to support business cases to leadership",
+        ],
+      },
     ],
   },
+
   {
-    id: "tech", label: "Tech & Analytics", color: "#0891b2",
+    id: "tech",
+    label: "TECH & ANALYTICS",
+    color: "#0891b2",
     topics: [
-      { num: "12", title: "Data Analytics", essentials: ["Data your team/org generates", "Reading dashboards & reports intelligently", "KPIs vs vanity metrics"], performance: ["Basic Excel/Google Sheets analysis", "Interpreting trend data for decisions", "Presenting data stories to non-technical audiences"] },
-      { num: "13", title: "AI & Productivity in Management", essentials: ["AI tools for managers (ChatGPT, Copilot, Notion AI)", "Automating repetitive tasks", "AI ethics basics"], performance: ["Integrating AI into team workflows", "AI for faster research, content & decisions", "Staying updated in a rapidly changing landscape"] },
+      {
+        num: "12",
+        title: "Data Analytics",
+        essentials: [
+          "What data does your team/organization generate?",
+          "Reading dashboards and reports intelligently",
+          "Understanding KPIs vs vanity metrics",
+        ],
+        performance: [
+          "Basic Excel/Google Sheets data analysis",
+          "Interpreting trend data for decision-making",
+          "Presenting data stories to non-technical audiences",
+        ],
+      },
+      {
+        num: "13",
+        title: "Optimum Utilization of AI & Productivity in Business Management",
+        essentials: [
+          "What AI tools exist for managers today (ChatGPT, Copilot, Notion AI, etc)",
+          "Automating repetitive tasks — emails, reports, scheduling",
+          "AI ethics basics — what not to automate",
+        ],
+        performance: [
+          "Integrating AI into team workflows without replacing human judgment",
+          "Using AI for faster research, content creation, and decision support",
+          "Staying updated in a rapidly changing tech landscape",
+        ],
+      },
     ],
   },
+
   {
-    id: "people", label: "People & Communication", color: "#7c3aed",
+    id: "people",
+    label: "PEOPLE & COMMUNICATION",
+    color: "#7c3aed",
     topics: [
-      { num: "14", title: "HR Management", essentials: ["Recruitment basics — JDs, interviewing, selecting", "Onboarding a new team member", "Leave policies, performance cycles, disciplinary processes"], performance: ["Performance management & PIPs", "Building psychologically safe teams", "Talent retention & career development"] },
-      { num: "15", title: "Public Speaking", essentials: ["Overcoming fear of speaking", "Structuring a clear message", "Eye contact, voice modulation, body language"], performance: ["Leading town halls, presentations & pitches", "Storytelling as a leadership tool", "Handling Q&A & tough questions"] },
-      { num: "16", title: "Time & Stress Management", essentials: ["Time auditing — where does time actually go?", "Eisenhower Matrix, 80/20 rule", "Recognizing early signs of burnout"], performance: ["Deep work habits & focus blocks", "Managing team workload", "Sustainable high-performance routines"] },
-      { num: "17", title: "Business Communication", essentials: ["Written communication — emails, reports, memos", "Meeting management — agenda, facilitation, minutes", "Active listening as a management skill"], performance: ["Adapting style for different audiences", "Difficult conversations — feedback, conflict", "Cross-cultural communication"] },
+      {
+        num: "14",
+        title: "HR Management",
+        essentials: [
+          "Recruitment basics — writing JDs, interviewing, selecting",
+          "Onboarding a new team member effectively",
+          "Understanding leave policies, performance cycles, and disciplinary processes.",
+        ],
+        performance: [
+          "Performance management — setting goals, giving feedback, PIPs",
+          "Building a psychologically safe team environment",
+          "Talent retention strategies and career development conversations",
+        ],
+      },
+      {
+        num: "15",
+        title: "Public Speaking",
+        essentials: [
+          "Overcoming fear of speaking in groups or meetings",
+          "Structuring a clear message: Opening → Body → Close",
+          "Eye contact, voice modulation, body language basics",
+        ],
+        performance: [
+          "Leading town halls, presentations, and pitches confidently",
+          "Storytelling as a leadership communication tool",
+          "Handling Q&A and tough questions on the spot",
+        ],
+      },
+      {
+        num: "16",
+        title: "Time & Stress Management",
+        essentials: [
+          "Time auditing — where does your time actually go?",
+          "Prioritization frameworks: Eisenhower Matrix, 80/20 rule",
+          "Recognizing early signs of burnout in oneself and the team",
+        ],
+        performance: [
+          "Deep work habits and protecting focus blocks",
+          "Managing team workload and preventing team burnout",
+          "Building sustainable high-performance routines",
+        ],
+      },
+      {
+        num: "17",
+        title: "Business Communication",
+        essentials: [
+          "Written communication — emails, reports, memos that are clear and professional",
+          "Meeting management — agenda, facilitation, minutes",
+          "Active listening as a management skill",
+        ],
+        performance: [
+          "Adapting communication style for different audiences (team vs senior leadership vs clients)",
+          "Difficult conversations — feedback, conflict, underperformance",
+          "Cross-cultural communication for diverse teams",
+        ],
+      },
     ],
   },
+
   {
-    id: "global", label: "Global & Operations", color: "#059669",
+    id: "other",
+    label: "OTHER TOPICS",
+    color: "#059669",
     topics: [
-      { num: "18", title: "International Business", essentials: ["How global markets differ", "Import/export basics & trade fundamentals", "Understanding global supply chains"], performance: ["Cross-cultural business etiquette & negotiation", "Managing remote/international teams", "Market entry strategies"] },
-      { num: "19", title: "Event Management", essentials: ["Planning a team/org event from scratch", "Budget management for events", "Coordinating vendors, timelines & logistics"], performance: ["Large-scale event planning with multiple stakeholders", "Risk planning for events", "Events as leadership visibility & team building"] },
-      { num: "20", title: "Logistics & Supply Chain", essentials: ["What is a supply chain?", "Inventory basics — too much vs too little", "Procurement & vendor relationships"], performance: ["Supply chain disruption management", "Cost optimization in procurement & distribution", "ERP basics & tracking systems"] },
+      {
+        num: "18",
+        title: "International Business",
+        essentials: [
+          "How global markets differ — culture, regulation, currency",
+          "Import/export basics and trade fundamentals",
+          "Understanding the global supply chains conceptually",
+        ],
+        performance: [
+          "Cross-cultural business etiquette and negotiation",
+          "Managing remote/international teams",
+          "Global expansion thinking — market entry strategies",
+        ],
+      },
+      {
+        num: "19",
+        title: "Event Management",
+        essentials: [
+          "Planning a team/organizational event from scratch",
+          "Budget management for events",
+          "Coordinating vendors, timelines, and logistics",
+        ],
+        performance: [
+          "Large-scale event planning with multiple stakeholders",
+          "Risk planning for events (backup plans, safety protocols)",
+          "Using events as a leadership visibility and team-building opportunity",
+        ],
+      },
+      {
+        num: "20",
+        title: "Logistics & Supply Chain",
+        essentials: [
+          "What is a supply chain? Flow from raw material to customer",
+          "Inventory basics — too much vs too little",
+          "Understanding procurement and vendor relationships",
+        ],
+        performance: [
+          "Supply chain disruption management and resilience planning",
+          "Cost optimization in procurement and distribution",
+          "Technology in supply chain — ERP basics, tracking systems",
+        ],
+      },
     ],
   },
 ];
@@ -58,6 +332,73 @@ type ModuleType = typeof modules[0];
 const allTopics = modules.flatMap(m =>
   m.topics.map(t => ({ ...t, moduleColor: m.color, moduleLabel: m.label }))
 );
+
+// ─── CHAIN LINK ICON ─────────────────────────────────────────────────────────
+// Two interlocking rounded-rect links, styled like the uploaded logo.
+// `color` = the primary (back) link; a lighter tint for the front link.
+
+const ChainLinkIcon = ({
+  color,
+  size = 22,
+  active = false,
+}: {
+  color: string;
+  size?: number;
+  active?: boolean;
+}) => {
+  // Front link is color at 55% opacity so they feel "layered"
+  const frontOpacity = active ? 0.72 : 0.45;
+  const backOpacity  = active ? 1    : 0.65;
+
+  return (
+    <svg
+      width={size}
+      height={size}
+      viewBox="0 0 40 40"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+      aria-hidden="true"
+      style={{ flexShrink: 0, display: "block" }}
+    >
+      {/*
+        Two pill/oval shapes overlapping at the centre.
+        Back link: rotated ~-35 deg, sits behind.
+        Front link: rotated ~+35 deg opposite, sits in front.
+        We clip the intersection so they look truly interlocked.
+      */}
+
+      {/* ── BACK LINK (darker / more opaque) ── */}
+      <g
+        transform="rotate(-35 20 20)"
+        opacity={backOpacity}
+      >
+        <rect
+          x="7" y="13"
+          width="26" height="14"
+          rx="7"
+          stroke={color}
+          strokeWidth="3.4"
+          fill="none"
+        />
+      </g>
+
+      {/* ── FRONT LINK (lighter tint) ── */}
+      <g
+        transform="rotate(35 20 20)"
+        opacity={frontOpacity}
+      >
+        <rect
+          x="7" y="13"
+          width="26" height="14"
+          rx="7"
+          stroke={color}
+          strokeWidth="3.4"
+          fill="none"
+        />
+      </g>
+    </svg>
+  );
+};
 
 // ─── TILT CARD ────────────────────────────────────────────────────────────────
 
@@ -103,41 +444,46 @@ const TiltCard = ({ children, accent }: { children: React.ReactNode; accent: str
 // ─── TOPIC ROW ────────────────────────────────────────────────────────────────
 
 const TopicRow = ({
-  topic, color, index, visible,
+  topic, color, index, visible, openTopic, setOpenTopic, topicId,
 }: {
   topic: TopicType; color: string; index: number; visible: boolean;
+  openTopic: string | null; setOpenTopic: (id: string | null) => void; topicId: string;
 }) => {
-  const [open, setOpen] = useState(false);
+  const isOpen = openTopic === topicId;
+
+  const handleToggle = () => {
+    setOpenTopic(isOpen ? null : topicId);
+  };
 
   return (
     <div
       style={{
         borderRadius: 12,
-        border: open ? `1.5px solid ${color}45` : "1.5px solid rgba(255,255,255,0.06)",
-        background: open ? `linear-gradient(135deg, ${color}10, rgba(255,255,255,0.02))` : "rgba(255,255,255,0.025)",
+        border: isOpen ? `1.5px solid ${color}45` : "1.5px solid rgba(255,255,255,0.06)",
+        background: isOpen ? `linear-gradient(135deg, ${color}10, rgba(255,255,255,0.02))` : "rgba(255,255,255,0.025)",
         marginBottom: 8,
         transition: "all 0.3s cubic-bezier(0.4,0,0.2,1)",
         opacity: visible ? 1 : 0,
         transform: visible ? "translateY(0)" : "translateY(10px)",
         transitionDelay: visible ? `${(index % 8) * 30}ms` : "0ms",
-        boxShadow: open ? `0 4px 24px ${color}15` : "none",
+        boxShadow: isOpen ? `0 4px 24px ${color}15` : "none",
       }}
     >
       <button
-        onClick={() => setOpen(o => !o)}
-        aria-expanded={open}
+        onClick={handleToggle}
+        aria-expanded={isOpen}
         style={{ width: "100%", background: "none", border: "none", cursor: "pointer", padding: "16px 20px", display: "flex", alignItems: "center", gap: 14, textAlign: "left" }}
       >
         <span style={{ fontFamily: "monospace", fontSize: 13, fontWeight: 700, color, opacity: 0.85, minWidth: 28, letterSpacing: "0.05em", flexShrink: 0 }}>{topic.num}</span>
         <span style={{ flex: 1, color: "rgba(255,255,255,0.92)", fontWeight: 600, fontSize: 15, lineHeight: 1.4 }}>{topic.title}</span>
         <svg
-          style={{ width: 16, height: 16, color: "rgba(255,255,255,0.4)", transform: open ? "rotate(180deg)" : "none", transition: "transform 0.25s", flexShrink: 0 }}
+          style={{ width: 16, height: 16, color: "rgba(255,255,255,0.4)", transform: isOpen ? "rotate(180deg)" : "none", transition: "transform 0.25s", flexShrink: 0 }}
           fill="none" stroke="currentColor" viewBox="0 0 24 24"
         >
           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M19 9l-7 7-7-7" />
         </svg>
       </button>
-      {open && (
+      {isOpen && (
         <div style={{ padding: "0 20px 18px 62px", display: "grid", gridTemplateColumns: "1fr 1fr", gap: 20 }}>
           <div>
             <p style={{ fontSize: 12, fontWeight: 700, color: "rgba(255,255,255,0.4)", textTransform: "uppercase", letterSpacing: "0.1em", marginBottom: 10, fontFamily: "monospace" }}>Essentials</p>
@@ -231,6 +577,7 @@ export default function Services() {
   const [activeModule, setActiveModule] = useState("foundations");
   const [search, setSearch] = useState("");
   const [isMounted, setIsMounted] = useState(false);
+  const [openTopic, setOpenTopic] = useState<string | null>(null);
   const particles = useParticles(22);
 
   useEffect(() => {
@@ -255,7 +602,10 @@ export default function Services() {
     );
   }, [search, isSearching, currentModule]);
 
-  const modIcons: Record<string, string> = { foundations: "🏛️", sales: "📈", tech: "⚡", people: "🤝", global: "🌐" };
+  // Close open topic when switching modules or searching
+  useEffect(() => {
+    setOpenTopic(null);
+  }, [activeModule, search]);
 
   return (
     <section
@@ -363,40 +713,56 @@ export default function Services() {
             {/* ── Module sidebar ── */}
             {!isSearching && (
               <div className="flex flex-row lg:flex-col gap-2 p-4 lg:p-5 overflow-x-auto lg:overflow-visible" style={{ borderRight: "1px solid rgba(255,255,255,0.06)", minWidth: 220, flexShrink: 0 }}>
-                {modules.map((m: ModuleType, i: number) => (
-                  <button
-                    key={m.id}
-                    onClick={() => setActiveModule(m.id)}
-                    aria-pressed={activeModule === m.id}
-                    className="flex items-center gap-3 rounded-xl text-left whitespace-nowrap lg:whitespace-normal transition-all duration-250"
-                    style={{
-                      padding: "12px 16px",
-                      background: activeModule === m.id ? `${m.color}1a` : "transparent",
-                      border: activeModule === m.id ? `1.5px solid ${m.color}45` : "1.5px solid transparent",
-                      boxShadow: activeModule === m.id ? `0 4px 20px ${m.color}1a` : "none",
-                      opacity: visible ? 1 : 0,
-                      transform: visible ? "translateX(0)" : "translateX(-12px)",
-                      transitionDelay: visible ? `${i * 60}ms` : "0ms",
-                    }}
-                  >
-                    <span style={{ fontSize: 18 }}>{modIcons[m.id]}</span>
-                    <div className="flex-1 min-w-0">
-                      <p className="text-sm font-bold leading-snug truncate" style={{ color: activeModule === m.id ? "white" : "rgba(255,255,255,0.6)", transition: "color 0.2s" }}>{m.label}</p>
-                    </div>
-                    <span
-                      className="text-sm font-bold rounded-full px-2 py-0.5 flex-shrink-0"
+                {modules.map((m: ModuleType, i: number) => {
+                  const isActive = activeModule === m.id;
+                  return (
+                    <button
+                      key={m.id}
+                      onClick={() => setActiveModule(m.id)}
+                      aria-pressed={isActive}
+                      className="flex items-center gap-3 rounded-xl text-left whitespace-nowrap lg:whitespace-normal transition-all duration-250"
                       style={{
-                        background: activeModule === m.id ? m.color : "rgba(255,255,255,0.07)",
-                        color: activeModule === m.id ? "#fff" : "rgba(255,255,255,0.4)",
-                        fontFamily: "monospace",
-                        transition: "all 0.2s",
-                        fontSize: 11,
+                        padding: "12px 16px",
+                        background: isActive ? `${m.color}1a` : "transparent",
+                        border: isActive ? `1.5px solid ${m.color}45` : "1.5px solid transparent",
+                        boxShadow: isActive ? `0 4px 20px ${m.color}1a` : "none",
+                        opacity: visible ? 1 : 0,
+                        transform: visible ? "translateX(0)" : "translateX(-12px)",
+                        transitionDelay: visible ? `${i * 60}ms` : "0ms",
                       }}
                     >
-                      {m.topics.length}
-                    </span>
-                  </button>
-                ))}
+                      {/* ── Icon: chain-link for "other", emoji for the rest ── */}
+                      {m.id === "other" ? (
+                        <ChainLinkIcon color={m.color} size={22} active={isActive} />
+                      ) : (
+                        <span style={{ fontSize: 18 }}>
+                          {({ foundations: "🏛️", sales: "📈", tech: "⚡", people: "🤝" } as Record<string, string>)[m.id]}
+                        </span>
+                      )}
+
+                      <div className="flex-1 min-w-0">
+                        <p
+                          className="text-sm font-bold leading-snug truncate"
+                          style={{ color: isActive ? "white" : "rgba(255,255,255,0.6)", transition: "color 0.2s" }}
+                        >
+                          {m.label}
+                        </p>
+                      </div>
+                      <span
+                        className="text-sm font-bold rounded-full px-2 py-0.5 flex-shrink-0"
+                        style={{
+                          background: isActive ? m.color : "rgba(255,255,255,0.07)",
+                          color: isActive ? "#fff" : "rgba(255,255,255,0.4)",
+                          fontFamily: "monospace",
+                          transition: "all 0.2s",
+                          fontSize: 11,
+                        }}
+                      >
+                        {m.topics.length}
+                      </span>
+                    </button>
+                  );
+                })}
                 <div className="hidden lg:block mt-4 rounded-xl p-3 text-center" style={{ background: "rgba(235,72,0,0.08)", border: "1px solid rgba(235,72,0,0.18)" }}>
                   <p className="text-sm font-bold mb-0.5" style={{ color: "#eb4800" }}>20 Topics Total</p>
                   <p className="text-sm leading-snug" style={{ color: "rgba(255,255,255,0.35)" }}>Click any topic to expand</p>
@@ -416,8 +782,17 @@ export default function Services() {
 
               {!isSearching && (
                 <div className="flex items-center gap-3 mb-5">
-                  <div className="w-8 h-8 rounded-lg flex items-center justify-center text-base" style={{ background: `${currentModule.color}1a` }}>
-                    {modIcons[currentModule.id]}
+                  <div
+                    className="w-8 h-8 rounded-lg flex items-center justify-center"
+                    style={{ background: `${currentModule.color}1a` }}
+                  >
+                    {currentModule.id === "other" ? (
+                      <ChainLinkIcon color={currentModule.color} size={20} active={true} />
+                    ) : (
+                      <span style={{ fontSize: 18 }}>
+                        {({ foundations: "🏛️", sales: "📈", tech: "⚡", people: "🤝" } as Record<string, string>)[currentModule.id]}
+                      </span>
+                    )}
                   </div>
                   <div>
                     <h4 className="text-base font-bold text-white leading-none mb-1.5">{currentModule.label}</h4>
@@ -436,14 +811,15 @@ export default function Services() {
                     color={"moduleColor" in t ? (t as typeof allTopics[0]).moduleColor : currentModule.color}
                     index={i}
                     visible={visible}
+                    openTopic={openTopic}
+                    setOpenTopic={setOpenTopic}
+                    topicId={t.num}
                   />
                 ))
               )}
             </div>
           </div>
         </div>
-
-        {/* ══ BOTTOM FEATURE STRIP (REMOVED) ══ */}
 
         {/* ══ CTA BUTTON ══ */}
         <div className="text-center mt-12">
@@ -480,7 +856,7 @@ export default function Services() {
       <div className="absolute bottom-5 left-1/2 -translate-x-1/2 hidden lg:flex flex-col items-center gap-1" style={{ opacity: 0.25 }} aria-hidden>
         <span className="text-white text-sm">Explore</span>
         <svg className="w-4 h-4 text-white animate-bounce" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 13l-7 7-7-7m14-8l-7 7-7-7" />
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 13l-7 7-7m14-8l-7 7-7-7" />
         </svg>
       </div>
 

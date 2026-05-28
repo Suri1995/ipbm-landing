@@ -3,9 +3,9 @@ import { useEffect, useState, useRef } from "react";
 
 const stats = [
   { value: "0→1", label: "Startup Journey" },
-  { value: "50+", label: "Students Enrolled" },
-  { value: "100%", label: "Practical Focus" },
-  { value: "25+", label: "Startup Partners" },
+  { value: "20", label: "Topics Covered" },
+  { value: "100", label: "Industry Expert Trainers" },
+  { value: "1-ON-1", label: "Mentorship" },
 ];
 
 // Smooth Animated counter component with eased animation
@@ -353,89 +353,89 @@ export default function Hero() {
             </div>
 
             {/* Right – floating card with 3D tilt - Updated for startup focus */}
+           <div
+  className={`hidden lg:block transition-all duration-700 delay-200 ${
+    visible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
+  }`}
+  aria-hidden="true"
+>
+  <TiltCard>
+    <div className="relative">
+      {/* Main card with hover glow */}
+      <div className="bg-white/8 backdrop-blur-sm border border-white/15 rounded-2xl p-6 xl:p-8 transition-all duration-300 hover:border-gold-500/40 hover:shadow-[0_0_30px_rgba(212,175,55,0.15)]">
+        <div className="flex items-center gap-3 mb-5 xl:mb-6">
+          <div className="w-10 h-10 bg-[#eb4800] rounded-xl flex items-center justify-center font-display font-bold text-white relative overflow-hidden group">
+            <span className="relative z-10">IP</span>
+            <div className="absolute inset-0 bg-white/20 translate-y-full group-hover:translate-y-0 transition-transform duration-300" />
+          </div>
+          <div>
+            <p className="text-white font-semibold text-sm">IPBM</p>
+            <p className="text-navy-300 text-xs">
+              Where Business Theory Meets Reality
+            </p>
+          </div>
+        </div>
+
+        <div className="grid grid-cols-2 gap-2 xl:gap-3 mb-5 xl:mb-6">
+          {[
+            "Business Foundations",
+            "Sales & Marketing",
+            "Tech & Analytics",
+            "People & Communication",
+          ].map((item, idx) => (
             <div
-              className={`hidden lg:block transition-all duration-700 delay-200 ${
-                visible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
-              }`}
-              aria-hidden="true"
+              key={item}
+              className="bg-white/8 border border-white/10 rounded-xl p-2.5 xl:p-3 text-center transition-all duration-300 hover:border-gold-500/30 hover:bg-white/12 cursor-default"
+              style={{ animationDelay: `${idx * 100}ms` }}
             >
-              <TiltCard>
-                <div className="relative">
-                  {/* Main card with hover glow */}
-                  <div className="bg-white/8 backdrop-blur-sm border border-white/15 rounded-2xl p-6 xl:p-8 transition-all duration-300 hover:border-gold-500/40 hover:shadow-[0_0_30px_rgba(212,175,55,0.15)]">
-                    <div className="flex items-center gap-3 mb-5 xl:mb-6">
-                      <div className="w-10 h-10 bg-[#eb4800] rounded-xl flex items-center justify-center font-display font-bold text-white relative overflow-hidden group">
-                        <span className="relative z-10">IP</span>
-                        <div className="absolute inset-0 bg-white/20 translate-y-full group-hover:translate-y-0 transition-transform duration-300" />
-                      </div>
-                      <div>
-                        <p className="text-white font-semibold text-sm">IPBM</p>
-                        <p className="text-navy-300 text-xs">
-                          India's First Practice-First B-School
-                        </p>
-                      </div>
-                    </div>
-
-                    <div className="grid grid-cols-2 gap-2 xl:gap-3 mb-5 xl:mb-6">
-                      {[
-                        "Startup Strategy",
-                        "Venture Finance",
-                        "Growth Marketing",
-                        "Product Management",
-                      ].map((item, idx) => (
-                        <div
-                          key={item}
-                          className="bg-white/8 border border-white/10 rounded-xl p-2.5 xl:p-3 text-center transition-all duration-300 hover:border-gold-500/30 hover:bg-white/12 cursor-default"
-                          style={{ animationDelay: `${idx * 100}ms` }}
-                        >
-                          <p className="text-white text-xs font-medium">{item}</p>
-                        </div>
-                      ))}
-                    </div>
-
-                    <div className="flex items-center justify-between bg-gold-500/15 border border-gold-500/30 rounded-xl p-3 transition-all duration-300 hover:bg-gold-500/25">
-                      <span className="text-gold-300 text-xs sm:text-sm font-medium">
-                        🚀 First Batch
-                      </span>
-                      <span className="text-gold-400 text-xs sm:text-sm font-bold flex items-center gap-1">
-                        Starting Jun 2026
-                        <svg
-                          className="w-3 h-3 animate-pulse"
-                          fill="none"
-                          stroke="currentColor"
-                          viewBox="0 0 24 24"
-                        >
-                          <path
-                            strokeLinecap="round"
-                            strokeLinejoin="round"
-                            strokeWidth={2}
-                            d="M13 7l5 5m0 0l-5 5m5-5H6"
-                          />
-                        </svg>
-                      </span>
-                    </div>
-                  </div>
-
-                  {/* Floating badge with rocket */}
-                  <div className="absolute -top-3 -right-3 xl:-top-4 xl:-right-4 bg-[#eb4800] text-white rounded-full p-2.5 xl:p-3 shadow-lg animate-float">
-                    <svg
-                      className="w-4 h-4 xl:w-5 xl:h-5"
-                      fill="none"
-                      stroke="currentColor"
-                      viewBox="0 0 24 24"
-                      aria-hidden="true"
-                    >
-                      <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        strokeWidth={2}
-                        d="M3.055 11H5a2 2 0 012 2v1a2 2 0 002 2 2 2 0 012 2v2.945M8 3.935V5.5A2.5 2.5 0 0010.5 8h.5a2 2 0 012 2 2 2 0 104 0 2 2 0 012-2h1.064M15 20.488V18a2 2 0 012-2h3.064M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
-                      />
-                    </svg>
-                  </div>
-                </div>
-              </TiltCard>
+              <p className="text-white text-xs font-medium">{item}</p>
             </div>
+          ))}
+        </div>
+
+        <div className="flex items-center justify-between bg-gold-500/15 border border-gold-500/30 rounded-xl p-3 transition-all duration-300 hover:bg-gold-500/25">
+          <span className="text-gold-300 text-xs sm:text-sm font-medium">
+            ⏱️ 3 Hours/Day
+          </span>
+          <span className="text-gold-400 text-xs sm:text-sm font-bold flex items-center gap-1">
+            Fee: ₹50,000 + GST
+            <svg
+              className="w-3 h-3 animate-pulse"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth={2}
+                d="M13 7l5 5m0 0l-5 5m5-5H6"
+              />
+            </svg>
+          </span>
+        </div>
+      </div>
+
+      {/* Floating badge with star */}
+      <div className="absolute -top-3 -right-3 xl:-top-4 xl:-right-4 bg-[#eb4800] text-white rounded-full p-2.5 xl:p-3 shadow-lg animate-float">
+        <svg
+          className="w-4 h-4 xl:w-5 xl:h-5"
+          fill="none"
+          stroke="currentColor"
+          viewBox="0 0 24 24"
+          aria-hidden="true"
+        >
+          <path
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            strokeWidth={2}
+            d="M11.049 2.927c.3-.921 1.603-.921 1.902 0l1.519 4.674a1 1 0 00.95.69h4.915c.969 0 1.371 1.24.588 1.81l-3.976 2.888a1 1 0 00-.363 1.118l1.518 4.674c.3.922-.755 1.688-1.538 1.118l-3.976-2.888a1 1 0 00-1.176 0l-3.976 2.888c-.783.57-1.838-.197-1.538-1.118l1.518-4.674a1 1 0 00-.363-1.118l-3.976-2.888c-.784-.57-.38-1.81.588-1.81h4.914a1 1 0 00.951-.69l1.519-4.674z"
+          />
+        </svg>
+      </div>
+    </div>
+  </TiltCard>
+</div>
           </div>
 
           {/* Stats row - Updated for startup stats */}
@@ -460,26 +460,66 @@ export default function Hero() {
                   </div>
                 );
               }
-              const numericValue = parseInt(stat.value);
-              const hasSuffix = stat.value.includes("+");
-              const suffix = hasSuffix ? "+" : "%";
-              return (
-                <div
-                  key={stat.label}
-                  className="group text-center bg-white/5 border border-white/10 rounded-xl sm:rounded-2xl p-3 sm:p-4 lg:p-5 transition-all duration-300 hover:bg-white/10 hover:border-gold-500/30 hover:-translate-y-1 cursor-default"
-                >
-                  {!isNaN(numericValue) ? (
-                    <AnimatedCounter target={numericValue} suffix={suffix} />
-                  ) : (
-                    <p className="font-display text-xl sm:text-2xl lg:text-3xl font-bold text-[#eb4800]/90">
-                      {stat.value}
+              // Handle "100" value - it should show 100 with % suffix
+              if (stat.value === "100") {
+                return (
+                  <div
+                    key={stat.label}
+                    className="group text-center bg-white/5 border border-white/10 rounded-xl sm:rounded-2xl p-3 sm:p-4 lg:p-5 transition-all duration-300 hover:bg-white/10 hover:border-gold-500/30 hover:-translate-y-1 cursor-default"
+                  >
+                    <AnimatedCounter target={100} suffix="%" />
+                    <p className="text-navy-300 text-xs sm:text-sm mt-0.5 sm:mt-1 group-hover:text-gold-300 transition-colors duration-300">
+                      {stat.label}
                     </p>
-                  )}
-                  <p className="text-navy-300 text-xs sm:text-sm mt-0.5 sm:mt-1 group-hover:text-gold-300 transition-colors duration-300">
-                    {stat.label}
-                  </p>
-                </div>
-              );
+                  </div>
+                );
+              }
+              // Handle "20" value - no suffix
+              if (stat.value === "20") {
+                return (
+                  <div
+                    key={stat.label}
+                    className="group text-center bg-white/5 border border-white/10 rounded-xl sm:rounded-2xl p-3 sm:p-4 lg:p-5 transition-all duration-300 hover:bg-white/10 hover:border-gold-500/30 hover:-translate-y-1 cursor-default"
+                  >
+                    <AnimatedCounter target={20} suffix="" />
+                    <p className="text-navy-300 text-xs sm:text-sm mt-0.5 sm:mt-1 group-hover:text-gold-300 transition-colors duration-300">
+                      {stat.label}
+                    </p>
+                  </div>
+                );
+              }
+              // Handle "1-ON-1" - special case
+              if (stat.value === "1-ON-1") {
+                return (
+                  <div
+                    key={stat.label}
+                    className="group text-center bg-white/5 border border-white/10 rounded-xl sm:rounded-2xl p-3 sm:p-4 lg:p-5 transition-all duration-300 hover:bg-white/10 hover:border-gold-500/30 hover:-translate-y-1 cursor-default"
+                  >
+                    <p className="font-display text-xl sm:text-2xl lg:text-3xl font-bold text-[#eb4800]/90">
+                      1-ON-1
+                    </p>
+                    <p className="text-navy-300 text-xs sm:text-sm mt-0.5 sm:mt-1 group-hover:text-gold-300 transition-colors duration-300">
+                      {stat.label}
+                    </p>
+                  </div>
+                );
+              }
+              // Fallback for any other numeric values
+              const numericValue = parseInt(stat.value);
+              if (!isNaN(numericValue)) {
+                return (
+                  <div
+                    key={stat.label}
+                    className="group text-center bg-white/5 border border-white/10 rounded-xl sm:rounded-2xl p-3 sm:p-4 lg:p-5 transition-all duration-300 hover:bg-white/10 hover:border-gold-500/30 hover:-translate-y-1 cursor-default"
+                  >
+                    <AnimatedCounter target={numericValue} suffix="" />
+                    <p className="text-navy-300 text-xs sm:text-sm mt-0.5 sm:mt-1 group-hover:text-gold-300 transition-colors duration-300">
+                      {stat.label}
+                    </p>
+                  </div>
+                );
+              }
+              return null;
             })}
           </div>
 

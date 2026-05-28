@@ -33,19 +33,19 @@ export default async function Home() {
 
       <main id="main-content">
         <Hero />
-        <SideNavbar />
+        {/* <SideNavbar /> */}
 
         <About />
         <Services />
-        <Team />
+        {/* <Team />
 
-        <Testimonials data={testimonialsSection} />
+        <Testimonials data={testimonialsSection} /> */}
 
         <FAQs />
         <Contact />
       </main>
 
-      <Footer />
+      {/* <Footer /> */}
     </>
   );
 }

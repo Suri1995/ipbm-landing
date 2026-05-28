@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
+import Image from "next/image";
 
 const particles = [
   { id: 0, width: 2, height: 2, left: 5, top: 10, duration: 8, delay: 0 },
@@ -25,16 +26,27 @@ const particles = [
   { id: 19, width: 4, height: 4, left: 98, top: 58, duration: 10, delay: 1.4 },
 ];
 
+// Updated pillars based on brochure content
 const pillars = [
+  {
+    icon: (
+      <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
+      </svg>
+    ),
+    title: "20 Essential Topics",
+    description:
+      "Comprehensive coverage across Business Foundations, Sales & Marketing, Tech & Analytics, People & Communication, and more — all taught by active industry experts.",
+  },
   {
     icon: (
       <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" />
       </svg>
     ),
-    title: "Industry-First Curriculum",
+    title: "45-Day Intensive",
     description:
-      "Built from scratch with CXOs and startup founders — every module tackles real business challenges from day one.",
+      "3 hours per day of immersive, practice-first learning. Zero textbooks — only case studies and current reality. Online & offline modes available.",
   },
   {
     icon: (
@@ -42,43 +54,44 @@ const pillars = [
         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
       </svg>
     ),
-    title: "Founder Mentorship",
+    title: "Industry Expert Faculty",
     description:
-      "Direct access to active entrepreneurs, investors, and domain experts who mentor your growth personally.",
+      "Every session is led by current practitioners — not academic theorists. Learn directly from those who are building and running businesses today.",
   },
   {
     icon: (
       <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
-        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6" />
+        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
       </svg>
     ),
-    title: "Career Launchpad",
+    title: "Certification of Completion",
     description:
-      "Hands-on projects, live client briefs, and industry connections that turn learning into immediate opportunity.",
-  },
-  {
-    icon: (
-      <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
-        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M3.055 11H5a2 2 0 012 2v1a2 2 0 002 2 2 2 0 012 2v2.945M8 3.935V5.5A2.5 2.5 0 0010.5 8h.5a2 2 0 012 2 2 2 0 104 0 2 2 0 012-2h1.064M15 20.488V18a2 2 0 012-2h3.064M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-      </svg>
-    ),
-    title: "Global Mindset",
-    description:
-      "International case studies, cross-border guest sessions, and a cohort of ambitious peers from across India.",
+      "Receive a recognized certification after completing the program — proof of your hands-on capability to manage across all key business departments.",
   },
 ];
 
+// Milestones based on brochure timeline
 const milestones = [
   { year: "May 2026", label: "IPBM founded in Hyderabad" },
-  { year: "Jun 2026", label: "First cohort applications open" },
-  { year: "Aug 2026", label: "Inaugural batch commences" },
-  { year: "2027", label: "First placements & alumni network" },
+  { year: "4th June 2026", label: "Program launch — applications open" },
+  { year: "July 2026", label: "First cohort commences" },
+  { year: "Aug/Sep 2026", label: "45-day intensive program completion" },
 ];
 
+// Outcomes / progress indicators
 const outcomes = [
-  { label: "Curriculum Industry Alignment", value: 100 },
-  { label: "Mentor Network Built", value: 80 },
-  { label: "Corporate Partnerships Secured", value: 65 },
+  { label: "Topics Curriculum Finalized", value: 100 },
+  { label: "Industry Expert Faculty Onboarded", value: 85 },
+  { label: "Corporate Partnerships Secured", value: 70 },
+];
+
+// Topic categories from brochure
+const topicCategories = [
+  { name: "Business Foundations", topics: ["Startup Management", "Financial Management", "Risk Management", "Project Management", "Operations Management", "Family Business Management"] },
+  { name: "Sales & Marketing", topics: ["Sales & Marketing Management", "E-Commerce & Digital Marketing", "Business Networking", "Brand Management", "Market Research"] },
+  { name: "Tech & Analytics", topics: ["Data Analytics", "Optimum Utilization of AI", "Productivity in Business Management"] },
+  { name: "People & Communication", topics: ["HR Management", "Public Speaking", "Time & Stress Management", "Business Communication"] },
+  { name: "Other Topics", topics: ["International Business", "Event Management", "Logistics & Supply Chain"] },
 ];
 
 // ── Animated year counter ──────────────────────────────────────────────────
@@ -202,6 +215,73 @@ const ProgressBar = ({
   );
 };
 
+// ── Topics Accordion Component ────────────────────────────────────────────
+const TopicsAccordion = ({ visible }: { visible: boolean }) => {
+  const [openCategory, setOpenCategory] = useState<string | null>("Business Foundations");
+
+  return (
+    <div
+      className={`mt-6 bg-white/70 backdrop-blur-sm rounded-xl p-4 sm:p-5 transition-all duration-700 delay-300 ${
+        visible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"
+      }`}
+      style={{ border: "1px solid rgba(4, 77, 212, 0.15)" }}
+    >
+      <div className="flex items-center gap-2 mb-4">
+        <span className="text-sm font-semibold uppercase tracking-wider" style={{ color: "#044dd4" }}>
+          📚 20 Topics Covered
+        </span>
+        <span className="text-xs text-navy-400">— All taught by industry experts</span>
+      </div>
+
+      <div className="space-y-2">
+        {topicCategories.map((category) => (
+          <div key={category.name} className="border border-navy-100 rounded-lg overflow-hidden">
+            <button
+              onClick={() => setOpenCategory(openCategory === category.name ? null : category.name)}
+              className="w-full flex justify-between items-center p-3 text-left bg-white/50 hover:bg-white/80 transition-colors duration-200"
+              aria-expanded={openCategory === category.name}
+            >
+              <span className="font-semibold text-navy-800 text-sm">{category.name}</span>
+              <svg
+                className={`w-4 h-4 transition-transform duration-200 ${openCategory === category.name ? "rotate-180" : ""}`}
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+                style={{ color: "#eb4800" }}
+              >
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+              </svg>
+            </button>
+            <div
+              className={`overflow-hidden transition-all duration-300 ${
+                openCategory === category.name ? "max-h-96" : "max-h-0"
+              }`}
+            >
+              <div className="p-3 pt-0 bg-white/30">
+                <div className="flex flex-wrap gap-1.5 mt-2">
+                  {category.topics.map((topic) => (
+                    <span
+                      key={topic}
+                      className="inline-block px-2 py-1 text-xs rounded-full"
+                      style={{ backgroundColor: "rgba(4, 77, 212, 0.08)", color: "#044dd4" }}
+                    >
+                      {topic}
+                    </span>
+                  ))}
+                </div>
+              </div>
+            </div>
+          </div>
+        ))}
+      </div>
+
+      <div className="mt-4 pt-3 border-t border-navy-100 flex items-center justify-between">
+        <span className="text-xs text-navy-500">🎯 Zero Textbooks — 100% Case Study Based</span>
+        <span className="text-xs font-semibold" style={{ color: "#eb4800" }}>3 Hours/Day · 45 Days</span>
+      </div>
+    </div>
+  );
+};
 
 // ── Main component ─────────────────────────────────────────────────────────
 export default function About() {
@@ -326,7 +406,7 @@ export default function About() {
                 aria-hidden="true"
               />
               <span className="text-xs font-medium tracking-wide" style={{ color: "#eb4800" }}>
-                Founded May <AnimatedYear />
+                Founded May <AnimatedYear /> · Launching 4th June 2026
               </span>
             </div>
 
@@ -336,7 +416,7 @@ export default function About() {
               style={{ color: "#044dd4" }}
             >
               <span className="w-8 h-px" style={{ backgroundColor: "#044dd4" }} aria-hidden="true" />
-              Who We Are
+              Where Business Theory Meets Reality
             </p>
 
             {/* Heading */}
@@ -344,9 +424,9 @@ export default function About() {
               id="about-heading"
               className="font-display text-2xl sm:text-3xl lg:text-4xl font-bold text-navy-900 mb-5 sm:mb-6 leading-tight text-balance"
             >
-              More Than an Institute —{" "}
+              Institute of{" "}
               <span className="text-navy-600 relative inline-block group">
-                A Launchpad
+                Practical Business Management
                 <span
                   className={`absolute -bottom-1 left-0 h-0.5 rounded-full transition-all duration-700 delay-300 ${
                     sectionVisible ? "w-full" : "w-0"
@@ -357,17 +437,23 @@ export default function About() {
               </span>
             </h2>
 
-            {/* Body text */}
+            {/* Body text based on brochure */}
             <p className="text-navy-600 leading-relaxed mb-4 sm:mb-5 text-sm sm:text-base">
               Launched in <span className="font-semibold text-navy-800">May 2026</span>, the
-              Institute of Practical Business Management is a bold new vision for management
+              Institute of Practical Business Management (IPBM) is a bold new vision for management
               education in India. We were founded on one belief — that real business acumen is
-              built through doing, not just listening. Every programme is a live laboratory of
-              real-world challenges.
+              built through <span className="italic">doing</span>, not just listening.
+            </p>
+
+            <p className="text-navy-600 leading-relaxed mb-4 sm:mb-5 text-sm sm:text-base">
+              Our <span className="font-semibold">45-day intensive program</span> runs <span className="font-semibold">3 hours daily</span>,
+              covering <span className="font-semibold">20 essential business topics</span> — all taught exclusively by{" "}
+              <span className="font-semibold">active industry experts</span>, not academic theorists.
+              <span className="block mt-2 text-xs text-navy-500">✨ Zero textbooks. Only case studies and current reality.</span>
             </p>
 
             <p className="text-navy-600 leading-relaxed mb-6 sm:mb-8 text-sm sm:text-base">
-              We&rsquo;re just getting started, and that&rsquo;s exactly the point. Our{" "}
+              We&apos;re just getting started, and that&apos;s exactly the point. Our{" "}
               <span className="font-semibold text-navy-800">founding cohort</span> will shape the
               culture, curriculum, and community of IPBM — becoming the alumni our future students
               look up to across finance, marketing, operations, and entrepreneurship.
@@ -375,7 +461,7 @@ export default function About() {
 
             {/* Accreditation / status badges */}
             <div className="flex flex-wrap gap-2 sm:gap-3 mb-8" role="list" aria-label="Institute status">
-              {["Newly Launched", "AICTE Pending", "ISO Certified"].map((badge, idx) => (
+              {["Newly Launched", "Online & Offline Modes", "Certification Program"].map((badge, idx) => (
                 <span
                   key={badge}
                   role="listitem"
@@ -394,46 +480,46 @@ export default function About() {
               ))}
             </div>
 
-            {/* Stats row */}
-            <div className="pt-6 border-t border-navy-100/50 flex gap-6 mb-8">
+            {/* Stats row - updated from brochure */}
+            <div className="pt-6 border-t border-navy-100/50 flex flex-wrap gap-4 sm:gap-6 mb-8">
               <div className="group cursor-default">
                 <p className="text-2xl font-bold relative inline-block" style={{ color: "#eb4800" }}>
-                  <AnimatedCounter target={20} suffix="+" />
+                  <AnimatedCounter target={45} suffix=" Days" />
                   <span
                     className="absolute -bottom-1 left-0 w-full h-0.5 scale-x-0 group-hover:scale-x-100 transition-transform duration-300 origin-left"
                     style={{ backgroundColor: "#eb4800" }}
                     aria-hidden="true"
                   />
                 </p>
-                <p className="text-navy-500 text-xs mt-1">Expert Faculty</p>
+                <p className="text-navy-500 text-xs mt-1">Intensive Program</p>
               </div>
 
               <div className="w-px bg-navy-100" aria-hidden="true" />
 
               <div className="group cursor-default">
                 <p className="text-2xl font-bold relative inline-block" style={{ color: "#eb4800" }}>
-                  <AnimatedCounter target={30} suffix="+" />
+                  <AnimatedCounter target={20} suffix=" Topics" />
                   <span
                     className="absolute -bottom-1 left-0 w-full h-0.5 scale-x-0 group-hover:scale-x-100 transition-transform duration-300 origin-left"
                     style={{ backgroundColor: "#eb4800" }}
                     aria-hidden="true"
                   />
                 </p>
-                <p className="text-navy-500 text-xs mt-1">Industry Mentors</p>
+                <p className="text-navy-500 text-xs mt-1">Comprehensive Coverage</p>
               </div>
 
               <div className="w-px bg-navy-100" aria-hidden="true" />
 
               <div className="group cursor-default">
                 <p className="text-2xl font-bold relative inline-block" style={{ color: "#eb4800" }}>
-                  <AnimatedCounter target={1} suffix="st" />
+                  <AnimatedCounter target={100} suffix="%" />
                   <span
                     className="absolute -bottom-1 left-0 w-full h-0.5 scale-x-0 group-hover:scale-x-100 transition-transform duration-300 origin-left"
                     style={{ backgroundColor: "#eb4800" }}
                     aria-hidden="true"
                   />
                 </p>
-                <p className="text-navy-500 text-xs mt-1">Founding Cohort</p>
+                <p className="text-navy-500 text-xs mt-1">Industry Expert Faculty</p>
               </div>
             </div>
 
@@ -444,13 +530,13 @@ export default function About() {
                 sectionVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"
               }`}
               style={{ border: "1px solid rgba(4, 77, 212, 0.15)" }}
-              aria-label="Launch readiness"
+              aria-label="Program readiness"
             >
               <p
                 className="text-xs font-semibold uppercase tracking-widest mb-4"
                 style={{ color: "#044dd4" }}
               >
-                Launch Readiness
+                Program Readiness
               </p>
               {outcomes.map((o, i) => (
                 <ProgressBar
@@ -475,7 +561,7 @@ export default function About() {
                 className="text-xs font-semibold uppercase tracking-widest mb-3"
                 style={{ color: "#044dd4" }}
               >
-                Our Journey
+                Program Timeline
               </p>
               <ol className="space-y-2.5" role="list">
                 {milestones.map((m, i) => (
@@ -486,7 +572,7 @@ export default function About() {
                     }`}
                     style={{ transitionDelay: `${300 + i * 100}ms` }}
                   >
-                    <span className="text-xs font-bold text-navy-800 w-16 shrink-0">{m.year}</span>
+                    <span className="text-xs font-bold text-navy-800 w-20 shrink-0">{m.year}</span>
                     <span
                       className="w-2 h-2 rounded-full shrink-0"
                       style={{ backgroundColor: "#eb4800" }}
@@ -502,9 +588,27 @@ export default function About() {
                 ))}
               </ol>
             </div>
+
+            {/* Added association line here */}
+  <div className="text-2xl text-[#eb4800] mt-10 flex items-center gap-3 font-bold">
+  Associated with
+
+  {/* BMRB Association Logo */}
+  <div className="">
+    
+    {/* Logo Image */}
+    <Image
+      src="/bmrb-logo.avif"
+      alt="BMRB Logo"
+      width={100}
+      height={40}
+      className="w-25 h-10"
+    />
+  </div>
+</div>
           </div>
 
-          {/* ── RIGHT COLUMN — Pillars + Testimonial ── */}
+          {/* ── RIGHT COLUMN — Pillars + Topics Accordion ── */}
           <div>
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-5 mb-5">
               {pillars.map((p, i) => (
@@ -596,15 +700,56 @@ export default function About() {
               ))}
             </div>
 
-            {/* ── Founder's note ── */}
+            {/* Topics Accordion - showing all 20 topics from brochure */}
+            <TopicsAccordion visible={pillarsVisible} />
+
+            {/* Program Fee & Contact */}
+<div
+  className={`mt-5 bg-gradient-to-r from-white to-navy-50/30 rounded-xl p-4 sm:p-5 transition-all duration-700 delay-500 ${
+    pillarsVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"
+  }`}
+  style={{ border: "1px solid rgba(235, 72, 0, 0.2)" }}
+>
+  <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
+    <div>
+      <p className="text-xs text-navy-500">Program Fee</p>
+      <p className="text-xl font-bold" style={{ color: "#eb4800" }}>₹50,000 + GST</p>
+      <p className="text-xs text-navy-400 mt-1">EMI options available</p>
+      <p className="text-xs font-semibold mt-2" style={{ color: "#044dd4" }}>
+        💡 Less than ₹1,200/- per day for Expert-led Learning
+      </p>
+    </div>
+    <div className="flex gap-3">
+      <a
+        href="tel:9704859888"
+        className="inline-flex items-center gap-1.5 px-3 py-2 rounded-lg text-xs font-medium transition-all hover:-translate-y-0.5"
+        style={{ backgroundColor: "rgba(4, 77, 212, 0.1)", color: "#044dd4" }}
+      >
+        📞 9704859888
+      </a>
+      <a
+        href="tel:9866739499"
+        className="inline-flex items-center gap-1.5 px-3 py-2 rounded-lg text-xs font-medium transition-all hover:-translate-y-0.5"
+        style={{ backgroundColor: "rgba(4, 77, 212, 0.1)", color: "#044dd4" }}
+      >
+        📞 9866739499
+      </a>
+    </div>
+  </div>
+  <p className="text-xs text-navy-400 mt-3 pt-2 border-t border-navy-100">
+    📍 IPBM, Brand Market Research Bureau, Raghavendra Nagar Colony, Uppal, Hyderabad - 500039
+  </p>
+  
+</div>
+
+            {/* Founder's note */}
             <blockquote
-              className={`bg-white rounded-2xl p-5 sm:p-6 relative transition-all duration-700 delay-500 ${
+              className={`bg-white rounded-2xl p-5 sm:p-6 mt-5 relative transition-all duration-700 delay-500 ${
                 pillarsVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"
               }`}
               style={{ border: "1px solid rgba(4, 77, 212, 0.15)" }}
               aria-label="Founder's note"
             >
-              {/* Decorative quote mark */}
               <span
                 className="absolute top-3 left-4 text-5xl leading-none font-serif select-none pointer-events-none"
                 style={{ color: "rgba(235, 72, 0, 0.2)" }}
@@ -614,9 +759,9 @@ export default function About() {
               </span>
 
               <p className="text-navy-600 text-sm sm:text-base leading-relaxed italic pl-5 relative z-10">
-                We didn&rsquo;t build IPBM because another management institute was needed. We built it
-                because a fundamentally different one was — one that treats students as professionals
-                from day one and refuses to separate learning from doing.
+                We don&apos;t ensure placements — we ensure you never need anyone to place you. Our
+                45-day intensive program builds the hands-on capability to confidently manage,
+                coordinate, and lead across all key business departments.
               </p>
 
               <footer className="flex items-center gap-3 mt-4 pl-5">
@@ -628,7 +773,7 @@ export default function About() {
                   AK
                 </div>
                 <div>
-                  <p className="text-xs font-semibold text-navy-800">Anil Kumar</p>
+                  <p className="text-xs font-semibold text-navy-800">Ajay Kumar</p>
                   <p className="text-xs text-navy-500">Founder &amp; Director, IPBM</p>
                 </div>
               </footer>

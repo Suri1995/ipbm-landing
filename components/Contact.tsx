@@ -2,6 +2,7 @@
 
 import { useEffect, useRef, useState, FormEvent, useCallback, useMemo } from "react";
 
+// Updated contact details from brochure
 const contactDetails = [
   {
     icon: (
@@ -11,7 +12,7 @@ const contactDetails = [
       </svg>
     ),
     label: "Address",
-    value: "12, Institutional Area, Madhapur, Hyderabad – 500081, Telangana",
+    value: "IPBM, Brand Market Research Bureau, Raghavendra Nagar Colony, Uppal, Hyderabad - 500039",
   },
   {
     icon: (
@@ -20,8 +21,8 @@ const contactDetails = [
       </svg>
     ),
     label: "Phone",
-    value: "+91 98765 43210",
-    href: "tel:+919876543210",
+    value: "9866739499 / 9704859888",
+    href: "tel:9866739499",
   },
   {
     icon: (
@@ -30,8 +31,8 @@ const contactDetails = [
       </svg>
     ),
     label: "Email",
-    value: "admissions@ipbm.edu.in",
-    href: "mailto:admissions@ipbm.edu.in",
+    value: "director@bmrb.in",
+    href: "mailto:director@bmrb.in",
   },
   {
     icon: (
@@ -167,7 +168,7 @@ const LiveEnquiries = () => {
   );
 };
 
-// ── Countdown to Aug 2026 intake ──────────────────────────────────────────
+// ── Countdown to Jun 2026 intake ──────────────────────────────────────────
 const IntakeCountdown = () => {
   const [timeLeft, setTimeLeft] = useState({ days: 0, hours: 0, minutes: 0, seconds: 0 });
 
@@ -230,67 +231,6 @@ const IntakeCountdown = () => {
   );
 };
 
-// ── Step indicator for multi-step form ────────────────────────────────────
-const steps = ["You", "Interest", "Message"];
-
-const StepDots = ({ current }: { current: number }) => (
-  <div className="flex items-center gap-2 mb-6" role="progressbar" aria-valuenow={current + 1} aria-valuemin={1} aria-valuemax={steps.length} aria-label={`Step ${current + 1} of ${steps.length}: ${steps[current]}`}>
-    {steps.map((s, i) => (
-      <div key={s} className="flex items-center gap-2">
-        <div className="flex flex-col items-center gap-1">
-          <div
-            className={`w-7 h-7 rounded-full flex items-center justify-center text-xs font-bold transition-all duration-300 ${
-              i < current
-                ? "bg-[#eb4800] text-white scale-90"
-                : i === current
-                ? "bg-[#eb4800] text-white ring-4 ring-[#eb4800]/25"
-                : "bg-white/10 text-navy-400"
-            }`}
-            aria-hidden="true"
-          >
-            {i < current ? (
-              <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M5 13l4 4L19 7" />
-              </svg>
-            ) : (
-              i + 1
-            )}
-          </div>
-          <span className={`text-xs transition-colors duration-300 ${i === current ? "text-[#eb4800]" : "text-navy-500"}`}>
-            {s}
-          </span>
-        </div>
-        {i < steps.length - 1 && (
-          <div className={`h-px w-8 mb-4 transition-all duration-500 ${i < current ? "bg-[#eb4800]" : "bg-white/10"}`} aria-hidden="true" />
-        )}
-      </div>
-    ))}
-  </div>
-);
-
-// ── Field wrapper ────────────────────────────────────────────────────────
-const Field = ({
-  id, label, required, children, hint,
-}: {
-  id: string; label: string; required?: boolean; children: React.ReactNode; hint?: string;
-}) => (
-  <div className="relative">
-    <label htmlFor={id} className="block text-navy-200 text-sm font-medium mb-1.5">
-      {label}
-      {required && <span aria-hidden="true" className="text-[#eb4800] ml-0.5">*</span>}
-      {required && <span className="sr-only">(required)</span>}
-    </label>
-    {children}
-    {hint && <p className="mt-1 text-xs text-navy-500">{hint}</p>}
-  </div>
-);
-
-// ── Input / Select base classes ───────────────────────────────────────────
-const inputCls =
-  "w-full bg-white/8 border border-white/15 text-white placeholder-navy-500 rounded-xl px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-[#eb4800] focus:border-transparent transition-all hover:border-white/25";
-const selectCls =
-  "w-full bg-navy-800 border border-white/15 text-white rounded-xl px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-[#eb4800] focus:border-transparent transition-all appearance-none cursor-pointer hover:border-white/25";
-
 // ── SSR-safe deterministic particles (no Math.random) ─────────────────────
 const useParticles = (n: number) =>
   useMemo(
@@ -311,13 +251,6 @@ const useParticles = (n: number) =>
 export default function Contact() {
   const ref = useRef<HTMLElement>(null);
   const [visible, setVisible] = useState(false);
-  const [status, setStatus] = useState<"idle" | "sending" | "sent">("idle");
-  const [step, setStep] = useState(0);
-  const [form, setForm] = useState({
-    name: "", email: "", phone: "", program: "", message: "",
-  });
-  const [errors, setErrors] = useState<Partial<typeof form>>({});
-  const [touched, setTouched] = useState<Partial<Record<keyof typeof form, boolean>>>({});
 
   // ── SSR-safe deterministic particles ──
   const particles = useParticles(12);
@@ -329,58 +262,6 @@ export default function Contact() {
     );
     if (ref.current) observer.observe(ref.current);
     return () => observer.disconnect();
-  }, []);
-
-  const handleChange = useCallback(
-    (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
-      const { name, value } = e.target;
-      setForm((prev) => ({ ...prev, [name]: value }));
-      if (errors[name as keyof typeof form]) {
-        setErrors((prev) => ({ ...prev, [name]: undefined }));
-      }
-    },
-    [errors]
-  );
-
-  const handleBlur = useCallback((e: React.FocusEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
-    setTouched((prev) => ({ ...prev, [e.target.name]: true }));
-  }, []);
-
-  const validateStep = useCallback(
-    (s: number): boolean => {
-      const errs: Partial<typeof form> = {};
-      if (s === 0) {
-        if (!form.name.trim()) errs.name = "Full name is required.";
-        if (!form.email.trim()) errs.email = "Email address is required.";
-        else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(form.email))
-          errs.email = "Please enter a valid email.";
-      }
-      setErrors(errs);
-      return Object.keys(errs).length === 0;
-    },
-    [form]
-  );
-
-  const nextStep = useCallback(() => {
-    if (validateStep(step)) setStep((s) => s + 1);
-  }, [step, validateStep]);
-
-  const prevStep = useCallback(() => setStep((s) => Math.max(0, s - 1)), []);
-
-  const handleSubmit = async (e: FormEvent) => {
-    e.preventDefault();
-    if (!validateStep(step)) return;
-    setStatus("sending");
-    await new Promise((r) => setTimeout(r, 1400));
-    setStatus("sent");
-  };
-
-  const resetForm = useCallback(() => {
-    setStatus("idle");
-    setStep(0);
-    setErrors({});
-    setTouched({});
-    setForm({ name: "", email: "", phone: "", program: "", message: "" });
   }, []);
 
   return (
@@ -449,8 +330,8 @@ export default function Contact() {
           </h2>
 
           <p className="text-navy-300 text-sm sm:text-base lg:text-lg max-w-2xl mx-auto text-pretty">
-            Be part of our <strong className="text-white">inaugural 2026 cohort</strong>. Fill in the
-            form and our admissions counsellor will connect within 24 hours.
+            Be part of our <strong className="text-white">inaugural 2026 cohort</strong>. Reach out to us
+            and our admissions counsellor will connect within 24 hours.
           </p>
         </div>
 
@@ -466,14 +347,14 @@ export default function Contact() {
             <div className="bg-white/5 border border-white/10 rounded-2xl p-4 sm:p-5">
               <p className="text-navy-400 text-xs uppercase tracking-wide font-medium mb-3 flex items-center gap-2">
                 <span className="w-1.5 h-1.5 bg-[#eb4800] rounded-full animate-pulse" aria-hidden="true" />
-                Inaugural Intake — Jun 2026
+                Inaugural Intake — 4th June 2026
               </p>
               <IntakeCountdown />
               <div className="mt-3 h-px bg-gradient-to-r from-[#eb4800]/40 to-transparent" aria-hidden="true" />
-              <p className="mt-3 text-xs text-navy-400">Applications close 03 June 2026.</p>
+              <p className="mt-3 text-xs text-navy-400">45-day intensive program · Online & offline modes available.</p>
             </div>
 
-            {/* Contact details */}
+            {/* Contact details - updated from brochure */}
             {contactDetails.map((item, i) => (
               <div
                 key={item.label}
@@ -503,42 +384,7 @@ export default function Contact() {
               </div>
             ))}
 
-            {/* Quick-reply options */}
-            <div className="bg-white/5 border border-white/10 rounded-2xl p-4 sm:p-5">
-              <p className="text-navy-400 text-xs uppercase tracking-wide font-medium mb-3">
-                Quick Connect
-              </p>
-              <div className="flex flex-col gap-2">
-                <a
-                  href="https://wa.me/919876543210"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  aria-label="Chat with IPBM admissions on WhatsApp"
-                  className="flex items-center gap-3 px-4 py-2.5 rounded-xl bg-[#25D366]/10 border border-[#25D366]/25 text-[#25D366] text-sm font-semibold hover:bg-[#25D366]/20 transition-all duration-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-[#25D366] focus-visible:ring-offset-2 focus-visible:ring-offset-navy-900 group"
-                >
-                  <svg className="w-4 h-4 shrink-0" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
-                    <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z" />
-                  </svg>
-                  Chat on WhatsApp
-                  <svg className="w-3 h-3 ml-auto group-hover:translate-x-0.5 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-                  </svg>
-                </a>
-                <a
-                  href="tel:+919876543210"
-                  aria-label="Call IPBM admissions"
-                  className="flex items-center gap-3 px-4 py-2.5 rounded-xl bg-white/5 border border-white/10 text-navy-200 text-sm font-semibold hover:bg-white/10 transition-all duration-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-[#eb4800] focus-visible:ring-offset-2 focus-visible:ring-offset-navy-900 group"
-                >
-                  <svg className="w-4 h-4 shrink-0 text-[#eb4800]" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
-                  </svg>
-                  Call Admissions Desk
-                  <svg className="w-3 h-3 ml-auto group-hover:translate-x-0.5 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-                  </svg>
-                </a>
-              </div>
-            </div>
+            
 
             {/* Social links */}
             <div>
@@ -554,247 +400,149 @@ export default function Contact() {
 
           </div>
 
-          {/* ── Form panel (sticky on large screens) ── */}
+          {/* ── Contact Information Panel (Form is commented out) ── */}
           <div className="w-full lg:w-7/12 lg:sticky lg:top-6 transition-all duration-700 delay-200">
             <div
               className={`bg-white/5 backdrop-blur-sm border border-white/10 rounded-2xl p-5 sm:p-6 lg:p-8 ${
                 visible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
               }`}
             >
+              {/* 
+                ============================================================
+                CONTACT FORM IS COMMENTED OUT AS REQUESTED
+                ============================================================
+              */}
+              
+              {/* Direct Contact Information Panel - Replacing the form */}
+              <div className="flex flex-col items-center text-center">
+                <div
+                  className="w-16 h-16 bg-[#eb4800]/20 rounded-2xl flex items-center justify-center mb-5"
+                  aria-hidden="true"
+                >
+                  <svg className="w-8 h-8 text-[#eb4800]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
+                  </svg>
+                </div>
+
+                <h3 className="font-display font-bold text-white text-xl sm:text-2xl mb-3">
+                  Get in Touch
+                </h3>
+                
+                <p className="text-navy-300 text-sm max-w-sm mb-6">
+                  Admissions are now open for our inaugural 45-day intensive program starting <strong className="text-white">4th June 2026</strong>.
+                </p>
+
+                {/* <div className="w-full space-y-4 text-left">
+                  <div className="flex items-center gap-3 p-3 rounded-xl bg-white/5 border border-white/10">
+                    <div className="w-8 h-8 bg-[#044dd4]/20 rounded-lg flex items-center justify-center text-[#044dd4] shrink-0">
+                      <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
+                      </svg>
+                    </div>
+                    <div>
+                      <p className="text-navy-400 text-xs">Call</p>
+                      <a href="tel:9704859888" className="text-white text-sm font-medium hover:text-[#044dd4] transition-colors">9866739499</a>
+                      <span className="text-navy-500 text-xs mx-1">/</span>
+                      <a href="tel:9866739499" className="text-white text-sm font-medium hover:text-[#044dd4] transition-colors">9704859888</a>
+                    </div>
+                  </div>
+
+                  <div className="flex items-center gap-3 p-3 rounded-xl bg-white/5 border border-white/10">
+                    <div className="w-8 h-8 bg-[#044dd4]/20 rounded-lg flex items-center justify-center text-[#044dd4] shrink-0">
+                      <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+                      </svg>
+                    </div>
+                    <div>
+                      <p className="text-navy-400 text-xs">Email</p>
+                      <a href="mailto:director@bmrb.in" className="text-white text-sm font-medium hover:text-[#044dd4] transition-colors">director@bmrb.in</a>
+                    </div>
+                  </div>
+
+                  <div className="flex items-center gap-3 p-3 rounded-xl bg-white/5 border border-white/10">
+                    <div className="w-8 h-8 bg-[#044dd4]/20 rounded-lg flex items-center justify-center text-[#044dd4] shrink-0">
+                      <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
+                      </svg>
+                    </div>
+                    <div>
+                      <p className="text-navy-400 text-xs">Address</p>
+                      <p className="text-white text-sm">IPBM, Brand Market Research Bureau, Raghavendra Nagar Colony, Uppal, Hyderabad - 500039</p>
+                    </div>
+                  </div>
+                </div> */}
+                {/* Quick-reply options - updated with brochure numbers */}
+            <div className="bg-white/5 border border-white/10 rounded-2xl p-4 sm:p-5 w-full">
+              <p className="text-navy-400 text-xs uppercase tracking-wide font-medium mb-3">
+                Quick Connect
+              </p>
+              <div className="flex flex-col gap-2">
+                <a
+                  href="https://wa.me/919866739499"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  aria-label="Chat with IPBM admissions on WhatsApp"
+                  className="flex items-center gap-3 px-4 py-2.5 rounded-xl bg-[#25D366]/10 border border-[#25D366]/25 text-[#25D366] text-sm font-semibold hover:bg-[#25D366]/20 transition-all duration-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-[#25D366] focus-visible:ring-offset-2 focus-visible:ring-offset-navy-900 group"
+                >
+                  <svg className="w-4 h-4 shrink-0" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                    <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z" />
+                  </svg>
+                  Chat on WhatsApp
+                  <svg className="w-3 h-3 ml-auto group-hover:translate-x-0.5 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                  </svg>
+                </a>
+                <a
+                  href="tel:9704859888"
+                  aria-label="Call IPBM admissions"
+                  className="flex items-center gap-3 px-4 py-2.5 rounded-xl bg-white/5 border border-white/10 text-navy-200 text-sm font-semibold hover:bg-white/10 transition-all duration-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-[#eb4800] focus-visible:ring-offset-2 focus-visible:ring-offset-navy-900 group"
+                >
+                  <svg className="w-4 h-4 shrink-0 text-[#eb4800]" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
+                  </svg>
+                  Call Admissions Desk
+                  <svg className="w-3 h-3 ml-auto group-hover:translate-x-0.5 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                  </svg>
+                </a>
+              </div>
+              <p className="text-xs text-navy-500 mt-3 pt-2 border-t border-white/10 text-center">
+                Program Fee: ₹50,000 + GST · EMI options available
+              </p>
+            </div>
+
+                <div className="w-full mt-6 pt-4 border-t border-white/10">
+                  <div className="bg-white/5 border-[0.5px] border-white/10 rounded-xl p-4 text-center">
+                    <p className="text-[#eb4800] text-sm font-semibold">📅 Program starts 4th June 2026</p>
+                    <p className="text-navy-400 text-xs mt-1">45 Days · 3 Hours/Day · Online & Offline Modes</p>
+                    <p className="text-navy-400 text-xs mt-2">Zero Textbooks · 100% Industry Expert Faculty</p>
+                  </div>
+                </div>
+              </div>
+
+              {/* 
+                ============================================================
+                ORIGINAL FORM CODE IS COMMENTED OUT BELOW
+                ============================================================
+              */}
+              {/* 
               {status === "sent" ? (
-                /* ── Success state ── */
                 <div className="flex flex-col items-center justify-center h-full py-8 sm:py-12 text-center">
-                  <div
-                    className="w-14 h-14 sm:w-16 sm:h-16 bg-[#eb4800] rounded-full flex items-center justify-center mb-4 animate-bounce-once"
-                    aria-hidden="true"
-                  >
-                    <svg className="w-7 h-7 sm:w-8 sm:h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M5 13l4 4L19 7" />
-                    </svg>
-                  </div>
-
-                  <div className="flex gap-1.5 mb-4" aria-hidden="true">
-                    {["bg-[#eb4800]","bg-navy-300","bg-[#044dd4]","bg-white/40","bg-[#eb4800]"].map((c,i) => (
-                      <span key={i} className={`w-2 h-2 rounded-full ${c}`} style={{ animation: `confettiPop .5s ease ${i * 80}ms both` }} />
-                    ))}
-                  </div>
-
-                  <h3 className="font-display font-bold text-white text-xl sm:text-2xl mb-2">
-                    Enquiry Received!
-                  </h3>
-                  <p className="text-navy-300 text-sm max-w-sm mb-1">
-                    Thank you,{" "}
-                    <strong className="text-white">{form.name}</strong>. Our
-                    admissions team will contact you within{" "}
-                    <strong className="text-[#eb4800]">24 hours</strong>.
-                  </p>
-                  <p className="text-navy-500 text-xs max-w-xs mb-6">
-                    A confirmation has been sent to{" "}
-                    <span className="text-navy-300">{form.email}</span>.
-                  </p>
-
-                  <div className="w-full max-w-sm bg-white/5 border border-white/10 rounded-xl p-4 text-left mb-6">
-                    <p className="text-[#044dd4] text-xs font-semibold uppercase tracking-wide mb-3">
-                      What happens next?
-                    </p>
-                    {[
-                      "Our counsellor calls you within 24 hours",
-                      "Receive your personalised programme brochure",
-                      "Schedule a campus or virtual tour",
-                      "Complete your application for Aug 2026 intake",
-                    ].map((s, i) => (
-                      <div key={s} className="flex items-start gap-2.5 mb-2 last:mb-0">
-                        <span className="w-5 h-5 rounded-full bg-[#eb4800]/20 text-[#eb4800] text-xs font-bold flex items-center justify-center shrink-0 mt-0.5">{i + 1}</span>
-                        <p className="text-navy-300 text-xs leading-relaxed">{s}</p>
-                      </div>
-                    ))}
-                  </div>
-
-                  <button
-                    onClick={resetForm}
-                    className="text-[#044dd4] text-sm hover:text-[#eb4800] underline focus:outline-none focus-visible:ring-2 focus-visible:ring-[#eb4800] rounded"
-                  >
-                    Submit another enquiry
-                  </button>
+                  ...
                 </div>
               ) : (
-                /* ── Multi-step form ── */
                 <form onSubmit={handleSubmit} noValidate aria-label="Admissions enquiry form">
-
                   <StepDots current={step} />
-
-                  {/* Step 0 — Personal details */}
-                  {step === 0 && (
-                    <div className="space-y-4">
-                      <p className="text-white text-sm font-semibold mb-4">Tell us about yourself</p>
-                      <div className="grid sm:grid-cols-2 gap-4">
-                        <Field id="name" label="Full Name" required>
-                          <input
-                            id="name" name="name" type="text" required autoComplete="name"
-                            value={form.name} onChange={handleChange} onBlur={handleBlur}
-                            placeholder="Your full name"
-                            className={inputCls}
-                            aria-describedby={errors.name ? "name-err" : undefined}
-                            aria-invalid={!!errors.name}
-                          />
-                          {errors.name && (
-                            <p id="name-err" role="alert" className="mt-1 text-xs text-red-400 flex items-center gap-1">
-                              <svg className="w-3 h-3" fill="currentColor" viewBox="0 0 20 20" aria-hidden="true"><path fillRule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z" clipRule="evenodd" /></svg>
-                              {errors.name}
-                            </p>
-                          )}
-                        </Field>
-                        <Field id="email" label="Email Address" required>
-                          <input
-                            id="email" name="email" type="email" required autoComplete="email"
-                            value={form.email} onChange={handleChange} onBlur={handleBlur}
-                            placeholder="you@email.com"
-                            className={inputCls}
-                            aria-describedby={errors.email ? "email-err" : undefined}
-                            aria-invalid={!!errors.email}
-                          />
-                          {errors.email && (
-                            <p id="email-err" role="alert" className="mt-1 text-xs text-red-400 flex items-center gap-1">
-                              <svg className="w-3 h-3" fill="currentColor" viewBox="0 0 20 20" aria-hidden="true"><path fillRule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z" clipRule="evenodd" /></svg>
-                              {errors.email}
-                            </p>
-                          )}
-                        </Field>
-                      </div>
-                      <Field id="phone" label="Phone Number">
-                        <input
-                          id="phone" name="phone" type="tel" autoComplete="tel"
-                          value={form.phone} onChange={handleChange} onBlur={handleBlur}
-                          placeholder="+91 XXXXX XXXXX"
-                          className={inputCls}
-                        />
-                      </Field>
-                    </div>
-                  )}
-
-                  {/* Step 1 — Programme interest */}
-                  {step === 1 && (
-                    <div className="space-y-4">
-                      <p className="text-white text-sm font-semibold mb-4">Which programme interests you?</p>
-                      <div className="grid grid-cols-1 gap-3" role="group" aria-label="Select programme of interest">
-                        {[
-                          { val: "mba",  label: "MBA in Business Management",  sub: "2 Years · Full-time · Aug 2026" },
-                          { val: "pgdm", label: "PGDM – Post Graduate Diploma", sub: "1 Year · Full-time / Part-time · Aug 2026" },
-                          { val: "emba", label: "Executive MBA",                sub: "18 Months · Weekend / Online · Sep 2026" },
-                          { val: "cert", label: "Short-Term Certification",     sub: "3–6 Months · Online & Offline · Rolling" },
-                        ].map((opt) => (
-                          <label
-                            key={opt.val}
-                            className={`flex items-start gap-3 p-3.5 rounded-xl border cursor-pointer transition-all duration-200 group ${
-                              form.program === opt.val
-                                ? "border-[#eb4800]/60 bg-[#eb4800]/10"
-                                : "border-white/10 bg-white/5 hover:border-white/20 hover:bg-white/8"
-                            }`}
-                          >
-                            <input
-                              type="radio" name="program" value={opt.val}
-                              checked={form.program === opt.val}
-                              onChange={handleChange}
-                              className="sr-only"
-                            />
-                            <span
-                              className={`mt-0.5 w-4 h-4 rounded-full border-2 flex items-center justify-center shrink-0 transition-colors ${
-                                form.program === opt.val ? "border-[#eb4800] bg-[#eb4800]" : "border-white/30"
-                              }`}
-                              aria-hidden="true"
-                            >
-                              {form.program === opt.val && <span className="w-1.5 h-1.5 bg-white rounded-full" />}
-                            </span>
-                            <div>
-                              <p className={`text-sm font-semibold transition-colors ${form.program === opt.val ? "text-[#eb4800]" : "text-white"}`}>
-                                {opt.label}
-                              </p>
-                              <p className="text-navy-400 text-xs mt-0.5">{opt.sub}</p>
-                            </div>
-                          </label>
-                        ))}
-                      </div>
-                    </div>
-                  )}
-
-                  {/* Step 2 — Message */}
-                  {step === 2 && (
-                    <div className="space-y-4">
-                      <p className="text-white text-sm font-semibold mb-4">Any questions or context for us?</p>
-                      <Field id="message" label="Message / Questions" hint="Tell us about your background, goals, or anything else we should know.">
-                        <textarea
-                          id="message" name="message" rows={5}
-                          value={form.message} onChange={handleChange} onBlur={handleBlur}
-                          placeholder="e.g. I have 3 years of sales experience and want to move into marketing leadership..."
-                          className={`${inputCls} resize-none`}
-                        />
-                      </Field>
-
-                      <div className="bg-white/5 border border-white/10 rounded-xl p-4" aria-label="Review your details">
-                        <p className="text-navy-400 text-xs uppercase tracking-wide font-medium mb-3">Review your details</p>
-                        <dl className="space-y-1.5">
-                          {[
-                            { dt: "Name",    dd: form.name  || "—" },
-                            { dt: "Email",   dd: form.email || "—" },
-                            { dt: "Phone",   dd: form.phone || "—" },
-                            { dt: "Program", dd: { mba:"MBA in Business Management", pgdm:"PGDM", emba:"Executive MBA", cert:"Short-Term Certification" }[form.program] || "—" },
-                          ].map(({ dt, dd }) => (
-                            <div key={dt} className="flex items-start gap-2 text-xs">
-                              <dt className="text-navy-400 w-16 shrink-0">{dt}</dt>
-                              <dd className="text-white">{dd}</dd>
-                            </div>
-                          ))}
-                        </dl>
-                      </div>
-                    </div>
-                  )}
-
-                  {/* Navigation buttons */}
+                  {step === 0 && (...)}
+                  {step === 1 && (...)}
+                  {step === 2 && (...)}
                   <div className={`flex gap-3 mt-6 ${step > 0 ? "justify-between" : "justify-end"}`}>
-                    {step > 0 && (
-                      <button
-                        type="button"
-                        onClick={prevStep}
-                        className="px-5 py-2.5 rounded-full border border-white/15 text-navy-200 text-sm font-semibold hover:bg-white/8 transition-all duration-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-[#eb4800] focus-visible:ring-offset-2 focus-visible:ring-offset-navy-900"
-                      >
-                        ← Back
-                      </button>
-                    )}
-
-                    {step < steps.length - 1 ? (
-                      <button
-                        type="button"
-                        onClick={nextStep}
-                        className="ml-auto px-6 py-2.5 rounded-full bg-[#eb4800] hover:bg-[#044dd4] text-white text-sm font-semibold transition-all duration-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-[#eb4800] focus-visible:ring-offset-2 focus-visible:ring-offset-navy-900 flex items-center gap-2 group"
-                      >
-                        Continue
-                        <svg className="w-4 h-4 group-hover:translate-x-0.5 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
-                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-                        </svg>
-                      </button>
-                    ) : (
-                      <button
-                        type="submit"
-                        disabled={status === "sending"}
-                        aria-disabled={status === "sending"}
-                        className="ml-auto w-full sm:w-auto px-8 py-3 rounded-full bg-[#eb4800] hover:bg-[#044dd4] disabled:opacity-70 disabled:cursor-not-allowed text-white font-semibold text-sm transition-all duration-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-[#eb4800] focus-visible:ring-offset-2 focus-visible:ring-offset-navy-900 flex items-center justify-center gap-2"
-                      >
-                        {status === "sending" ? (
-                          <>
-                            <svg className="w-4 h-4 animate-spin" fill="none" viewBox="0 0 24 24" aria-hidden="true">
-                              <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
-                              <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z" />
-                            </svg>
-                            <span>Sending...</span>
-                          </>
-                        ) : (
-                          "Submit Enquiry →"
-                        )}
-                      </button>
-                    )}
+                    ...
                   </div>
                 </form>
               )}
+              */}
             </div>
           </div>
         </div>
@@ -805,19 +553,8 @@ export default function Contact() {
           0%, 100% { transform: translateY(0) translateX(0); opacity: 0; }
           50% { transform: translateY(-30px) translateX(12px); opacity: 0.6; }
         }
-        @keyframes confettiPop {
-          0% { transform: scale(0) translateY(10px); opacity: 0; }
-          60% { transform: scale(1.3) translateY(-4px); opacity: 1; }
-          100% { transform: scale(1) translateY(0); opacity: 1; }
-        }
-        @keyframes bounce-once {
-          0%, 100% { transform: translateY(0); }
-          40% { transform: translateY(-10px); }
-          60% { transform: translateY(-5px); }
-        }
-        .animate-bounce-once { animation: bounce-once .7s ease both; }
         @media (prefers-reduced-motion: reduce) {
-          .animate-ping, .animate-spin, .animate-bounce-once, .animate-pulse, [style*="animation"] {
+          .animate-ping, .animate-spin, .animate-pulse, [style*="animation"] {
             animation: none !important;
           }
         }
