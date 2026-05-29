@@ -18,7 +18,7 @@ export default function Header() {
             alt="Logo"
             width={350}
             height={40}
-            className="w-40 sm:w-96"
+            className="w-60 sm:w-96"
             priority
             />
           </a>
@@ -27,7 +27,7 @@ export default function Header() {
           <a
             href="tel:+919866739499"
             aria-label="Call us at +91 9866739499"
-            className="group flex items-center gap-1.5 sm:gap-2 bg-navy-600 hover:bg-navy-700 text-white px-3 py-1.5 sm:px-4 sm:py-2 lg:px-5 lg:py-2.5 rounded-full text-xs sm:text-sm font-medium transition-all duration-200 hover:shadow-navy-glow focus:outline-none focus-visible:ring-2 focus-visible:ring-navy-500 focus-visible:ring-offset-2"
+            className="group flex items-center gap-1.5 sm:gap-2 bg-navy-600 hover:bg-navy-700 text-white px-3 py-1.5 sm:px-4 sm:py-2 lg:px-5 lg:py-2.5 rounded-full text-sm font-medium transition-all duration-200 hover:shadow-navy-glow focus:outline-none focus-visible:ring-2 focus-visible:ring-navy-500 focus-visible:ring-offset-2"
           >
             <svg
               className="w-3.5 h-3.5 sm:w-4 sm:h-4 group-hover:animate-bounce"
