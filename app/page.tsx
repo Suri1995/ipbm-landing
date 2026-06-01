@@ -8,6 +8,7 @@ import Testimonials from "@/components/Testimonials";
 import FAQs from "@/components/FAQs";
 import Contact from "@/components/Contact";
 import Footer from "@/components/Footer";
+import Image from "next/image"; // Add this import
 
 import { getHomePage } from "@/lib/strapi";
 
@@ -37,15 +38,25 @@ export default async function Home() {
 
         <About />
         <Services />
-        {/* <Team />
+        <Team />
 
-        <Testimonials data={testimonialsSection} /> */}
+        {/* <Testimonials data={testimonialsSection} /> */}
 
         <FAQs />
         <Contact />
       </main>
 
       {/* <Footer /> */}
+<a href="https://wa.me/+919866739499" target="_blank" className="absolute top-0 right-0">
+                <Image
+                  src = "/whatsapp-image.webp"
+                  alt = "whatsapp"
+                  width={40}
+                  height={41}
+                  sizes="40px"
+                  className="fixed bottom-5 right-5 z-50 shadow-lg transition-all duration-300 ease-in-out hover:scale-110 hover:shadow-2xl active:scale-95 rounded-full animate-bounce w-10 md:w-[70px]"
+                /> 
+              </a>
     </>
   );
 }

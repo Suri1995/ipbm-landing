@@ -96,11 +96,11 @@ const differentiators = [
 ];
 
 const whoProfiles = [
-  { icon: "🎓", label: "Fresh Graduates"  },
-  { icon: "💼", label: "Career Builders"  },
-  { icon: "🔄", label: "Career Returners" },
-  { icon: "🚀", label: "Startup Explorers"},
-  { icon: "🏢", label: "Business Leaders" },
+  { icon: "🎓", label: "Fresh Graduate"  },
+  { icon: "💼", label: "Career Builder"  },
+  { icon: "🔄", label: "Career Returner" },
+  { icon: "🚀", label: "Startup Explorer"},
+  { icon: "🏢", label: "Business Leader" },
 ];
 
 // ── Sub-components ─────────────────────────────────────────────────────────
@@ -684,12 +684,12 @@ export default function About(): JSX.Element {
                     </a>
                   </div>
                   <a
-                    href="mailto:director@bmrb.in"
+                    href="mailto:director@ipbm.in"
                     className="text-xs transition-colors hover:underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 rounded"
                     style={{ color: "#eb4800" }}
-                    aria-label="Email director@bmrb.in"
+                    aria-label="Email director@ipbm.in"
                   >
-                    📧 director@bmrb.in
+                    📧 director@ipbm.in
                   </a>
                 </div>
               </div>
@@ -700,7 +700,7 @@ export default function About(): JSX.Element {
 
             {/* BMRB association */}
             <div className="flex items-center gap-3 flex-wrap mt-10 md:mt-20 justify-center">
-              <span className="text-sm font-semibold" style={{ color: "#6a7a9a" }}>Associated with</span>
+              <span className="text-lg font-bold underline underline-offset-2" style={{ color: "#eb4800" }}>Programs Developed in Association with</span>
               <div className="flex items-center gap-2 px-3 py-1.5 rounded-lg" style={{ backgroundColor: "rgba(235,72,0,0.06)", border: "1px solid rgba(235,72,0,0.2)" }}>
                 <Image
                   src="/bmrb-logo.avif"

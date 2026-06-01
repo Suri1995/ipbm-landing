@@ -10,7 +10,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: "Institute of Practical Business Management",
     description:
-      "Transform your career with industry-aligned programs and expert mentors.",
+      "45-day practical business management program in Hyderabad — 20 topics, zero textbooks, industry expert faculty.",
     type: "website",
     locale: "en_IN",
   },

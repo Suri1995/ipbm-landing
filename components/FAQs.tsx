@@ -58,7 +58,7 @@ const faqs: { q: string; a: string; category: Category }[] = [
   {
     category: "Program",
     q: "How do I enroll, and where is IPBM located?",
-    a: "For enrollment inquiries, contact IPBM via WhatsApp, telephone (9866739499 or 9704859888), or email (director@bmrb.in). The institute is located at Raghavendra Nagar Colony, Uppal, Hyderabad, 500039. Admissions are currently open.",
+    a: "For enrollment inquiries, contact IPBM via WhatsApp, telephone (9866739499 or 9704859888), or email (director@ipbm.in). The institute is located at Raghavendra Nagar Colony, Uppal, Hyderabad, 500039. Admissions are currently open.",
   },
 ];
 
@@ -351,6 +351,18 @@ const useParticles = (n: number) =>
     [n]
   );
 
+// ── Download brochure function ────────────────────────────────────────────
+const handleBrochureDownload = (e: React.MouseEvent<HTMLAnchorElement>) => {
+  e.preventDefault();
+  const brochurePath = '/IPBM Brochure.pdf';
+  const link = document.createElement('a');
+  link.href = brochurePath;
+  link.download = 'IPBM-Programme-Brochure.pdf';
+  document.body.appendChild(link);
+  link.click();
+  document.body.removeChild(link);
+};
+
 // ── Main export ───────────────────────────────────────────────────────────
 export default function FAQs() {
   const ref = useRef<HTMLElement>(null);
@@ -616,7 +628,8 @@ export default function FAQs() {
                 <span className="w-1 h-1 bg-navy-300 rounded-full" aria-hidden="true" />
                 <a
                   href="#"
-                  className="text-navy-500 text-sm hover:text-[#044dd4] transition-colors focus:outline-none focus-visible:underline"
+                  onClick={handleBrochureDownload}
+                  className="text-black font-semibold text-sm hover:text-[#eb4800] transition-colors focus:outline-none focus-visible:underline"
                   aria-label="Download IPBM programme brochure"
                 >
                   Download Brochure

@@ -1,64 +1,35 @@
 "use client";
 import { useEffect, useRef, useState, useMemo } from "react";
+import Image from "next/image";
 
 const team = [
   {
-    name: "Dr. Ramesh Kumar",
-    role: "Founder & CEO",
-    expertise: "Startup Strategy · 25 Years Experience",
-    bio: "Former VP at McKinsey India. PhD from IIM Ahmedabad. Architect of IPBM's innovative startup-focused curriculum.",
-    initials: "RK",
+    name: "Mr. Ajay Kumar Vakita",
+    role: "Professional Market Researcher",
+    experience: "18+ years of experience",
+    bio: "Expert market researcher with extensive experience in market analysis, consumer behavior, and strategic insights. Brings real-world market research expertise to help students understand market dynamics.",
+    image: "/ajay-kumar-vakita.webp",
     color: "navy",
-    social: "linkedin",
   },
   {
-    name: "Prof. Sunita Iyer",
-    role: "Co-Founder & CFO",
-    expertise: "Startup Finance · CFA Charter",
-    bio: "Ex-CFO of a BSE-listed conglomerate. Brings real treasury, fundraising, and M&A experience to every lecture.",
-    initials: "SI",
+    name: "Mr. Rohit Mehta",
+    role: "Professional Chartered Accountant",
+    experience: "15+ years of experience",
+    bio: "Chartered Accountant with deep expertise in financial management, taxation, and corporate finance. Provides practical financial insights based on years of industry experience.",
+    image: "/rohit-mehta.webp",
     color: "gold",
-    social: "linkedin",
   },
   {
-    name: "Mr. Arjun Mehta",
-    role: "Head of Placements & Industry Relations",
-    expertise: "Startup Hiring · HR Leadership",
-    bio: "15 years in corporate HR at Deloitte and HCL. Has built relationships with 200+ startup hiring partners.",
-    initials: "AM",
+    name: "Mrs. Nita Mehta",
+    role: "Professional Chartered Accountant",
+    experience: "15+ years of experience",
+    bio: "Chartered Accountant specializing in financial planning, audit, and business advisory. Brings extensive knowledge of financial systems and regulatory compliance.",
+    image: "/nita-mehta.webp",
     color: "navy",
-    social: "linkedin",
-  },
-  {
-    name: "Dr. Priya Nair",
-    role: "Head of Marketing & Growth",
-    expertise: "Growth Marketing · Brand Strategy",
-    bio: "Worked with Unilever and 3 high-growth startups. PhD in Consumer Behaviour from IIT Madras.",
-    initials: "PN",
-    color: "gold",
-    social: "linkedin",
-  },
-  {
-    name: "Prof. Vikram Singh",
-    role: "Head of Operations & Analytics",
-    expertise: "Supply Chain · Data Strategy",
-    bio: "MIT Sloan alumnus. Former Head of Operations at a Fortune 500 manufacturing group. Startup advisor.",
-    initials: "VS",
-    color: "navy",
-    social: "linkedin",
-  },
-  {
-    name: "Ms. Lakshmi Reddy",
-    role: "Entrepreneurship Cell Lead",
-    expertise: "Venture Building · Innovation",
-    bio: "Serial entrepreneur with 3 successful exits. Leads IPBM's startup incubation programme.",
-    initials: "LR",
-    color: "gold",
-    social: "linkedin",
   },
 ];
 
-// ── Deterministic particles hook (no Math.random — SSR-safe) ──────────────
+// Deterministic particles hook (SSR-safe)
 const useParticles = (n: number) =>
   useMemo(
     () =>
@@ -71,12 +42,20 @@ const useParticles = (n: number) =>
         duration: ((i * 11.317) % 12) + 8,
         delay: (i * 7.919) % 6,
       })),
-    [n]
+    [n],
   );
 
-// Animated profile card component
-const ProfileCard = ({ member, index, visible }: { member: typeof team[0]; index: number; visible: boolean }) => {
-  const [isFlipped, setIsFlipped] = useState(false);
+// Profile card with image on top, details on bottom
+const ProfileCard = ({
+  member,
+  index,
+  visible,
+}: {
+  member: (typeof team)[0];
+  index: number;
+  visible: boolean;
+}) => {
+  const [imageLoaded, setImageLoaded] = useState(false);
   const cardRef = useRef<HTMLDivElement>(null);
   const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
 
@@ -97,87 +76,147 @@ const ProfileCard = ({ member, index, visible }: { member: typeof team[0]; index
       ref={cardRef}
       onMouseMove={handleMouseMove}
       onMouseLeave={handleMouseLeave}
-      aria-label={`${member.name}, ${member.role}`}
-      className={`relative bg-white border border-navy-100 rounded-2xl p-5 sm:p-6 flex flex-col transition-all duration-500 hover:shadow-2xl hover:-translate-y-2 overflow-hidden group ${
+      aria-label={`${member.name}, ${member.role} with ${member.experience}`}
+      className={`relative bg-white rounded-2xl overflow-hidden transition-all duration-500 hover:shadow-2xl hover:-translate-y-2 group ${
         visible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
       }`}
-      style={{ 
-        transitionDelay: visible ? `${index * 80}ms` : "0ms",
-        transformStyle: "preserve-3d",
+      style={{
+        transitionDelay: visible ? `${index * 100}ms` : "0ms",
       }}
     >
       {/* Animated gradient overlay on hover */}
-      <div 
-        className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none"
+      <div
+        className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none z-10"
         style={{
-          background: `radial-gradient(circle at ${mousePosition.x}% ${mousePosition.y}%, rgba(235,72,0,0.08) 0%, transparent 70%)`,
+          background: `radial-gradient(circle at ${mousePosition.x}% ${mousePosition.y}%, rgba(235,72,0,0.06) 0%, transparent 70%)`,
         }}
       />
-      
-      {/* Shine effect */}
-      <div className="absolute inset-0 -translate-x-full group-hover:translate-x-full transition-transform duration-1000 bg-gradient-to-r from-transparent via-white/10 to-transparent pointer-events-none" />
 
-      {/* Avatar with animated ring */}
-      <div className="flex items-center gap-3 sm:gap-4 mb-4 relative">
-        <div className="relative">
-          <div
-            className={`w-12 h-12 sm:w-14 sm:h-14 rounded-2xl flex items-center justify-center text-base sm:text-lg font-display font-bold flex-shrink-0 transition-all duration-300 group-hover:scale-110 group-hover:rotate-3 ${
-              member.color === "navy"
-                ? "bg-[#044dd4] text-white"
-                : "bg-[#eb4800] text-white"
+      {/* Shine effect */}
+      <div className="absolute inset-0 -translate-x-full group-hover:translate-x-full transition-transform duration-1000 bg-gradient-to-r from-transparent via-white/20 to-transparent pointer-events-none z-10" />
+
+      {/* Top Half - Image Section */}
+      <div className="relative h-64 sm:h-72 lg:h-80 overflow-hidden bg-gradient-to-br from-[#044dd4]/5 to-[#eb4800]/5">
+        {/* Loading skeleton */}
+        {!imageLoaded && (
+          <div className="absolute inset-0 bg-gradient-to-r from-gray-100 to-gray-200 animate-pulse" />
+        )}
+
+        {/* Faculty Image */}
+        <div className="relative w-full h-full">
+          <Image
+            src={member.image}
+            alt={`${member.name} - ${member.role}`}
+            fill
+            sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw"
+            className={`object-cover object-top transition-all duration-700 group-hover:scale-110 ${
+              imageLoaded ? "opacity-100" : "opacity-0"
             }`}
-            aria-hidden="true"
-          >
-            {member.initials}
-          </div>
-          {/* Animated pulse ring */}
-          <div className="absolute inset-0 rounded-2xl border-2 border-[#eb4800] opacity-0 group-hover:opacity-100 group-hover:scale-150 transition-all duration-500 pointer-events-none" />
+            onLoad={() => setImageLoaded(true)}
+            priority={index === 0}
+          />
         </div>
-        <div className="min-w-0 flex-1">
-          <h3 className="font-display font-bold text-navy-900 text-sm sm:text-base leading-tight truncate group-hover:text-[#044dd4] transition-colors duration-300">
-            {member.name}
-          </h3>
-          <p className="text-[#eb4800] text-xs font-semibold mt-0.5 truncate flex items-center gap-1">
-            <span className="w-1 h-1 bg-[#eb4800] rounded-full animate-pulse" aria-hidden="true" />
+
+        {/* Overlay gradient for better text readability when hovered */}
+        <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+
+        {/* Color accent bar */}
+        <div
+          className={`absolute bottom-0 left-0 right-0 h-1 bg-gradient-to-r ${
+            member.color === "navy"
+              ? "from-[#044dd4] to-[#044dd4]/50"
+              : "from-[#eb4800] to-[#eb4800]/50"
+          } transform scale-x-0 group-hover:scale-x-100 transition-transform duration-500 origin-left`}
+        />
+      </div>
+
+      {/* Bottom Half - Details Section */}
+      <div className="p-5 sm:p-6 relative z-20 bg-white">
+        {/* Name */}
+        <h3 className="font-display font-bold text-navy-900 text-base sm:text-lg lg:text-xl leading-tight mb-1 group-hover:text-[#044dd4] transition-colors duration-300">
+          {member.name}
+        </h3>
+
+        {/* Role with icon */}
+        <div className="flex items-center gap-1.5 mb-3">
+          <div
+            className={`w-1.5 h-1.5 rounded-full ${
+              member.color === "navy" ? "bg-[#044dd4]" : "bg-[#eb4800]"
+            } animate-pulse`}
+          />
+          <p className="text-[#eb4800] text-xs sm:text-sm font-semibold">
             {member.role}
           </p>
         </div>
-      </div>
 
-      {/* Expertise with animated underline */}
-      <div className="relative mb-2 sm:mb-3">
-        <p className="text-navy-400 text-xs font-medium tracking-wide uppercase inline-block">
-          {member.expertise}
+        {/* Expertise divider */}
+        <div className="relative mb-3">
+          <div className="flex items-center gap-2">
+            <span
+              className={`text-[11px] sm:text-xs font-medium px-2 py-0.5 rounded-full ${
+                member.color === "navy"
+                  ? "bg-[#044dd4]/10 text-[#044dd4]"
+                  : "bg-[#eb4800]/10 text-[#eb4800]"
+              }`}
+            >
+              {member.experience}
+            </span>
+          </div>
+          <div
+            className={`absolute -bottom-1 left-0 w-12 h-0.5 ${
+              member.color === "navy" ? "bg-[#044dd4]" : "bg-[#eb4800]"
+            } group-hover:w-full transition-all duration-500`}
+          />
+        </div>
+
+        {/* Bio */}
+        <p className="text-navy-500 text-xs sm:text-sm leading-relaxed line-clamp-3 group-hover:line-clamp-none transition-all duration-300">
+          {member.bio}
         </p>
-        <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-[#eb4800] group-hover:w-full transition-all duration-500" />
-      </div>
-      
-      <p className="text-navy-500 text-xs sm:text-sm leading-relaxed flex-1 relative z-10">
-        {member.bio}
-      </p>
 
-      {/* Social connect with animation */}
-      <div className="mt-4 pt-3 border-t border-navy-100/50">
-        <a
-          href="#"
-          aria-label={`Connect with ${member.name} on LinkedIn`}
-          className="inline-flex items-center gap-2 text-navy-400 hover:text-[#044dd4] text-xs font-medium transition-all duration-300 group-hover:gap-3 focus:outline-none focus:underline"
-        >
-          <svg className="w-4 h-4 transition-transform duration-300 group-hover:scale-110" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
-            <path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z" />
-          </svg>
-          <span className="relative">
-            Connect
-            <span className="absolute bottom-0 left-0 w-0 h-px bg-[#044dd4] group-hover:w-full transition-all duration-300" />
-          </span>
-          <svg className="w-3 h-3 opacity-0 -translate-x-2 group-hover:opacity-100 group-hover:translate-x-0 transition-all duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-          </svg>
-        </a>
+        {/* Connect button */}
+        <div className="mt-4 pt-3 border-t border-navy-100/50">
+          <a
+            href="#contact"
+            aria-label={`Connect with ${member.name}`}
+            className={`inline-flex items-center gap-2 text-navy-400 hover:text-[#044dd4] text-xs sm:text-sm font-medium transition-all duration-300 group/btn focus:outline-none focus-visible:ring-2 focus-visible:ring-[#eb4800] focus-visible:rounded-full`}
+          >
+            <svg
+              className="w-4 h-4 transition-transform duration-300 group-hover/btn:scale-110"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth={2}
+                d="M16 12a4 4 0 10-8 0 4 4 0 008 0zm0 0v1.5a2.5 2.5 0 005 0V12a9 9 0 10-9 9m4.5-1.206a8.959 8.959 0 01-4.5 1.207"
+              />
+            </svg>
+            <span>Learn more</span>
+            <svg
+              className="w-3 h-3 opacity-0 -translate-x-2 group-hover/btn:opacity-100 group-hover/btn:translate-x-0 transition-all duration-300"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth={2}
+                d="M9 5l7 7-7 7"
+              />
+            </svg>
+          </a>
+        </div>
       </div>
 
       {/* Decorative corner accent */}
-      <div className="absolute bottom-3 right-3 w-8 h-8 border-r-2 border-b-2 border-[#eb4800]/20 opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none" aria-hidden="true" />
+      <div
+        className="absolute top-3 right-3 w-12 h-12 border-t-2 border-r-2 border-[#eb4800]/20 opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none z-20"
+        aria-hidden="true"
+      />
     </article>
   );
 };
@@ -185,15 +224,14 @@ const ProfileCard = ({ member, index, visible }: { member: typeof team[0]; index
 export default function Team() {
   const ref = useRef<HTMLElement>(null);
   const [visible, setVisible] = useState(false);
-  const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
-
-  // ── SSR-safe deterministic particles ──
-  const particles = useParticles(40);
+  const particles = useParticles(30);
 
   useEffect(() => {
     const observer = new IntersectionObserver(
-      ([entry]) => { if (entry.isIntersecting) setVisible(true); },
-      { threshold: 0.1 }
+      ([entry]) => {
+        if (entry.isIntersecting) setVisible(true);
+      },
+      { threshold: 0.1 },
     );
     if (ref.current) observer.observe(ref.current);
     return () => observer.disconnect();
@@ -204,11 +242,14 @@ export default function Team() {
       id="team"
       ref={ref}
       aria-labelledby="team-heading"
-      className="py-7 sm:py-20 bg-cream relative overflow-hidden"
+      className="py-12 sm:py-16 lg:py-20 bg-gradient-to-b from-white to-[#fefaf8] relative overflow-hidden"
     >
       {/* Animated background elements */}
-      <div aria-hidden="true" className="absolute inset-0 overflow-hidden pointer-events-none">
-        {/* Floating dots pattern — deterministic, SSR-safe */}
+      <div
+        aria-hidden="true"
+        className="absolute inset-0 overflow-hidden pointer-events-none"
+      >
+        {/* Floating dots pattern */}
         <div className="absolute inset-0">
           {particles.map((p) => (
             <div
@@ -225,15 +266,25 @@ export default function Team() {
             />
           ))}
         </div>
-        
+
         {/* Animated gradient blobs */}
-        <div className="absolute top-20 -left-32 w-64 h-64 bg-[#eb4800]/5 rounded-full blur-3xl animate-pulse-slow" />
-        <div className="absolute bottom-20 -right-32 w-64 h-64 bg-[#044dd4]/5 rounded-full blur-3xl animate-pulse-slow animation-delay-3000" />
-        
+        <div className="absolute top-20 -left-32 w-96 h-96 bg-[#eb4800]/5 rounded-full blur-3xl animate-pulse-slow" />
+        <div className="absolute bottom-20 -right-32 w-96 h-96 bg-[#044dd4]/5 rounded-full blur-3xl animate-pulse-slow animation-delay-3000" />
+
         {/* Subtle grid pattern */}
-        <svg className="absolute inset-0 w-full h-full opacity-[0.02]" aria-hidden="true">
+        <svg
+          className="absolute inset-0 w-full h-full opacity-[0.02]"
+          aria-hidden="true"
+        >
           <defs>
-            <pattern id="teamGrid" x="0" y="0" width="30" height="30" patternUnits="userSpaceOnUse">
+            <pattern
+              id="teamGrid"
+              x="0"
+              y="0"
+              width="40"
+              height="40"
+              patternUnits="userSpaceOnUse"
+            >
               <rect x="0" y="0" width="1" height="1" fill="#1a2a3a" />
             </pattern>
           </defs>
@@ -241,96 +292,130 @@ export default function Team() {
         </svg>
       </div>
 
-      <div className="max-w-7xl mx-auto px-4 relative z-10">
-        {/* Header with enhanced animations */}
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+        {/* Header section */}
         <div
-          className={`text-center mb-10 sm:mb-14 lg:mb-16 transition-all duration-700 ${
+          className={`text-center mb-10 sm:mb-14 transition-all duration-700 ${
             visible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
           }`}
         >
-          {/* Founding badge */}
-          <div className="inline-flex items-center gap-2 bg-[#eb4800]/10 backdrop-blur-sm border border-[#eb4800]/20 rounded-full px-4 py-1.5 mb-4 animate-pulse-slow">
+          {/* Badge */}
+          <div className="inline-flex items-center gap-2 bg-[#eb4800]/10 backdrop-blur-sm border border-[#eb4800]/20 rounded-full px-4 py-1.5 mb-4">
             <span className="w-1.5 h-1.5 bg-[#eb4800] rounded-full animate-ping" />
-            <span className="text-[#eb4800] text-xs font-medium tracking-wide">Founded May 2026 · First Batch Starting Soon</span>
+            <span className="text-[#eb4800] text-xs font-medium tracking-wide">
+              Expert Faculty
+            </span>
           </div>
-          
+
           <p className="text-[#eb4800] font-semibold text-sm tracking-widest uppercase mb-3 flex items-center justify-center gap-2">
             <span className="w-8 h-px bg-[#eb4800]" aria-hidden="true" />
             Meet Your Mentors
             <span className="w-8 h-px bg-[#eb4800]" aria-hidden="true" />
           </p>
+
           <h2
             id="team-heading"
-            className="font-display text-2xl sm:text-3xl lg:text-4xl font-bold text-navy-900 mb-4 text-balance"
+            className="font-display text-2xl sm:text-3xl lg:text-4xl font-bold text-navy-900 mb-4"
           >
-            Learn From Those Who{" "}
-            <span className="relative inline-block group">
-              <span className="text-[#044dd4]">Built It</span>
-              <svg className="absolute -bottom-2 left-0 w-full" height="3" aria-hidden="true">
-                <line x1="0" y1="1.5" x2="100%" y2="1.5" stroke="#C6A43F" strokeWidth="2" strokeDasharray="4 4" className="animate-dash" />
+            Learn From Industry{" "}
+            <span className="relative inline-block">
+              <span className="text-[#044dd4]">Experts</span>
+              <svg
+                className="absolute -bottom-2 left-0 w-full"
+                height="3"
+                aria-hidden="true"
+              >
+                <line
+                  x1="0"
+                  y1="1.5"
+                  x2="100%"
+                  y2="1.5"
+                  stroke="#eb4800"
+                  strokeWidth="2"
+                  strokeDasharray="4 4"
+                  className="animate-dash"
+                />
               </svg>
             </span>
           </h2>
-          <p className="text-navy-500 text-sm sm:text-base lg:text-lg max-w-2xl mx-auto text-pretty">
-            Our faculty are active practitioners and startup founders — they bring real-world experience, 
-            not just textbook theory.
+
+          <p className="text-navy-500 text-sm sm:text-base max-w-2xl mx-auto">
+            Our faculty brings decades of real-world experience to help you
+            master business management
           </p>
         </div>
 
-        {/* Grid with enhanced cards */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-5 lg:gap-6">
-          {team.map((member, i) => (
-            <div
+        {/* Faculty Grid - 3 cards */}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8">
+          {team.map((member, index) => (
+            <ProfileCard
               key={member.name}
-              onMouseEnter={() => setHoveredIndex(i)}
-              onMouseLeave={() => setHoveredIndex(null)}
-            >
-              <ProfileCard member={member} index={i} visible={visible} />
-            </div>
+              member={member}
+              index={index}
+              visible={visible}
+            />
           ))}
         </div>
 
-        {/* Join the team CTA */}
+        {/* Bottom CTA */}
         <div className="text-center mt-12 sm:mt-16">
-          <div className="inline-flex flex-col items-center gap-3">
-            <p className="text-navy-500 text-sm">Want to join our expert faculty?</p>
+          <div className="inline-flex flex-col items-center gap-4">
+            <p className="text-navy-500 text-sm">
+              Want to learn from these industry experts?
+            </p>
             <a
               href="#contact"
-              className="inline-flex items-center gap-2 px-6 py-3 rounded-full bg-[#044dd4] text-white hover:bg-[#eb4800] hover:text-white transition-all duration-300 text-sm font-semibold group shadow-lg hover:shadow-xl"
+              className="inline-flex items-center gap-2 px-6 py-3 rounded-full bg-[#044dd4] text-white hover:bg-[#eb4800] transition-all duration-300 text-sm font-semibold shadow-lg hover:shadow-xl focus:outline-none focus:ring-2 focus:ring-[#eb4800] focus:ring-offset-2"
             >
-              <span>Become a Mentor</span>
-              <svg className="w-4 h-4 group-hover:translate-x-1 group-hover:translate-y-[-1px] transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
+              <span>Enroll Now</span>
+              <svg
+                className="w-4 h-4 group-hover:translate-x-1 transition-transform duration-300"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={2}
+                  d="M17 8l4 4m0 0l-4 4m4-4H3"
+                />
               </svg>
             </a>
           </div>
         </div>
       </div>
 
-      {/* Scroll indicator */}
-      <div className="absolute bottom-4 left-1/2 transform -translate-x-1/2 hidden lg:block" aria-hidden="true">
-        <div className="flex flex-col items-center gap-1 opacity-30">
-          <span className="text-navy-900 text-xs">Explore</span>
-          <svg className="w-4 h-4 text-navy-900 animate-bounce" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 13l-7 7-7-7m14-8l-7 7-7-7" />
-          </svg>
-        </div>
-      </div>
-
       <style jsx global>{`
         @keyframes floatDot {
-          0%, 100% { transform: translateY(0px) translateX(0px); opacity: 0; }
-          50% { transform: translateY(-30px) translateX(15px); opacity: 0.5; }
+          0%,
+          100% {
+            transform: translateY(0px) translateX(0px);
+            opacity: 0;
+          }
+          50% {
+            transform: translateY(-20px) translateX(10px);
+            opacity: 0.4;
+          }
         }
         @keyframes dash {
-          to { stroke-dashoffset: -8; }
+          to {
+            stroke-dashoffset: -8;
+          }
         }
         .animate-dash {
           animation: dash 1.5s linear infinite;
         }
         @keyframes pulse-slow {
-          0%, 100% { opacity: 0.3; transform: scale(1); }
-          50% { opacity: 0.6; transform: scale(1.05); }
+          0%,
+          100% {
+            opacity: 0.3;
+            transform: scale(1);
+          }
+          50% {
+            opacity: 0.6;
+            transform: scale(1.05);
+          }
         }
         .animate-pulse-slow {
           animation: pulse-slow 4s ease-in-out infinite;
@@ -338,14 +423,38 @@ export default function Team() {
         .animation-delay-3000 {
           animation-delay: 3s;
         }
-        @keyframes float {
-          0%, 100% { transform: translateY(0px); }
-          50% { transform: translateY(-5px); }
+        @keyframes fadeInUp {
+          from {
+            opacity: 0;
+            transform: translateY(30px);
+          }
+          to {
+            opacity: 1;
+            transform: translateY(0);
+          }
         }
         @media (prefers-reduced-motion: reduce) {
-          [style*="animation"] { animation: none !important; }
-          .animate-pulse, .animate-ping, .animate-bounce, .animate-dash, .animate-pulse-slow {
+          [style*="animation"] {
             animation: none !important;
+          }
+          .animate-pulse,
+          .animate-ping,
+          .animate-dash,
+          .animate-pulse-slow {
+            animation: none !important;
+          }
+        }
+
+        /* Accessibility improvements */
+        @media (max-width: 640px) {
+          .line-clamp-3 {
+            display: -webkit-box;
+            -webkit-line-clamp: 3;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+          }
+          .group:hover .line-clamp-3 {
+            display: block;
           }
         }
       `}</style>
