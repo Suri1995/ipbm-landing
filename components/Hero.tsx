@@ -304,9 +304,6 @@ export default function Hero() {
       >
         {/* Enhanced Background Carousel */}
         <BackgroundCarousel />
-        
-        {/* Carousel dots for user awareness */}
-        <CarouselDots currentIndex={currentCarouselIndex} total={carouselImages.length} />
 
         {/* Animated gradient overlay based on mouse position */}
         <div
