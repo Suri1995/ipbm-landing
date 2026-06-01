@@ -96,7 +96,7 @@ const ProfileCard = ({
       <div className="absolute inset-0 -translate-x-full group-hover:translate-x-full transition-transform duration-1000 bg-gradient-to-r from-transparent via-white/20 to-transparent pointer-events-none z-10" />
 
       {/* Top Half - Image Section */}
-      <div className="relative h-64 sm:h-72 lg:h-80 overflow-hidden bg-gradient-to-br from-[#044dd4]/5 to-[#eb4800]/5">
+      <div className="relative h-80 overflow-hidden bg-gradient-to-br from-[#044dd4]/5 to-[#eb4800]/5">
         {/* Loading skeleton */}
         {!imageLoaded && (
           <div className="absolute inset-0 bg-gradient-to-r from-gray-100 to-gray-200 animate-pulse" />
