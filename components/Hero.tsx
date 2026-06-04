@@ -366,13 +366,23 @@ export default function Hero() {
 
               <h1
                 id="hero-heading"
-                className="font-display text-4xl lg:text-5xl xl:text-6xl font-bold text-white leading-tight mb-4 sm:mb-5 lg:mb-6 text-balance"
+                className="font-display text-4xl lg:text-6xl font-bold text-white leading-tight mb-4 sm:mb-5 lg:mb-6 text-balance"
               >
                 BUILD YOUR{" "}
-                <span className="text-[#f15a24] italic relative inline-block group">
-                  STARTUP CAREER
-                  <span className="absolute bottom-0 left-0 w-full h-0.5 bg-[#f15a24] scale-x-0 group-hover:scale-x-100 transition-transform duration-500 origin-left" />
-                </span>{" "}
+                <span
+  className="text-[#FFFFFF] italic relative inline-block group"
+  style={{
+    textShadow: `
+      0 0 2px rgba(241,90,36,0.3),
+      0 0 5px rgba(241,90,36,0.3),
+      0 0 8px rgba(241,90,36,0.3),
+      3px 3px 8px rgba(241,90,36,0.25)
+    `,
+    WebkitTextStroke: "1px rgba(255,255,255,0.1)",
+  }}
+>
+  MANAGEMENT CAREER
+</span>{" "}
                 FROM DAY ONE
               </h1>
 
