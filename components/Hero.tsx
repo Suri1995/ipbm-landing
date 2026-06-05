@@ -2,7 +2,6 @@
 import { useEffect, useState, useRef, useCallback } from "react";
 
 const stats = [
-  { value: "0→1", label: "Startup Journey" },
   { value: "20", label: "Topics Covered" },
   { value: "100", label: "Industry Expert Trainers" },
   { value: "1-ON-1", label: "Mentorship" },
@@ -343,7 +342,7 @@ export default function Hero() {
           }}
         />
 
-        <div className="relative max-w-7xl mx-auto px-4 pt-7 pb-7 sm:pt-32 sm:pb-20 w-full z-10">
+        <div className="relative max-w-7xl mx-auto px-4 pt-32 pb-7 sm:pb-20 w-full z-10">
           <div className="grid lg:grid-cols-2 gap-8 sm:gap-10 lg:gap-16 items-center">
             {/* Left content */}
             <div
@@ -459,7 +458,7 @@ export default function Hero() {
 
                     <div className="flex items-center justify-between bg-black/30 border border-white rounded-xl p-3 transition-all duration-300 backdrop-blur-sm">
                       <span className="text-white text-xs sm:text-sm font-medium">
-                        ⏱️ 3 Hours/Day
+                        ⏱️ 3 Hours/Day for 45 days
                       </span>
                       <span className="text-[#fe7644] text-xs sm:text-sm font-bold flex items-center gap-1">
                         Fee: ₹50,000 + GST
@@ -491,7 +490,7 @@ export default function Hero() {
 
           {/* Stats row */}
           <div
-            className={`grid grid-cols-2 sm:grid-cols-4 gap-3 sm:gap-4 mt-10 sm:mt-12 lg:mt-16 transition-all duration-700 delay-300 ${
+            className={`grid grid-cols-2 sm:grid-cols-3 gap-3 sm:gap-4 mt-10 sm:mt-12 lg:mt-16 transition-all duration-700 delay-300 ${
               visible ? "opacity-80 translate-y-0" : "opacity-0 translate-y-8"
             }`}
           >
